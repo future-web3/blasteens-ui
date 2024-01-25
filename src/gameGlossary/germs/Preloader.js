@@ -12,12 +12,12 @@ export default class Preloader extends Phaser.Scene {
       .bitmapText(400, 300, "slime", "Loading ...", 80)
       .setOrigin(0.5);
 
-    this.load.setPath("assets/games/germs/");
+    this.load.setPath("../../assets/games/germs");
     this.load.atlas("assets", "germs.png", "germs.json");
     this.load.glsl("goo", "goo.glsl.js");
 
     //  Audio ...
-    this.load.setPath("assets/games/germs/sounds/");
+    this.load.setPath("../../assets/games/germs/sounds");
 
     this.load.audio("appear", ["appear.ogg", "appear.m4a", "appear.mp3"]);
     this.load.audio("fail", ["fail.ogg", "fail.m4a", "fail.mp3"]);
