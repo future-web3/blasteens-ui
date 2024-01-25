@@ -1,16 +1,21 @@
 import { Outlet, Link, useParams } from "react-router-dom";
 import styles from "./GameView.module.scss";
-import React from "react";
-import gameGlossaryConfigs from "../../configs/gameGlossaryConfigs";
+import React, { useEffect } from "react";
+import { gameGlossaryConfigs } from "../../configs/gameGlossaryConfig";
+import Phaser from "phaser";
 
 let game = null;
 
 function GameView() {
   const { gameId } = useParams();
 
-  const targetGame = gameGlossaryConfigs[gameId];
+  const targetGame = gameGlossaryConfigs[`${gameId}`];
 
-  console.log(targetGame);
+  if (!targetGame) {
+    return null;
+  }
+
+  game = new Phaser.Game(targetGame.config);
 
   return (
     <div>

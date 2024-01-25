@@ -1,5 +1,9 @@
-import germsConfig from '../gameGlossary/germs/main'
+import { germsConfig } from "../gameGlossary/germs/main";
 
-export gameGlossaryConfigs ={'germs':{
-	id:1,name:'germs',config:germsConfig
-}}
+export const gameGlossaryConfigs = {
+  germs: {
+    id: 1,
+    name: "germs",
+    config: germsConfig,
+  },
+};
