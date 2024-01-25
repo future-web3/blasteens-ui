@@ -4,7 +4,7 @@ export default class Preloader extends Phaser.Scene {
   constructor() {
     super("Preloader");
 
-    this.loadText;
+    this.loadText = null;
   }
 
   preload() {
@@ -18,12 +18,12 @@ export default class Preloader extends Phaser.Scene {
     this.loadText.setStroke("#203c5b", 6);
     this.loadText.setShadow(2, 2, "#2d2d2d", 4, true, false);
 
-    this.load.setPath("../../assets/games/emoji-match/");
+    this.load.setPath("../../assets/games/emoji/");
     this.load.image(["background", "logo"]);
     this.load.atlas("emojis", "emojis.png", "emojis.json");
 
     //  Audio ...
-    this.load.setPath("../../assets/games/emoji-match/sounds/");
+    this.load.setPath("../../assets/games/emoji/sounds/");
 
     this.load.audio("music", ["music.ogg", "music.m4a", "music.mp3"]);
     this.load.audio("countdown", [

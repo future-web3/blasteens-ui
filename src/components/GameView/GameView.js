@@ -39,6 +39,11 @@ function GameView() {
     if (game) return;
 
     game = new Phaser.Game(targetGame.config);
+
+    return () => {
+      game.destroy(true);
+      game = null;
+    };
   }, [isConnected, address, game]);
 
   if (!targetGame) {
