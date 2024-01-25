@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { Outlet, Route, Routes } from "react-router-dom";
+import Navbar from "./components/Navbar/Navbar";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Routes>
+      <Route path="/" element={<Navbar />}>
+        <Route index element={<div>Homepage</div>} />
+        <Route path="about" element={<div>About Us</div>} />
+        <Route
+          path="game-glossary"
+          element={
+            <div>
+              Game Glossary
+              <div>
+                <Outlet />
+              </div>
+            </div>
+          }
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Route path=":id" element={<div>ID Page</div>} />
+        </Route>
+        <Route path="crypto-dungeon" element={<div>Crypto Dungeon</div>} />
+        <Route path="*" element={<div>404 Not Found</div>} />
+      </Route>
+    </Routes>
   );
 }
 
