@@ -4,23 +4,23 @@ export default class MainGame extends Phaser.Scene {
   constructor() {
     super("MainGame");
 
-    this.emojis;
+    this.emojis = null;
 
-    this.circle1;
-    this.circle2;
+    this.circle1 = null;
+    this.circle2 = null;
 
-    this.child1;
-    this.child2;
+    this.child1 = null;
+    this.child2 = null;
 
     this.selectedEmoji = null;
     this.matched = false;
 
     this.score = 0;
     this.highscore = 0;
-    this.scoreText;
+    this.scoreText = null;
 
-    this.timer;
-    this.timerText;
+    this.timer = null;
+    this.timerText = null;
   }
 
   create() {
@@ -252,7 +252,7 @@ export default class MainGame extends Phaser.Scene {
           () => {
             this.scene.start("MainMenu");
           },
-          this
+          this,
         );
       },
     });
