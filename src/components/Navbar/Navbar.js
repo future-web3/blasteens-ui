@@ -1,7 +1,7 @@
 import { Outlet, Link } from "react-router-dom";
 import styles from "./Navbar.module.scss";
 import React from "react";
-function Layout() {
+function Navbar() {
   return (
     <div>
       <nav className={styles.navBarContainer}>
@@ -23,4 +23,4 @@ function Layout() {
   );
 }
 
-export default Layout;
+export default Navbar;
