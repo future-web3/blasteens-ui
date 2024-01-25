@@ -47,17 +47,19 @@ export default class MainGame extends Phaser.Scene {
     this.pickups.start();
 
     this.input.once("pointerdown", () => {
-      // emitter.on("redeemed", () => {
-      this.player.start();
-      this.germs.start();
+      emitter.emit(events.CHECK_TICKET);
 
-      this.sound.play("start");
+      console.log("pointer down");
 
-      this.tweens.add({
-        targets: this.introText,
-        alpha: 0,
-        duration: 300,
-      });
+      // this.player.start();
+      // this.germs.start();
+      //
+      // this.sound.play("start");
+      //
+      // this.tweens.add({
+      //   targets: this.introText,
+      //   alpha: 0,
+      //   duration: 300,
       // });
     });
 

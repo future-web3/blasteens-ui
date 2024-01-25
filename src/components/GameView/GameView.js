@@ -42,9 +42,28 @@ function GameView() {
   }, [netId]);
 
   useEffect(() => {
-    if (!address || !gameTicketContract) return;
-    const fetch = async () => {
-      console.log(gameTicketContract);
+    if (!isConnected) {
+      if (game) {
+        game.destroy(true);
+        game = null;
+      }
+      return;
+    }
+    if (!address) return;
+    if (game) return;
+
+    game = new Phaser.Game(targetGame.config);
+
+    return () => {
+      game.destroy(true);
+      game = null;
+    };
+  }, [isConnected, address, game]);
+
+  useEffect(() => {
+    if (!game) return;
+
+    const checkTicketHandler = async () => {
       const data = await readContracts({
         contracts: [
           {
@@ -66,30 +85,12 @@ function GameView() {
       });
       console.log(">>>>>>>data", data);
     };
-    fetch();
-  }, [gameTicketContract, address]);
 
-  useEffect(() => {
-    if (!isConnected) {
-      if (game) {
-        game.destroy(true);
-        game = null;
-      }
-      return;
-    }
-    if (!address) return;
-    if (game) return;
-
-    game = new Phaser.Game(targetGame.config);
+    emitter.on(events.CHECK_TICKET, checkTicketHandler);
 
     return () => {
-      game.destroy(true);
-      game = null;
+      emitter.off(events.CHECK_TICKET);
     };
-  }, [isConnected, address, game]);
-
-  useEffect(() => {
-    if (!game) return;
   }, [game]);
 
   if (!targetGame) {
