@@ -252,7 +252,7 @@ export default class MainGame extends Phaser.Scene {
           () => {
             this.scene.start("MainMenu");
           },
-          this
+          this,
         );
       },
     });

@@ -35,7 +35,7 @@ export default class MainMenu extends Phaser.Scene {
       20,
       20,
       "High Score: " + this.registry.get("highscore"),
-      fontStyle
+      fontStyle,
     );
 
     let logo = this.add.image(400, -200, "logo");

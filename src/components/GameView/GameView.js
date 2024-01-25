@@ -62,22 +62,24 @@ function GameView() {
 
   return (
     <div className={styles.gameOuterContainer}>
-      {!isConnected && (
-        <div className={styles.filter}>
-          <div className={styles.buttonContainer}>
-            <button
-              className={styles.web3Button}
-              onClick={() => {
-                handleConnectWallet();
-              }}
-            >
-              Connect Your Wallet
-            </button>
+      <div className={styles.gameContainer}>
+        {!isConnected && (
+          <div className={styles.filter}>
+            <div className={styles.buttonContainer}>
+              <button
+                className={styles.web3Button}
+                onClick={() => {
+                  handleConnectWallet();
+                }}
+              >
+                Connect Your Wallet
+              </button>
+            </div>
           </div>
-        </div>
-      )}
-      <p className={styles.gameTitle}>{targetGame.name}</p>
-      <div id="game-glossary-frame"></div>
+        )}
+        <p className={styles.gameTitle}>{targetGame.name}</p>
+        <div id="game-glossary-frame"></div>
+      </div>
     </div>
   );
 }
