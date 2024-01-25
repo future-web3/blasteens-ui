@@ -1,5 +1,6 @@
-import { Outlet, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
+import GameView from "./components/GameView/GameView";
 
 function App() {
   return (
@@ -8,7 +9,7 @@ function App() {
         <Route index element={<div>Homepage</div>} />
         <Route path="about" element={<div>About Us</div>} />
         <Route path="game-glossary">
-          <Route path=":id" element={<div>ID Page</div>} />
+          <Route path=":gameId" element={<GameView />} />
         </Route>
         <Route path="crypto-dungeon" element={<div>Crypto Dungeon</div>} />
         <Route path="*" element={<div>404 Not Found</div>} />
