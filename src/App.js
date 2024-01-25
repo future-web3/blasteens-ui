@@ -2,17 +2,30 @@ import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import GameView from "./components/GameView/GameView";
 import { goerli } from "wagmi/chains";
-import { createConfig, WagmiConfig, mainnet } from "wagmi";
+import { createConfig, WagmiConfig, mainnet, configureChains } from "wagmi";
+import { jsonRpcProvider } from "@wagmi/core/providers/jsonRpc";
 import config from "./configs";
 
 function App() {
-  const networkConfig = createConfig({
-    chains: [goerli],
-    publicClient: { key: config.alchmeyKey },
+  const { publicClient } = configureChains(
+    [goerli, mainnet],
+    [
+      jsonRpcProvider({
+        rpc: () => ({
+          //TODO
+          http: `https://eth-goerli.g.alchemy.com/v2/${config.alchemyKey}`,
+        }),
+      }),
+    ],
+  );
+
+  const wagmiConfig = createConfig({
+    autoConnect: true,
+    publicClient,
   });
 
   return (
-    <WagmiConfig config={networkConfig}>
+    <WagmiConfig config={wagmiConfig}>
       <Routes>
         <Route path="/" element={<Navbar />}>
           <Route index element={<div>Homepage</div>} />

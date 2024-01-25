@@ -1,11 +1,12 @@
 import { useParams } from "react-router-dom";
 import styles from "./GameView.module.scss";
-import React, { useEffect } from "react";
-import { useAccount, useConnect, useNetwork } from "wagmi";
+import React, { useEffect, useMemo } from "react";
+import { useAccount, useConnect, useNetwork, readContracts } from "wagmi";
 import events from "../../constants/events";
 
 import { gameGlossaryConfigs } from "../../configs/gameGlossaryConfig";
 import Phaser from "phaser";
+import { getABI, getContractAddress } from "../../helpers/network";
 
 let game = null;
 
@@ -14,18 +15,59 @@ function transformId(id) {
   let transformedWords = words.map((word, index) => {
     return index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1);
   });
-  let result = transformedWords.join("");
-  return result;
+  return transformedWords.join("");
 }
 
 export const emitter = new Phaser.Events.EventEmitter();
 
 function GameView() {
-  const { connectAsync, connect, connectors, error } = useConnect();
+  const { connectAsync, connect, connectors } = useConnect();
   const { address, isConnected } = useAccount();
   const { gameId } = useParams();
+  const { chain } = useNetwork();
+  const netId = chain ? chain.id : 1;
 
   const targetGame = gameGlossaryConfigs[`${transformId(gameId)}`];
+
+  const gameTicketContract = useMemo(() => {
+    const address = getContractAddress("TICKET", netId);
+    const abi = getABI("TICKET");
+    if (!address || !abi) {
+      return null;
+    }
+    return {
+      address,
+      abi,
+    };
+  }, [netId]);
+
+  useEffect(() => {
+    if (!address || !gameTicketContract) return;
+    const fetch = async () => {
+      console.log(gameTicketContract);
+      const data = await readContracts({
+        contracts: [
+          {
+            ...gameTicketContract,
+            functionName: "balanceOf",
+            args: [address, 0],
+          },
+          {
+            ...gameTicketContract,
+            functionName: "balanceOf",
+            args: [address, 1],
+          },
+          {
+            ...gameTicketContract,
+            functionName: "balanceOf",
+            args: [address, 2],
+          },
+        ],
+      });
+      console.log(">>>>>>>data", data);
+    };
+    fetch();
+  }, [gameTicketContract, address]);
 
   useEffect(() => {
     if (!isConnected) {
@@ -45,6 +87,10 @@ function GameView() {
       game = null;
     };
   }, [isConnected, address, game]);
+
+  useEffect(() => {
+    if (!game) return;
+  }, [game]);
 
   if (!targetGame) {
     return null;

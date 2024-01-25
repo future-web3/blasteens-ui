@@ -3,6 +3,9 @@ import Germs from "./Germs.js";
 import Player from "./Player.js";
 import Pickups from "./Pickups.js";
 
+import events from "../../constants/events";
+import { emitter } from "../../components/GameView/GameView";
+
 export default class MainGame extends Phaser.Scene {
   constructor() {
     super("MainGame");
@@ -44,6 +47,7 @@ export default class MainGame extends Phaser.Scene {
     this.pickups.start();
 
     this.input.once("pointerdown", () => {
+      // emitter.on("redeemed", () => {
       this.player.start();
       this.germs.start();
 
@@ -54,13 +58,14 @@ export default class MainGame extends Phaser.Scene {
         alpha: 0,
         duration: 300,
       });
+      // });
     });
 
     this.physics.add.overlap(this.player, this.pickups, (player, pickup) =>
-      this.playerHitPickup(player, pickup)
+      this.playerHitPickup(player, pickup),
     );
     this.physics.add.overlap(this.player, this.germs, (player, germ) =>
-      this.playerHitGerm(player, germ)
+      this.playerHitGerm(player, germ),
     );
   }
 
