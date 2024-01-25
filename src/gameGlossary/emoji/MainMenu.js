@@ -4,7 +4,7 @@ export default class MainMenu extends Phaser.Scene {
   constructor() {
     super("MainMenu");
 
-    this.music;
+    this.music = null;
   }
 
   create() {
