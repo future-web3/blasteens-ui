@@ -5,11 +5,11 @@ import MainMenu from "./MainMenu.js";
 import MainGame from "./Game.js";
 
 export const config = {
-  title: "Escapae from Germs",
+  title: "Snowman Defender",
   type: Phaser.AUTO,
-  width: 800,
-  height: 600,
-  backgroundColor: "#000000",
+  width: 1024,
+  height: 768,
+  backgroundColor: "#3366b2",
   parent: "game-glossary-frame",
   scene: [Boot, Preloader, MainMenu, MainGame],
   physics: {

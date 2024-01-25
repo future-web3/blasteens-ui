@@ -1,4 +1,4 @@
-import { Outlet, Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styles from "./GameView.module.scss";
 import React, { useEffect } from "react";
 import { gameGlossaryConfigs } from "../../configs/gameGlossaryConfig";
@@ -6,10 +6,19 @@ import Phaser from "phaser";
 
 let game = null;
 
+function transformId(id) {
+  let words = id.split("-");
+  let transformedWords = words.map((word, index) => {
+    return index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1);
+  });
+  let result = transformedWords.join("");
+  return result;
+}
+
 function GameView() {
   const { gameId } = useParams();
 
-  const targetGame = gameGlossaryConfigs[`${gameId}`];
+  const targetGame = gameGlossaryConfigs[`${transformId(gameId)}`];
 
   if (!targetGame) {
     return null;
