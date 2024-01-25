@@ -37,7 +37,16 @@ function Navbar() {
           <Link to="/about">About</Link>
         </div>
         <div>
-          <Link to="/game-glossary">Game Glossary</Link>
+          <Link to="/game-glossary/escape-from-germs">Germs</Link>
+        </div>
+        <div>
+          <Link to="/game-glossary/tommy-jumping">Tom</Link>
+        </div>
+        <div>
+          <Link to="/game-glossary/snowman-defender">Snowman</Link>
+        </div>
+        <div>
+          <Link to="/game-glossary/emoji-match">Emoji</Link>
         </div>
         <div>
           <Link to="/crypto-dungeon">Crypto Dungeon</Link>

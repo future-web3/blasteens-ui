@@ -9,6 +9,15 @@ import Phaser from "phaser";
 
 let game = null;
 
+function transformId(id) {
+  let words = id.split("-");
+  let transformedWords = words.map((word, index) => {
+    return index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1);
+  });
+  let result = transformedWords.join("");
+  return result;
+}
+
 export const emitter = new Phaser.Events.EventEmitter();
 
 function GameView() {
@@ -16,7 +25,7 @@ function GameView() {
   const { address, isConnected } = useAccount();
   const { gameId } = useParams();
 
-  const targetGame = gameGlossaryConfigs[`${gameId}`];
+  const targetGame = gameGlossaryConfigs[`${transformId(gameId)}`];
 
   useEffect(() => {
     if (!isConnected) {
