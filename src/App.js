@@ -5,6 +5,8 @@ import { goerli } from "wagmi/chains";
 import { createConfig, WagmiConfig, mainnet, configureChains } from "wagmi";
 import { jsonRpcProvider } from "@wagmi/core/providers/jsonRpc";
 import config from "./configs";
+import { Provider } from "react-redux";
+import store from "../src/store/index";
 
 function App() {
   const { publicClient } = configureChains(
@@ -26,17 +28,19 @@ function App() {
 
   return (
     <WagmiConfig config={wagmiConfig}>
-      <Routes>
-        <Route path="/" element={<Navbar />}>
-          <Route index element={<div>Homepage</div>} />
-          <Route path="about" element={<div>About Us</div>} />
-          <Route path="game-glossary">
-            <Route path=":gameId" element={<GameView />} />
+      <Provider store={store}>
+        <Routes>
+          <Route path="/" element={<Navbar />}>
+            <Route index element={<div>Homepage</div>} />
+            <Route path="about" element={<div>About Us</div>} />
+            <Route path="game-glossary">
+              <Route path=":gameId" element={<GameView />} />
+            </Route>
+            <Route path="crypto-dungeon" element={<div>Crypto Dungeon</div>} />
+            <Route path="*" element={<div>404 Not Found</div>} />
           </Route>
-          <Route path="crypto-dungeon" element={<div>Crypto Dungeon</div>} />
-          <Route path="*" element={<div>404 Not Found</div>} />
-        </Route>
-      </Routes>
+        </Routes>
+      </Provider>
     </WagmiConfig>
   );
 }

@@ -1,24 +1,36 @@
 import { useParams } from "react-router-dom";
 import styles from "./GameView.module.scss";
-import React, { useEffect, useMemo } from "react";
-import { useAccount, useConnect, useNetwork, readContracts } from "wagmi";
+import React, { useEffect, useMemo, useState } from "react";
+import { useAccount, useConnect, useNetwork } from "wagmi";
 import events from "../../constants/events";
 
 import { gameGlossaryConfigs } from "../../configs/gameGlossaryConfig";
 import Phaser from "phaser";
 import { getABI, getContractAddress } from "../../helpers/network";
+import { checkTicket } from "../../helpers/ticket";
+import { emitter } from "../../utils/emitter";
+import { useDispatch, useSelector } from "react-redux";
+import { gameTicketActions } from "../../store/modules/gameTicketSlice";
 
 let game = null;
 
-export const emitter = new Phaser.Events.EventEmitter();
-
 function GameView() {
-  const { connectAsync, connect, connectors } = useConnect();
+  const { connect, connectors } = useConnect();
   const { address, isConnected } = useAccount();
   const { chain } = useNetwork();
   const netId = chain ? chain.id : 1;
 
+  const dispatch = useDispatch();
+
+  const tickets = useSelector((state) => state.gameTicket.tickets);
+  const showTicketWindow = useSelector(
+    (state) => state.gameTicket.showTicketWindow,
+  );
+
+  // const [showTicketWindow, setShowTicketWindow] = useState(false);
+
   const { gameId } = useParams();
+
   const transformId = (id) => {
     let words = id.split("-");
     let transformedWords = words.map((word, index) => {
@@ -50,6 +62,7 @@ function GameView() {
     }
     if (!address) return;
     if (game) return;
+    console.log(">>>>>>>>>game", game);
 
     game = new Phaser.Game(targetGame.config);
 
@@ -57,32 +70,18 @@ function GameView() {
       game.destroy(true);
       game = null;
     };
-  }, [isConnected, address, game, targetGame]);
+  }, [isConnected, address, targetGame]);
 
   useEffect(() => {
-    if (!game) return;
+    if (!game || !address || !gameTicketContract) return;
 
+    console.log(game);
     const checkTicketHandler = async () => {
-      const data = await readContracts({
-        contracts: [
-          {
-            ...gameTicketContract,
-            functionName: "balanceOf",
-            args: [address, 0],
-          },
-          {
-            ...gameTicketContract,
-            functionName: "balanceOf",
-            args: [address, 1],
-          },
-          {
-            ...gameTicketContract,
-            functionName: "balanceOf",
-            args: [address, 2],
-          },
-        ],
-      });
-      console.log(">>>>>>>data", data);
+      const data = await checkTicket(gameTicketContract, address);
+      console.log(">>>>>>>>>data", data);
+      dispatch(gameTicketActions.setTickets(data));
+      // setShowTicketWindow(true);
+      dispatch(gameTicketActions.setShowTicketWindow(true));
     };
 
     emitter.on(events.CHECK_TICKET, checkTicketHandler);
@@ -90,7 +89,7 @@ function GameView() {
     return () => {
       emitter.off(events.CHECK_TICKET);
     };
-  }, [game]);
+  }, [game, address, dispatch, gameTicketContract]);
 
   if (!targetGame) {
     return <div>The game url in invalid</div>;
@@ -119,6 +118,26 @@ function GameView() {
                 }}
               >
                 Connect Your Wallet
+              </button>
+            </div>
+          </div>
+        )}
+        {showTicketWindow && isConnected && (
+          <div className={styles.filter}>
+            <div className={styles.ticketInfoContainer}>
+              <h3>Your current tickets</h3>
+              <div>Bronze: {tickets[0]?.amount}</div>
+              <div>Sliver: {tickets[1]?.amount}</div>
+              <div>Gold: {tickets[2]?.amount}</div>
+            </div>
+            <div className={styles.buttonContainer}>
+              <button className={styles.web3TicketButton} onClick={() => {}}>
+                Buy Ticket
+              </button>
+            </div>
+            <div className={styles.buttonContainer}>
+              <button className={styles.web3TicketButton} onClick={() => {}}>
+                Redeem Ticket
               </button>
             </div>
           </div>

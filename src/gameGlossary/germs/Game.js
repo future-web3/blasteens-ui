@@ -3,9 +3,6 @@ import Germs from "./Germs.js";
 import Player from "./Player.js";
 import Pickups from "./Pickups.js";
 
-import events from "../../constants/events";
-import { emitter } from "../../components/GameView/GameView";
-
 export default class MainGame extends Phaser.Scene {
   constructor() {
     super("MainGame");
@@ -47,20 +44,19 @@ export default class MainGame extends Phaser.Scene {
     this.pickups.start();
 
     this.input.once("pointerdown", () => {
-      emitter.emit(events.CHECK_TICKET);
+      // emitter.emit(events.CHECK_TICKET);
+      // console.log("pointer down");
+      // console.log("clicked");
+      this.player.start();
+      this.germs.start();
 
-      console.log("pointer down");
+      this.sound.play("start");
 
-      // this.player.start();
-      // this.germs.start();
-      //
-      // this.sound.play("start");
-      //
-      // this.tweens.add({
-      //   targets: this.introText,
-      //   alpha: 0,
-      //   duration: 300,
-      // });
+      this.tweens.add({
+        targets: this.introText,
+        alpha: 0,
+        duration: 300,
+      });
     });
 
     this.physics.add.overlap(this.player, this.pickups, (player, pickup) =>
