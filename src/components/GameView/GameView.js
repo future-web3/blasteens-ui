@@ -10,23 +10,22 @@ import { getABI, getContractAddress } from "../../helpers/network";
 
 let game = null;
 
-function transformId(id) {
-  let words = id.split("-");
-  let transformedWords = words.map((word, index) => {
-    return index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1);
-  });
-  return transformedWords.join("");
-}
-
 export const emitter = new Phaser.Events.EventEmitter();
 
 function GameView() {
   const { connectAsync, connect, connectors } = useConnect();
   const { address, isConnected } = useAccount();
-  const { gameId } = useParams();
   const { chain } = useNetwork();
   const netId = chain ? chain.id : 1;
 
+  const { gameId } = useParams();
+  const transformId = (id) => {
+    let words = id.split("-");
+    let transformedWords = words.map((word, index) => {
+      return index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1);
+    });
+    return transformedWords.join("");
+  };
   const targetGame = gameGlossaryConfigs[`${transformId(gameId)}`];
 
   const gameTicketContract = useMemo(() => {
@@ -42,7 +41,7 @@ function GameView() {
   }, [netId]);
 
   useEffect(() => {
-    if (!isConnected) {
+    if (!isConnected || !targetGame) {
       if (game) {
         game.destroy(true);
         game = null;
@@ -58,7 +57,7 @@ function GameView() {
       game.destroy(true);
       game = null;
     };
-  }, [isConnected, address, game]);
+  }, [isConnected, address, game, targetGame]);
 
   useEffect(() => {
     if (!game) return;
@@ -94,7 +93,7 @@ function GameView() {
   }, [game]);
 
   if (!targetGame) {
-    return null;
+    return <div>The game url in invalid</div>;
   }
 
   const handleConnectWallet = async () => {
