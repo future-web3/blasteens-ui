@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import styles from "./GameView.module.scss";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useAccount, useConnect, useNetwork } from "wagmi";
 import events from "../../constants/events";
 
@@ -11,6 +11,7 @@ import { checkTicket } from "../../helpers/ticket";
 import { emitter } from "../../utils/emitter";
 import { useDispatch, useSelector } from "react-redux";
 import { gameTicketActions } from "../../store/modules/gameTicketSlice";
+import TicketFilter from "./TicketFilter/TicketFilter";
 
 let game = null;
 
@@ -27,7 +28,7 @@ function GameView() {
     (state) => state.gameTicket.showTicketWindow,
   );
 
-  // const [showTicketWindow, setShowTicketWindow] = useState(false);
+  console.log(address);
 
   const { gameId } = useParams();
 
@@ -62,7 +63,6 @@ function GameView() {
     }
     if (!address) return;
     if (game) return;
-    console.log(">>>>>>>>>game", game);
 
     game = new Phaser.Game(targetGame.config);
 
@@ -77,10 +77,9 @@ function GameView() {
 
     console.log(game);
     const checkTicketHandler = async () => {
-      const data = await checkTicket(gameTicketContract, address);
+      const data = await checkTicket(gameTicketContract);
       console.log(">>>>>>>>>data", data);
       dispatch(gameTicketActions.setTickets(data));
-      // setShowTicketWindow(true);
       dispatch(gameTicketActions.setShowTicketWindow(true));
     };
 
@@ -123,24 +122,10 @@ function GameView() {
           </div>
         )}
         {showTicketWindow && isConnected && (
-          <div className={styles.filter}>
-            <div className={styles.ticketInfoContainer}>
-              <h3>Your current tickets</h3>
-              <div>Bronze: {tickets[0]?.amount}</div>
-              <div>Sliver: {tickets[1]?.amount}</div>
-              <div>Gold: {tickets[2]?.amount}</div>
-            </div>
-            <div className={styles.buttonContainer}>
-              <button className={styles.web3TicketButton} onClick={() => {}}>
-                Buy Ticket
-              </button>
-            </div>
-            <div className={styles.buttonContainer}>
-              <button className={styles.web3TicketButton} onClick={() => {}}>
-                Redeem Ticket
-              </button>
-            </div>
-          </div>
+          <TicketFilter
+            address={address}
+            gameTicketContract={gameTicketContract}
+          />
         )}
         <p className={styles.gameTitle}>{targetGame.name}</p>
         <div id="game-glossary-frame"></div>

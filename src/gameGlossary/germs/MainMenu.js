@@ -1,10 +1,12 @@
 import Phaser from "phaser";
-import events from "../../constants/events";
+import store from "../../store/index";
 import { emitter } from "../../utils/emitter";
+import events from "../../constants/events";
 
 export default class MainMenu extends Phaser.Scene {
   constructor() {
     super("MainMenu");
+    this.store = store;
   }
 
   create() {
@@ -27,11 +29,14 @@ export default class MainMenu extends Phaser.Scene {
 
     this.add.bitmapText(400, 500, "slime", "Click to Play", 40).setOrigin(0.5);
 
-    this.input.once("pointerdown", () => {
+    this.input.on("pointerdown", () => {
       emitter.emit(events.CHECK_TICKET);
       // console.log("pointer down");
       // console.log("clicked");
-      this.scene.start("MainGame");
+      const state = this.store.getState();
+      if (state.gameTicket.allowGamePlay) {
+        this.scene.start("MainGame");
+      }
     });
   }
 
