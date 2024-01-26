@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import styles from "./GameView.module.scss";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAccount, useConnect, useNetwork } from "wagmi";
 import events from "../../constants/events";
 
@@ -61,24 +61,51 @@ function GameView() {
   };
 
   return (
-    <div className={styles.gameOuterContainer}>
-      <div className={styles.gameContainer}>
-        {!isConnected && (
-          <div className={styles.filter}>
-            <div className={styles.buttonContainer}>
-              <button
-                className={styles.web3Button}
-                onClick={() => {
-                  handleConnectWallet();
-                }}
-              >
-                Connect Your Wallet
-              </button>
+    <div className={styles.gameGlossaryContainer}>
+      <header className={styles.gameGlossaryHeader}>
+        <h1>{targetGame.name}</h1>
+        <hr />
+      </header>
+      <div className={styles.gameGlossaryContent}>
+        <div className={styles.gameGlossarySideBlock}>Leaderboard</div>
+        <div className={styles.gameGlossaryFrame}>
+          <div id="gameDisplay"></div>
+          {!isConnected && (
+            <div
+              className={styles.gameGlossaryFilter}
+              style={{
+                backgroundImage: `url('/assets/games/${targetGame.key}/background.png')`,
+              }}
+            >
+              <div className={styles.gameGlossaryButtonContainer}>
+                <button
+                  className={
+                    (styles.gameGlossaryWeb3Button,
+                    styles.btn,
+                    styles.drawBorder)
+                  }
+                  onClick={handleConnectWallet}
+                >
+                  Connect Your Wallet
+                </button>
+              </div>
             </div>
-          </div>
-        )}
-        <p className={styles.gameTitle}>{targetGame.name}</p>
-        <div id="game-glossary-frame"></div>
+          )}
+        </div>
+        <div className={styles.gameGlossarySideBlock}>Inventory</div>
+      </div>
+      <div className={styles.gameGlossaryDescription}>
+        <hr />
+        <h3>About this Game</h3>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </p>
       </div>
     </div>
   );
