@@ -29,9 +29,6 @@ export default class MainMenu extends Phaser.Scene {
     this.add.bitmapText(400, 500, "slime", "Click to Play", 40).setOrigin(0.5);
 
     this.input.on("pointerdown", () => {
-      // emitter.emit(events.CHECK_TICKET);
-      // console.log("pointer down");
-      // console.log("clicked");
       const state = this.store.getState();
       if (state.gameTicket.numberOfLives > 0) {
         this.scene.start("MainGame");

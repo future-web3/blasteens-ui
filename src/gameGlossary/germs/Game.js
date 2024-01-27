@@ -48,9 +48,6 @@ export default class MainGame extends Phaser.Scene {
     this.pickups.start();
 
     this.input.once("pointerdown", () => {
-      // emitter.emit(events.CHECK_TICKET);
-      // console.log("pointer down");
-      // console.log("clicked");
       this.player.start();
       this.germs.start();
 
