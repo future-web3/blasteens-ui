@@ -48,7 +48,8 @@ function TicketFilter({ address, gameTicketContract }) {
   const handleBuyTicket = async (data) => {
     setIsBuying(true);
     const args = [Number(data.buyTicketType), Number(data.ticketAmount)];
-    const totalPrice = Number(data.buyTicketType) * Number(data.ticketAmount);
+    const totalPrice =
+      (Number(data.buyTicketType) * Number(data.ticketAmount)) / 10;
 
     try {
       const txReceiptForBuying = await writeContract({

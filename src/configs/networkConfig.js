@@ -1,4 +1,4 @@
-const alchemyKey = process.env.NEXT_PUBLIC_ALCHEMY_API_KEY || "";
+const alchemyKey = process.env.REACT_APP_ALCHEMY_API_KEY || "";
 
 export const networkConfig = {
   netId5: {
