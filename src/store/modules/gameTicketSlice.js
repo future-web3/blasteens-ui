@@ -4,6 +4,7 @@ const initialState = {
   tickets: [],
   numberOfLives: 0,
   showTicketWindow: false,
+  score: 0,
 };
 
 const gameTicketSlice = createSlice({
