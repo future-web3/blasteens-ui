@@ -1,19 +1,22 @@
 import { readContracts } from "wagmi";
 
-export const checkTicket = async (gameTicketContract) => {
+export const checkTicket = async (gameTicketContract, address) => {
   const data = await readContracts({
     contracts: [
       {
         ...gameTicketContract,
-        functionName: "BRONZE",
+        functionName: "balanceOf",
+        args: [address, 1],
       },
       {
         ...gameTicketContract,
-        functionName: "SILVER",
+        functionName: "balanceOf",
+        args: [address, 2],
       },
       {
         ...gameTicketContract,
-        functionName: "GOLD",
+        functionName: "balanceOf",
+        args: [address, 3],
       },
     ],
   });

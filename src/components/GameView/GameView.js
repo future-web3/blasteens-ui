@@ -24,11 +24,10 @@ function GameView() {
   const dispatch = useDispatch();
 
   const tickets = useSelector((state) => state.gameTicket.tickets);
+  const numberOfLives = useSelector((state) => state.gameTicket.numberOfLives);
   const showTicketWindow = useSelector(
     (state) => state.gameTicket.showTicketWindow,
   );
-
-  console.log(address);
 
   const { gameId } = useParams();
 
@@ -73,21 +72,36 @@ function GameView() {
   }, [isConnected, address, targetGame]);
 
   useEffect(() => {
-    if (!game || !address || !gameTicketContract) return;
-
-    console.log(game);
     const checkTicketHandler = async () => {
-      const data = await checkTicket(gameTicketContract);
+      if (!address || !gameTicketContract) return;
+      const data = await checkTicket(gameTicketContract, address);
       console.log(">>>>>>>>>data", data);
       dispatch(gameTicketActions.setTickets(data));
-      dispatch(gameTicketActions.setShowTicketWindow(true));
+      if (numberOfLives <= 0) {
+        dispatch(gameTicketActions.setShowTicketWindow(true));
+      } else {
+        dispatch(gameTicketActions.setAllowGamePlay(true));
+      }
     };
 
-    emitter.on(events.CHECK_TICKET, checkTicketHandler);
+    checkTicketHandler();
+  }, [address, gameTicketContract]);
 
-    return () => {
-      emitter.off(events.CHECK_TICKET);
-    };
+  useEffect(() => {
+    if (!game || !address || !gameTicketContract) return;
+    //
+    // const checkTicketHandler = async () => {
+    //   const data = await checkTicket(gameTicketContract);
+    //   console.log(">>>>>>>>>data", data);
+    //   dispatch(gameTicketActions.setTickets(data));
+    //   dispatch(gameTicketActions.setShowTicketWindow(true));
+    // };
+    //
+    // emitter.on(events.CHECK_TICKET, checkTicketHandler);
+    //
+    // return () => {
+    //   emitter.off(events.CHECK_TICKET);
+    // };
   }, [game, address, dispatch, gameTicketContract]);
 
   if (!targetGame) {

@@ -1,13 +1,22 @@
 import styles from "./TicketFilter.module.scss";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { writeContract } from "@wagmi/core";
-import { useWalletClient } from "wagmi";
+import { useWaitForTransaction, useWalletClient } from "wagmi";
 import BN from "bignumber.js";
+import { gameTicketActions } from "../../../store/modules/gameTicketSlice";
+import { checkTicket } from "../../../helpers/ticket";
 
 function TicketFilter({ address, gameTicketContract }) {
+  const [isBuying, setIsBuying] = useState(false);
+  const [isRedeeming, setIsRedeeming] = useState(false);
+  const [buyingPendingHash, setBuyingPendingHash] = useState("");
+  const [redeemingPendingHash, setRedeemingPendingHash] = useState("");
+
   const { data: walletClientData } = useWalletClient();
+
+  const dispatch = useDispatch();
   const tickets = useSelector((state) => state.gameTicket.tickets);
 
   const { register, handleSubmit } = useForm({
@@ -18,9 +27,29 @@ function TicketFilter({ address, gameTicketContract }) {
     },
   });
 
+  useWaitForTransaction({
+    hash: buyingPendingHash,
+    enabled: !!buyingPendingHash,
+    onSuccess: async (data) => {
+      if (data.status === "success") {
+        setBuyingPendingHash("");
+        console.log(">>>>>>>>>Buying success");
+        const updatedTickets = await checkTicket(gameTicketContract, address);
+        dispatch(gameTicketActions.setTickets(updatedTickets));
+      }
+      setIsBuying(false);
+    },
+    onError() {
+      setBuyingPendingHash("");
+      setIsBuying(false);
+    },
+  });
+
   const handleBuyTicket = async (data) => {
+    setIsBuying(true);
     const args = [Number(data.buyTicketType), Number(data.ticketAmount)];
     const totalPrice = Number(data.buyTicketType) * Number(data.ticketAmount);
+
     try {
       const txReceipt = await writeContract({
         ...gameTicketContract,
@@ -31,12 +60,21 @@ function TicketFilter({ address, gameTicketContract }) {
           new BN(10).pow(new BN(18)),
         ),
       });
+      console.log(txReceipt);
+      setBuyingPendingHash(txReceipt.hash);
     } catch (error) {
       console.log(error);
+      setIsBuying(false);
     }
   };
 
-  const handleRedeemTicket = async (data) => {};
+  const handleRedeemTicket = async (data) => {
+    setIsRedeeming(true);
+    const args = [Number(data.redeemTicketType)];
+    console.log(args);
+
+    setIsRedeeming(false);
+  };
 
   return (
     <div className={styles.filter}>
