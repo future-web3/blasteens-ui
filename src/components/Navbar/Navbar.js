@@ -1,57 +1,33 @@
-import { Outlet, Link, useParams } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import styles from "./Navbar.module.scss";
 import React from "react";
-import { useAccount, useConnect, useNetwork } from "wagmi";
-import { gameGlossaryConfigs } from "../../configs/gameGlossaryConfig";
-import { emitter } from "../GameView/GameView";
-
-import events from "../../constants/events";
 
 function Navbar() {
-  // const { connectAsync, connectors, error } = useConnect();
-  // const { address } = useAccount();
-  // const { isConnected } = useNetwork();
-  //
-  // const { gameId } = useParams();
-  // const targetGame = gameGlossaryConfigs[`${gameId}`];
-
-  // const handleConnectWallet = async () => {
-  //   try {
-  //     if (!isConnected) {
-  //       await connectAsync({ connector: connectors[0] });
-  //     }
-  //   } catch (error) {
-  //     if (targetGame) {
-  //       emitter.emit(events.AUTH_FAILED);
-  //     }
-  //   }
-  // };
-
   return (
-    <div>
-      <nav className={styles.navBarContainer}>
-        <div>
+    <div className={styles.navBarContainer}>
+      <ul>
+        <li>
           <Link to="/">Home</Link>
-        </div>
-        <div>
+        </li>
+        <li>
           <Link to="/about">About</Link>
-        </div>
-        <div>
+        </li>
+        <li>
           <Link to="/game-glossary/escape-from-germs">Germs</Link>
-        </div>
-        <div>
+        </li>
+        <li>
           <Link to="/game-glossary/tommy-jumping">Tom</Link>
-        </div>
-        <div>
+        </li>
+        <li>
           <Link to="/game-glossary/snowman-defender">Snowman</Link>
-        </div>
-        <div>
+        </li>
+        <li>
           <Link to="/game-glossary/emoji-match">Emoji</Link>
-        </div>
-        <div>
+        </li>
+        <li>
           <Link to="/crypto-dungeon">Crypto Dungeon</Link>
-        </div>
-      </nav>
+        </li>
+      </ul>
       <Outlet />
     </div>
   );
