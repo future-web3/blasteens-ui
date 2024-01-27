@@ -19,7 +19,6 @@ function TicketFilter({ address, gameTicketContract }) {
 
   const dispatch = useDispatch();
   const tickets = useSelector((state) => state.gameTicket.tickets);
-  const numberOfLives = useSelector((state) => state.gameTicket.numberOfLives);
 
   const { register, handleSubmit } = useForm({
     defaultValues: {

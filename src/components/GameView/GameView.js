@@ -80,7 +80,7 @@ function GameView() {
       if (numberOfLives <= 0) {
         dispatch(gameTicketActions.setShowTicketWindow(true));
       } else {
-        dispatch(gameTicketActions.setAllowGamePlay(true));
+        dispatch(gameTicketActions.setShowTicketWindow(false));
       }
     };
 
@@ -142,6 +142,7 @@ function GameView() {
           />
         )}
         <p className={styles.gameTitle}>{targetGame.name}</p>
+        <p>You have {numberOfLives} times of chance</p>
         <div id="game-glossary-frame"></div>
       </div>
     </div>
