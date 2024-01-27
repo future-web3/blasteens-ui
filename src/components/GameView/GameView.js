@@ -7,6 +7,7 @@ import events from "../../constants/events";
 import { gameGlossaryConfigs } from "../../configs/gameGlossaryConfig";
 import Phaser from "phaser";
 import Leaderboard from "../Leaderboard/Leaderboard";
+import Inventory from "../Inventory/Inventory";
 
 let game = null;
 
@@ -95,7 +96,9 @@ function GameView() {
             </div>
           )}
         </div>
-        <div className={styles.gameGlossarySideBlock}>Inventory</div>
+        <div className={styles.gameGlossarySideBlock}>
+          <Inventory />
+        </div>
       </div>
       <div className={styles.gameGlossaryDescription}>
         <hr />

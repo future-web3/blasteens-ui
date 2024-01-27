@@ -29,7 +29,7 @@ function Leaderboard() {
 
   return (
     <div className={styles.leaderboardContainer}>
-      <h2>Leaderboard</h2>
+      <h2 className={styles.stickyHeader}>Leaderboard</h2>
       {individuals.map((individual, index) => (
         <Individual key={index} {...individual} />
       ))}

@@ -79,7 +79,7 @@
   .gameGlossaryHeader {
     grid-column: span 3;
     text-align: center;
-    color: $font-color;
+    color: $primary-color;
 
     hr {
       border-color: $border-color;
@@ -94,22 +94,12 @@
     place-items: center;
 
     .gameGlossarySideBlock {
-      padding: 10px;
       text-align: center;
       height: 600px;
       width: 80%;
       min-width: 400px;
-      border: 0.35rem solid;
+      border: 0.35rem solid $border-color;
       overflow-y: scroll;
-      border-image: conic-gradient(
-          from var(--angle),
-          $border-color,
-          $navbar-color 0.1turn,
-          $navbar-color 0.15turn,
-          $border-color 0.25turn
-        )
-        30;
-      animation: borderRotate var(--duration) linear infinite forwards;
     }
 
     .gameGlossaryFrame {
@@ -260,58 +250,4 @@ $t: 0.001%;
   to {
     transform: rotate(360deg) scale(1);
   }
-}
-
-@keyframes borderRotate {
-  100% {
-    --angle: 420deg;
-  }
-}
-
-@keyframes borderRadial {
-  20% {
-    --gradX: 100%;
-    --gradY: 50%;
-  }
-  40% {
-    --gradX: 100%;
-    --gradY: 100%;
-  }
-  60% {
-    --gradX: 50%;
-    --gradY: 100%;
-  }
-  80% {
-    --gradX: 0%;
-    --gradY: 50%;
-  }
-  100% {
-    --gradX: 50%;
-    --gradY: 0%;
-  }
-}
-
-:root {
-  --duration: 10000ms;
-  --angle: 90deg;
-  --gradX: 100%;
-  --gradY: 50%;
-}
-
-@property --angle {
-  syntax: "<angle>";
-  initial-value: 90deg;
-  inherits: true;
-}
-
-@property --gradX {
-  syntax: "<percentage>";
-  initial-value: 50%;
-  inherits: true;
-}
-
-@property --gradY {
-  syntax: "<percentage>";
-  initial-value: 0%;
-  inherits: true;
 }
