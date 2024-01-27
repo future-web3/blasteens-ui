@@ -2,6 +2,8 @@ import Phaser from "phaser";
 import Germs from "./Germs.js";
 import Player from "./Player.js";
 import Pickups from "./Pickups.js";
+import store from "../../store";
+import { gameTicketActions } from "../../store/modules/gameTicketSlice";
 
 export default class MainGame extends Phaser.Scene {
   constructor() {
@@ -16,6 +18,8 @@ export default class MainGame extends Phaser.Scene {
     this.score = 0;
     this.highscore = 0;
     this.newHighscore = false;
+
+    this.store = store;
   }
 
   create() {
@@ -98,6 +102,8 @@ export default class MainGame extends Phaser.Scene {
   gameOver() {
     this.player.kill();
     this.germs.stop();
+
+    this.store.dispatch(gameTicketActions.useLives());
 
     this.sound.stopAll();
     this.sound.play("fail");

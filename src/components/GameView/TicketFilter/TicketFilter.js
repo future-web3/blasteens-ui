@@ -11,6 +11,7 @@ import { checkTicket } from "../../../helpers/ticket";
 function TicketFilter({ address, gameTicketContract }) {
   const [isBuying, setIsBuying] = useState(false);
   const [isRedeeming, setIsRedeeming] = useState(false);
+  const [livesRedeemed, setLivesRedeemed] = useState(0);
   const [buyingPendingHash, setBuyingPendingHash] = useState("");
   const [redeemingPendingHash, setRedeemingPendingHash] = useState("");
 
@@ -18,6 +19,7 @@ function TicketFilter({ address, gameTicketContract }) {
 
   const dispatch = useDispatch();
   const tickets = useSelector((state) => state.gameTicket.tickets);
+  const numberOfLives = useSelector((state) => state.gameTicket.numberOfLives);
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
@@ -44,14 +46,13 @@ function TicketFilter({ address, gameTicketContract }) {
       setIsBuying(false);
     },
   });
-
   const handleBuyTicket = async (data) => {
     setIsBuying(true);
     const args = [Number(data.buyTicketType), Number(data.ticketAmount)];
     const totalPrice = Number(data.buyTicketType) * Number(data.ticketAmount);
 
     try {
-      const txReceipt = await writeContract({
+      const txReceiptForBuying = await writeContract({
         ...gameTicketContract,
         account: walletClientData.account.address,
         args,
@@ -60,20 +61,58 @@ function TicketFilter({ address, gameTicketContract }) {
           new BN(10).pow(new BN(18)),
         ),
       });
-      console.log(txReceipt);
-      setBuyingPendingHash(txReceipt.hash);
+      console.log(txReceiptForBuying);
+      setBuyingPendingHash(txReceiptForBuying.hash);
     } catch (error) {
       console.log(error);
       setIsBuying(false);
     }
   };
 
+  useWaitForTransaction({
+    hash: redeemingPendingHash,
+    enabled: !!redeemingPendingHash,
+    onSuccess: async (data) => {
+      if (data.status === "success") {
+        setRedeemingPendingHash("");
+        const updatedTickets = await checkTicket(gameTicketContract, address);
+        dispatch(gameTicketActions.setTickets(updatedTickets));
+        dispatch(gameTicketActions.setNumberOfLives(livesRedeemed));
+        dispatch(gameTicketActions.setShowTicketWindow(false));
+        console.log(">>>>>>>>>Redeeming success");
+      }
+      setIsRedeeming(false);
+      setLivesRedeemed(0);
+    },
+    onError() {
+      setRedeemingPendingHash("");
+      setIsRedeeming(false);
+      setLivesRedeemed(0);
+    },
+  });
+
   const handleRedeemTicket = async (data) => {
     setIsRedeeming(true);
     const args = [Number(data.redeemTicketType)];
-    console.log(args);
+    const targetTicket = tickets.find(
+      (ticket) => ticket.type.toString() === data.redeemTicketType.toString(),
+    );
+    setLivesRedeemed(Number(targetTicket.numberOfLives));
 
-    setIsRedeeming(false);
+    try {
+      const txReceiptForRedeeming = await writeContract({
+        ...gameTicketContract,
+        account: walletClientData.account.address,
+        args,
+        functionName: "redeemTicket",
+      });
+      console.log(txReceiptForRedeeming);
+      setRedeemingPendingHash(txReceiptForRedeeming.hash);
+    } catch (error) {
+      console.log(error);
+      setIsRedeeming(false);
+      setLivesRedeemed(0);
+    }
   };
 
   return (

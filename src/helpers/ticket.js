@@ -33,8 +33,23 @@ export const checkTicket = async (gameTicketContract, address) => {
 
 export const mapTicket = (data) => {
   return [
-    { name: "BRONZE", amount: data[0].result.toString() },
-    { name: "SILVER", amount: data[1].result.toString() },
-    { name: "GOLD", amount: data[2].result.toString() },
+    {
+      name: "BRONZE",
+      amount: data[0].result.toString(),
+      numberOfLives: 2,
+      type: 1,
+    },
+    {
+      name: "SILVER",
+      amount: data[1].result.toString(),
+      numberOfLives: 5,
+      type: 2,
+    },
+    {
+      name: "GOLD",
+      amount: data[2].result.toString(),
+      numberOfLives: 10,
+      type: 3,
+    },
   ];
 };

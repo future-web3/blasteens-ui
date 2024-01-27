@@ -1,7 +1,6 @@
 import Phaser from "phaser";
 import store from "../../store/index";
-import { emitter } from "../../utils/emitter";
-import events from "../../constants/events";
+import { gameTicketActions } from "../../store/modules/gameTicketSlice";
 
 export default class MainMenu extends Phaser.Scene {
   constructor() {
@@ -34,8 +33,10 @@ export default class MainMenu extends Phaser.Scene {
       // console.log("pointer down");
       // console.log("clicked");
       const state = this.store.getState();
-      if (state.gameTicket.allowGamePlay) {
+      if (state.gameTicket.numberOfLives > 0) {
         this.scene.start("MainGame");
+      } else {
+        this.store.dispatch(gameTicketActions.setShowTicketWindow(true));
       }
     });
   }

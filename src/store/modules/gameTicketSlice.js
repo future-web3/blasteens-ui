@@ -20,6 +20,9 @@ const gameTicketSlice = createSlice({
     setNumberOfLives(state, action) {
       state.numberOfLives = action.payload;
     },
+    useLives(state) {
+      state.numberOfLives -= 1;
+    },
     setShowTicketWindow(state, action) {
       state.showTicketWindow = action.payload;
     },
