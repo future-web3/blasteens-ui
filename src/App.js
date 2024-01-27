@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import GameView from "./components/GameView/GameView";
 import { goerli } from "wagmi/chains";
-import { createConfig, WagmiConfig, mainnet } from "wagmi";
+import { createConfig, WagmiConfig } from "wagmi";
 import config from "./configs";
 
 function App() {

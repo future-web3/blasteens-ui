@@ -1,11 +1,12 @@
 import { useParams } from "react-router-dom";
 import styles from "./GameView.module.scss";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useAccount, useConnect, useNetwork } from "wagmi";
 import events from "../../constants/events";
 
 import { gameGlossaryConfigs } from "../../configs/gameGlossaryConfig";
 import Phaser from "phaser";
+import Leaderboard from "../Leaderboard/Leaderboard";
 
 let game = null;
 
@@ -67,7 +68,9 @@ function GameView() {
         <hr />
       </header>
       <div className={styles.gameGlossaryContent}>
-        <div className={styles.gameGlossarySideBlock}>Leaderboard</div>
+        <div className={styles.gameGlossarySideBlock}>
+          <Leaderboard />
+        </div>
         <div className={styles.gameGlossaryFrame}>
           <div id="gameDisplay"></div>
           {!isConnected && (
