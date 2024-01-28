@@ -1,21 +1,19 @@
 import { Outlet, Link } from "react-router-dom";
 import styles from "./Navbar.module.scss";
 import React from "react";
+
+
 function Navbar() {
   return (
     <div>
       <nav className={styles.navBarContainer}>
-        <div>
-          <Link to="/">Home</Link>
-        </div>
-        <div>
-          <Link to="/about">About</Link>
-        </div>
-        <div>
-          <Link to="/game-glossary">Game Glossary</Link>
-        </div>
-        <div>
-          <Link to="/crypto-dungeon">Crypto Dungeon</Link>
+        
+        <div className={styles.navBarWrapper}>
+          <div className={styles.logo}>Logo</div>
+          <div className={styles.linksContainer}>
+            <Link to="/Homepage">Home</Link>
+            <Link to="/market-place">Market Place</Link>
+          </div>
         </div>
       </nav>
       <Outlet />

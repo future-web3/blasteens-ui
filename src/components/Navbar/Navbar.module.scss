@@ -1,5 +1,33 @@
 .navBarContainer {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   padding: 30px;
+  
+  position: sticky;
+  .navBarWrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    .linksContainer{
+      width: 50%;
+      display: flex;
+      flex-direction: row;
+      align-items: start;
+      justify-content: space-evenly;
+      gap: 10%;
+    }
+    .menuButton{
+      visibility: hidden;
+    }
+    @media screen and (max-width: 700px){
+      .linksContainer{
+        visibility: hidden;
+      }
+      .menuButton{
+        visibility: visible;
+      }
+    }
+  }
 }
