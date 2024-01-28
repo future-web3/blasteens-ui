@@ -16,13 +16,11 @@ let game = null;
 function GameView() {
   const { connect, connectors } = useConnect();
   const { address, isConnected } = useAccount();
-  const { data: walletClientData } = useWalletClient();
   const { chain } = useNetwork();
   const netId = chain ? chain.id : 1;
 
   const dispatch = useDispatch();
 
-  const tickets = useSelector((state) => state.gameTicket.tickets);
   const numberOfLives = useSelector((state) => state.gameTicket.numberOfLives);
   const showTicketWindow = useSelector(
     (state) => state.gameTicket.showTicketWindow,
@@ -64,6 +62,7 @@ function GameView() {
       abi,
     };
   }, [netId]);
+
   useEffect(() => {
     if (!isConnected || !targetGame) {
       if (game) {

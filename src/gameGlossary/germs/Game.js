@@ -127,7 +127,6 @@ export default class MainGame extends Phaser.Scene {
     this.input.once("pointerdown", () => {
       const state = this.store.getState();
       if (state.gameTicket.numberOfLives === 0) {
-        console.log("should sync");
         this.store.dispatch(
           gameLeaderboardActions.toggleSyncPermission({
             gameName: "escapeFromGerms",
