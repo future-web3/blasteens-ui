@@ -79,6 +79,7 @@
   min-width: 1300px;
   overflow-y: scroll;
   overflow-x: scroll;
+  padding-top: 20px;
 
   .gameGlossaryHeader {
     flex: 1;
@@ -94,6 +95,10 @@
     }
   }
 
+  @media screen and (max-width: $breakpoint-xl) {
+    overflow-y: auto !important;
+  }
+
   .gameGlossaryContent {
     flex: 3;
     display: flex;
@@ -103,9 +108,12 @@
     justify-content: center;
     align-items: center;
 
-    // @media screen and (max-width: $breakpoint-2xl) {
-    //   grid-template-columns: repeat(1, 1fr);
-    // }
+    @media screen and (max-width: $breakpoint-xl) {
+      flex-direction: column;
+      align-items: center;
+      min-height: 1020px;
+      overflow-y: auto;
+    }
 
     .gameGlossarySideBlock {
       flex: 1;
@@ -116,6 +124,13 @@
       overflow-y: scroll;
       overflow-x: hidden;
       min-width: fit-content;
+
+      @media screen and (max-width: $breakpoint-xl) {
+        order: 2;
+        width: 50%;
+        max-height: 300px;
+        margin-top: 30px;
+      }
     }
 
     .gameGlossaryFrame {
@@ -125,6 +140,15 @@
       height: 600px;
       margin: 0 auto;
       justify-content: center;
+
+      @media screen and (max-width: $breakpoint-xl) {
+        flex: 1;
+        order: 1;
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+      }
 
       .gameGlossaryFilter {
         width: 100%;
