@@ -7,8 +7,8 @@ function Individual({ rank, points, addressLink, address }) {
       <div className={styles.individualInner} style={{ flex: 1 }}>
         #{rank}
       </div>
-      <div className={styles.individualInner} style={{ flex: 3 }}>
-        {points} points
+      <div className={styles.individualInner} style={{ flex: 2 }}>
+        {points} pt
       </div>
       <div className={styles.individualInner} style={{ flex: 3 }}>
         <a href={addressLink} target="_blank" rel="noopener noreferrer">

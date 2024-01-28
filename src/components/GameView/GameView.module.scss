@@ -111,14 +111,15 @@
       flex: 1;
       text-align: center;
       height: 600px;
-      width: 100%;
-      min-width: 400px;
+      width: 60%;
       border: 0.35rem solid $border-color;
       overflow-y: scroll;
+      overflow-x: hidden;
+      min-width: fit-content;
     }
 
     .gameGlossaryFrame {
-      flex: 3;
+      flex: 4;
       display: flex;
       width: 800px;
       height: 600px;
