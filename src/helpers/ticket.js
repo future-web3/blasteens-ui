@@ -28,7 +28,26 @@ export const checkTicket = async (gameTicketContract, address) => {
   ) {
     return mapTicket(data);
   }
-  return [];
+  return [
+    {
+      name: "BRONZE",
+      amount: "0",
+      numberOfLives: 2,
+      type: 1,
+    },
+    {
+      name: "SILVER",
+      amount: "0",
+      numberOfLives: 5,
+      type: 2,
+    },
+    {
+      name: "GOLD",
+      amount: "0",
+      numberOfLives: 10,
+      type: 3,
+    },
+  ];
 };
 
 export const mapTicket = (data) => {
