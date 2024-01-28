@@ -7,10 +7,21 @@ import { useWaitForTransaction, useWalletClient } from "wagmi";
 import BN from "bignumber.js";
 import { gameTicketActions } from "../../../store/modules/gameTicketSlice";
 import { checkTicket } from "../../../helpers/ticket";
+import { RotatingLines } from "react-loader-spinner";
+import { emitter } from "../../../utils/emitter";
+import events from "../../../constants/events";
+import { gameLeaderboardActions } from "../../../store/modules/gameLeaderboardSlice";
 
-function TicketFilter({ address, gameTicketContract }) {
+function TicketFilter({
+  transformedGameId,
+  address,
+  gameTicketContract,
+  gameLeaderboardContract,
+}) {
   const [isBuying, setIsBuying] = useState(false);
   const [isRedeeming, setIsRedeeming] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [syncPendingHash, setSyncPendingHash] = useState("");
   const [livesRedeemed, setLivesRedeemed] = useState(0);
   const [buyingPendingHash, setBuyingPendingHash] = useState("");
   const [redeemingPendingHash, setRedeemingPendingHash] = useState("");
@@ -19,6 +30,12 @@ function TicketFilter({ address, gameTicketContract }) {
 
   const dispatch = useDispatch();
   const tickets = useSelector((state) => state.gameTicket.tickets);
+  const score = useSelector(
+    (state) => state.gameLeaderboard[transformedGameId].score,
+  );
+  const allowSync = useSelector(
+    (state) => state.gameLeaderboard[transformedGameId].allowSync,
+  );
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
@@ -45,6 +62,7 @@ function TicketFilter({ address, gameTicketContract }) {
       setIsBuying(false);
     },
   });
+
   const handleBuyTicket = async (data) => {
     setIsBuying(true);
     const args = [Number(data.buyTicketType), Number(data.ticketAmount)];
@@ -115,6 +133,56 @@ function TicketFilter({ address, gameTicketContract }) {
     }
   };
 
+  useWaitForTransaction({
+    hash: syncPendingHash,
+    enabled: !!syncPendingHash,
+    onSuccess: async (data) => {
+      if (data.status === "success") {
+        setSyncPendingHash("");
+        console.log(">>>>>>>>>Sync success");
+      }
+      setIsSyncing(false);
+      dispatch(
+        gameLeaderboardActions.toggleSyncPermission({
+          gameName: transformedGameId,
+          allowSync: false,
+        }),
+      );
+      emitter.emit(events.SYNC_FINISH);
+    },
+    onError() {
+      setSyncPendingHash("");
+      setIsSyncing(false);
+      dispatch(
+        gameLeaderboardActions.toggleSyncPermission({
+          gameName: transformedGameId,
+          allowSync: false,
+        }),
+      );
+      console.log(">>>>>>>>>Sync finish,but your score is too low");
+      emitter.emit(events.SYNC_FINISH);
+    },
+  });
+
+  const handleSyncScore = async () => {
+    setIsSyncing(true);
+    const args = [address, score];
+
+    try {
+      const txReceiptForSyncing = await writeContract({
+        ...gameLeaderboardContract,
+        account: walletClientData.account.address,
+        args,
+        functionName: "addScore",
+      });
+      console.log(txReceiptForSyncing);
+      setSyncPendingHash(txReceiptForSyncing.hash);
+    } catch (error) {
+      console.log(error);
+      setIsSyncing(false);
+    }
+  };
+
   return (
     <div className={styles.filter}>
       <div className={styles.ticketInfoContainer}>
@@ -141,8 +209,13 @@ function TicketFilter({ address, gameTicketContract }) {
         <button
           className={styles.web3TicketButton}
           onClick={handleSubmit(handleBuyTicket)}
+          disabled={isBuying}
         >
-          Buy Ticket
+          {isBuying ? (
+            <RotatingLines strokeColor="#eff0f2" height="20" width="20" />
+          ) : (
+            "Buy Ticket"
+          )}
         </button>
       </div>
       <div className={styles.formOuterContainer}>
@@ -161,10 +234,30 @@ function TicketFilter({ address, gameTicketContract }) {
         <button
           className={styles.web3TicketButton}
           onClick={handleSubmit(handleRedeemTicket)}
+          disabled={isRedeeming}
         >
-          Redeem Ticket
+          {isRedeeming ? (
+            <RotatingLines strokeColor="#eff0f2" height="20" width="20" />
+          ) : (
+            "Redeem Ticket"
+          )}
         </button>
       </div>
+      {allowSync && (
+        <div className={styles.buttonContainer}>
+          <button
+            className={styles.web3TicketButton}
+            onClick={handleSubmit(handleSyncScore)}
+            disabled={isSyncing}
+          >
+            {isSyncing ? (
+              <RotatingLines strokeColor="#eff0f2" height="20" width="20" />
+            ) : (
+              "Sync"
+            )}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

@@ -118,7 +118,7 @@ export default class MainGame extends Phaser.Scene {
       this.registry.set("highscore", this.score);
       this.store.dispatch(
         gameLeaderboardActions.updateGameScore({
-          gameName: "germs",
+          gameName: "escapeFromGerms",
           score: this.score,
         }),
       );
@@ -128,6 +128,12 @@ export default class MainGame extends Phaser.Scene {
       const state = this.store.getState();
       if (state.gameTicket.numberOfLives === 0) {
         console.log("should sync");
+        this.store.dispatch(
+          gameLeaderboardActions.toggleSyncPermission({
+            gameName: "escapeFromGerms",
+            allowSync: true,
+          }),
+        );
       }
       this.scene.start("MainMenu");
     });

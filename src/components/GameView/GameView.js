@@ -1,14 +1,12 @@
 import { useParams } from "react-router-dom";
 import styles from "./GameView.module.scss";
 import React, { useEffect, useMemo } from "react";
-import { useAccount, useConnect, useNetwork } from "wagmi";
-import events from "../../constants/events";
+import { useAccount, useConnect, useNetwork, useWalletClient } from "wagmi";
 
 import { gameGlossaryConfigs } from "../../configs/gameGlossaryConfig";
 import Phaser from "phaser";
 import { getABI, getContractAddress } from "../../helpers/network";
 import { checkTicket } from "../../helpers/ticket";
-import { emitter } from "../../utils/emitter";
 import { useDispatch, useSelector } from "react-redux";
 import { gameTicketActions } from "../../store/modules/gameTicketSlice";
 import TicketFilter from "./TicketFilter/TicketFilter";
@@ -18,6 +16,7 @@ let game = null;
 function GameView() {
   const { connect, connectors } = useConnect();
   const { address, isConnected } = useAccount();
+  const { data: walletClientData } = useWalletClient();
   const { chain } = useNetwork();
   const netId = chain ? chain.id : 1;
 
@@ -38,7 +37,9 @@ function GameView() {
     });
     return transformedWords.join("");
   };
-  const targetGame = gameGlossaryConfigs[`${transformId(gameId)}`];
+
+  const transformedGameId = transformId(gameId);
+  const targetGame = gameGlossaryConfigs[transformedGameId];
 
   const gameTicketContract = useMemo(() => {
     const address = getContractAddress("TICKET", netId);
@@ -52,6 +53,17 @@ function GameView() {
     };
   }, [netId]);
 
+  const gameLeaderboardContract = useMemo(() => {
+    const address = getContractAddress("BOARD", netId);
+    const abi = getABI("BOARD");
+    if (!address || !abi) {
+      return null;
+    }
+    return {
+      address,
+      abi,
+    };
+  }, [netId]);
   useEffect(() => {
     if (!isConnected || !targetGame) {
       if (game) {
@@ -89,24 +101,13 @@ function GameView() {
 
   useEffect(() => {
     if (!game || !address || !gameTicketContract) return;
-    //
-    // const checkTicketHandler = async () => {
-    //   const data = await checkTicket(gameTicketContract);
-    //   console.log(">>>>>>>>>data", data);
-    //   dispatch(gameTicketActions.setTickets(data));
-    //   dispatch(gameTicketActions.setShowTicketWindow(true));
-    // };
-    //
-    // emitter.on(events.CHECK_TICKET, checkTicketHandler);
+
+    // emitter.on(events.SYNC_SCORE);
     //
     // return () => {
-    //   emitter.off(events.CHECK_TICKET);
+    //   emitter.off(events.SYNC_SCORE);
     // };
   }, [game, address, dispatch, gameTicketContract]);
-
-  if (!targetGame) {
-    return <div>The game url in invalid</div>;
-  }
 
   const handleConnectWallet = async () => {
     try {
@@ -114,9 +115,13 @@ function GameView() {
         connect({ connector: connectors[0] });
       }
     } catch (error) {
-      emitter.emit(events.AUTH_FAILED);
+      console.error(error);
     }
   };
+
+  if (!targetGame) {
+    return <div>The game url in invalid</div>;
+  }
 
   return (
     <div className={styles.gameOuterContainer}>
@@ -137,8 +142,10 @@ function GameView() {
         )}
         {showTicketWindow && isConnected && (
           <TicketFilter
+            transformedGameId={transformedGameId}
             address={address}
             gameTicketContract={gameTicketContract}
+            gameLeaderboardContract={gameLeaderboardContract}
           />
         )}
         <p className={styles.gameTitle}>{targetGame.name}</p>
