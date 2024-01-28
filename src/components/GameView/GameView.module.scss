@@ -1,0 +1,43 @@
+.gameOuterContainer {
+  position: relative;
+
+  .gameContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+
+    .filter {
+      width: 100%;
+      height: 100vh;
+      position: absolute;
+      background: gray;
+      opacity: 0.8;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-content: center;
+      top: 0;
+
+      .buttonContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .web3Button {
+          max-width: 200px;
+          font-size: 20px;
+          padding: 10px;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .gameTitle {
+      text-align: center;
+    }
+  }
+}
