@@ -10,6 +10,8 @@ import { checkTicket } from "../../helpers/ticket";
 import { useDispatch, useSelector } from "react-redux";
 import { gameTicketActions } from "../../store/modules/gameTicketSlice";
 import TicketFilter from "./TicketFilter/TicketFilter";
+import Leaderboard from "../Leaderboard/Leaderboard";
+import Inventory from "../Inventory/Inventory";
 
 let game = null;
 
@@ -123,33 +125,72 @@ function GameView() {
   }
 
   return (
-    <div className={styles.gameOuterContainer}>
-      <div className={styles.gameContainer}>
-        {!isConnected && (
-          <div className={styles.filter}>
-            <div className={styles.buttonContainer}>
-              <button
-                className={styles.web3Button}
-                onClick={() => {
-                  handleConnectWallet();
-                }}
-              >
-                Connect Your Wallet
-              </button>
-            </div>
-          </div>
-        )}
-        {showTicketWindow && isConnected && (
-          <TicketFilter
-            transformedGameId={transformedGameId}
-            address={address}
-            gameTicketContract={gameTicketContract}
-            gameLeaderboardContract={gameLeaderboardContract}
-          />
-        )}
-        <p className={styles.gameTitle}>{targetGame.name}</p>
+    <div className={styles.gameGlossaryContainer}>
+      <header className={styles.gameGlossaryHeader}>
+        <h1>{targetGame.name}</h1>
         <p>You have {numberOfLives} times of chance</p>
-        <div id="game-glossary-frame"></div>
+        <hr />
+      </header>
+      <div className={styles.gameGlossaryContent}>
+        <div className={styles.gameGlossarySideBlock}>
+          <Leaderboard />
+        </div>
+        <div className={styles.gameGlossaryFrame}>
+          <div id="gameDisplay"></div>
+          {!isConnected && (
+            <div
+              className={styles.gameGlossaryFilter}
+              style={{
+                backgroundImage: `url('/assets/games/${targetGame.key}/background.png')`,
+              }}
+            >
+              <div className={styles.gameGlossaryMenuContainer}>
+                <button
+                  className={
+                    (styles.gameGlossaryWeb3Button,
+                    styles.btn,
+                    styles.drawBorder)
+                  }
+                  onClick={handleConnectWallet}
+                >
+                  Connect Your Wallet
+                </button>
+              </div>
+            </div>
+          )}
+          {showTicketWindow && isConnected && (
+            <div
+              className={`${styles.gameGlossaryFilter} ${styles.ticketInfoContainer}`}
+            >
+              <div
+                className={`${styles.gameGlossaryMenuContainer} ${styles.gameGlossaryMenuContainerForTicket}`}
+              >
+                <TicketFilter
+                  transformedGameId={transformedGameId}
+                  address={address}
+                  gameTicketContract={gameTicketContract}
+                  gameLeaderboardContract={gameLeaderboardContract}
+                />
+              </div>
+            </div>
+          )}
+        </div>
+        <div className={styles.gameGlossarySideBlock}>
+          <Inventory />
+        </div>
+      </div>
+      <div className={styles.gameGlossaryDescription}>
+        <hr />
+        <h3>About this Game</h3>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </p>
       </div>
     </div>
   );

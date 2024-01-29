@@ -1,60 +1,320 @@
-.gameOuterContainer {
-  position: relative;
+@import "../../variables.module.scss";
 
-  .gameContainer {
+@mixin btn-border-drawing(
+  $color: $territory-color,
+  $hover: $black,
+  $width: 100px,
+  $vertical: top,
+  $horizontal: left,
+  $duration: 0.25s
+) {
+  box-shadow: inset 0 0 0 $width $color;
+  color: $color;
+  transition: color $duration calc($duration/3);
+  position: relative;
+  padding: 10px;
+
+  &::before,
+  &::after {
+    border: 0 solid transparent;
+    box-sizing: border-box;
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    width: 0;
+    height: 0;
+
+    #{$vertical}: 0;
+    #{$horizontal}: 0;
+  }
+
+  &::before {
+    $h-side: if($horizontal == "left", "right", "left");
+
+    border-#{$vertical}-width: $width;
+    border-#{$h-side}-width: $width;
+  }
+
+  &::after {
+    $v-side: if($vertical == "top", "bottom", "top");
+
+    border-#{$v-side}-width: $width;
+    border-#{$horizontal}-width: $width;
+  }
+
+  &:hover {
+    color: $hover;
+
+    &::before,
+    &::after {
+      border-color: $hover;
+      transition:
+        border-color 0s,
+        width $duration,
+        height $duration;
+      width: 100%;
+      height: 100%;
+    }
+
+    &::before {
+      transition-delay: 0s, 0s, $duration;
+    }
+
+    &::after {
+      transition-delay: 0s, $duration, 0s;
+    }
+  }
+}
+
+.gameGlossaryContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: $background-color;
+
+  font: 700 1.2rem $font-family;
+  color: $font-color;
+  height: 95vh;
+  width: 100%;
+  min-width: 1300px;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  padding-top: 20px;
+
+  .gameGlossaryHeader {
+    flex: 1;
+    color: $primary-color;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
-    margin-top: 10px;
+    text-align: center;
+    gap: 10px;
 
-    .filter {
-      width: 100%;
-      height: 100vh;
-      position: absolute;
-      background: gray;
-      opacity: 0.8;
-      display: flex;
+    hr {
+      border-color: $border-color;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+  }
+
+  @media screen and (max-width: $breakpoint-xl) {
+    overflow-y: auto !important;
+  }
+
+  .gameGlossaryContent {
+    flex: 3;
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+    width: 90vw;
+    justify-content: center;
+    align-items: center;
+
+    @media screen and (max-width: $breakpoint-xl) {
       flex-direction: column;
+      align-items: center;
+      min-height: 1020px;
+      overflow-y: auto;
+    }
+
+    .gameGlossarySideBlock {
+      flex: 1;
+      text-align: center;
+      height: 600px;
+      width: 60%;
+      border: 0.35rem solid $border-color;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      min-width: fit-content;
+
+      @media screen and (max-width: $breakpoint-xl) {
+        order: 2;
+        width: 50%;
+        max-height: 300px;
+        margin-top: 30px;
+      }
+    }
+
+    .gameGlossaryFrame {
+      flex: 4;
+      display: flex;
+      width: 800px;
+      height: 600px;
+      margin: 0 auto;
       justify-content: center;
-      align-content: center;
-      top: 0;
+      position: relative;
+
+      @media screen and (max-width: $breakpoint-xl) {
+        flex: 1;
+        order: 1;
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+      }
 
       .ticketInfoContainer {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 20px;
-        font-weight: bold;
+        position: absolute;
       }
 
-      .buttonContainer {
+      .gameGlossaryFilter {
+        width: 100%;
+        height: 100%;
         display: flex;
+        background-color: rgba(255, 255, 255, 0.486);
+        background-blend-mode: overlay;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        top: 0;
 
-        .web3Button {
-          max-width: 200px;
-          font-size: 20px;
-          padding: 10px;
-          cursor: pointer;
+        .gameGlossaryMenuContainer {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          width: 300px;
+          height: 300px;
+          background: $background-color;
+          animation: corner 3s;
+          border-radius: 50%;
+          animation-iteration-count: infinite;
+          animation-timing-function: linear;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          margin: auto;
+
+          .gameGlossaryWeb3Button {
+            width: 100px;
+            cursor: pointer;
+            background: none;
+            border: none;
+          }
+
+          .btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            line-height: 1.5;
+            font: 700 1.2rem $font-family;
+            padding: 5em;
+            letter-spacing: 0.05rem;
+
+            &:focus {
+              outline: 2px dotted $secondary-color;
+            }
+          }
+
+          .drawBorder {
+            @include btn-border-drawing(
+              $territory-color,
+              $primary-color,
+              2px,
+              bottom,
+              right
+            );
+            font-size: 24px;
+            background: $background-color;
+            cursor: pointer;
+          }
         }
 
-        .web3TicketButton {
-          min-width: 200px;
-          font-size: 20px;
-          padding: 10px;
-          margin-bottom: 20px;
-          cursor: pointer;
+        .gameGlossaryMenuContainerForTicket {
+          width: 500px;
+          height: 500px;
         }
+
+        //.web3TicketButton {
+        //  min-width: 200px;
+        //  font-size: 20px;
+        //  padding: 10px;
+        //  margin-bottom: 20px;
+        //  cursor: pointer;
+        //}
       }
     }
+  }
+}
 
-    .gameTitle {
-      text-align: center;
-    }
+.gameGlossaryDescription {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  max-width: 80vw;
+  padding: 10px;
+  color: $font-color;
+
+  hr {
+    border-color: $border-color;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  p {
+    margin-top: 10px;
+    font-size: smaller;
+  }
+}
+
+$s: calc(100% / 8);
+$t: 0.001%;
+
+@keyframes corner {
+  #{$s * 0} {
+    border-top-left-radius: 1% 50%;
+  }
+  #{$s * 1} {
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+  }
+  #{$s * 2} {
+    border-top-right-radius: 1% 50%;
+  }
+  #{$s * 2 + $t} {
+    border-top-right-radius: 50% 1%;
+  }
+  #{$s * 3} {
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+  }
+  #{$s * 4} {
+    border-bottom-right-radius: 50% 1%;
+  }
+  #{$s * 4 + $t} {
+    border-bottom-right-radius: 1% 50%;
+  }
+  #{$s * 5} {
+    border-bottom-right-radius: 50%;
+    border-bottom-left-radius: 50%;
+  }
+  #{$s * 6} {
+    border-bottom-left-radius: 1% 50%;
+  }
+  #{$s * 6 + $t} {
+    border-bottom-left-radius: 50% 1%;
+  }
+  #{$s * 7} {
+    border-bottom-left-radius: 50%;
+    border-top-left-radius: 50%;
+  }
+  #{$s * 8} {
+    border-top-left-radius: 50% 1%;
+  }
+}
+
+@keyframes rotateThis {
+  from {
+    transform: rotate(0deg) scale(1);
+  }
+
+  to {
+    transform: rotate(360deg) scale(1);
   }
 }

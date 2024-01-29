@@ -1,59 +1,58 @@
-.filter {
-  width: 100%;
-  height: 100vh;
-  position: absolute;
-  background: gray;
-  opacity: 0.8;
+//.filter {
+//  width: 100%;
+//  height: 100vh;
+//  position: absolute;
+//  background: gray;
+//  opacity: 0.8;
+//  display: flex;
+//  flex-direction: column;
+//  justify-content: center;
+//  align-content: center;
+//  top: 0;
+
+.ticketInfoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.formOuterContainer {
+  display: flex;
+  justify-content: center;
+  .formContainer {
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 20px;
+    .selection {
+      padding: 10px;
+      width: 150px;
+    }
+    .redeemSelection {
+      width: 100%;
+      padding: 10px;
+    }
+    .numberInput {
+      padding: 10px;
+    }
+  }
+}
+
+.buttonContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-content: center;
-  top: 0;
+  align-items: center;
 
-  .ticketInfoContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  .web3TicketButton {
+    min-width: 300px;
+    font-size: 20px;
+    padding: 10px;
     margin-bottom: 20px;
-    font-weight: bold;
-  }
-
-  .formOuterContainer {
-    display: flex;
-    justify-content: center;
-    .formContainer {
-      width: 300px;
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 20px;
-      .selection {
-        padding: 10px;
-        width: 150px;
-      }
-      .redeemSelection {
-        width: 100%;
-        padding: 10px;
-      }
-      .numberInput {
-        padding: 10px;
-      }
-    }
-  }
-
-  .buttonContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    .web3TicketButton {
-      min-width: 300px;
-      font-size: 20px;
-      padding: 10px;
-      margin-bottom: 20px;
-      cursor: pointer;
-    }
+    cursor: pointer;
   }
 }

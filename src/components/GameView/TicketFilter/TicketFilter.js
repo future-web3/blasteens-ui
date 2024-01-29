@@ -184,66 +184,8 @@ function TicketFilter({
   };
 
   return (
-    <div className={styles.filter}>
-      <div className={styles.ticketInfoContainer}>
-        <h3>Your current tickets</h3>
-        <div>Bronze: {tickets[0]?.amount}</div>
-        <div>Sliver: {tickets[1]?.amount}</div>
-        <div>Gold: {tickets[2]?.amount}</div>
-      </div>
-      <div className={styles.formOuterContainer}>
-        <div className={styles.formContainer}>
-          <select className={styles.selection} {...register("buyTicketType")}>
-            <option value={1}>Bronze</option>
-            <option value={2}>Sliver</option>
-            <option value={3}>Gold</option>
-          </select>
-          <input
-            className={styles.numberInput}
-            placeholder="fill in number of tickets"
-            {...register("ticketAmount")}
-          />
-        </div>
-      </div>
-      <div className={styles.buttonContainer}>
-        <button
-          className={styles.web3TicketButton}
-          onClick={handleSubmit(handleBuyTicket)}
-          disabled={isBuying}
-        >
-          {isBuying ? (
-            <RotatingLines strokeColor="#eff0f2" height="20" width="20" />
-          ) : (
-            "Buy Ticket"
-          )}
-        </button>
-      </div>
-      <div className={styles.formOuterContainer}>
-        <div className={styles.formContainer}>
-          <select
-            className={styles.redeemSelection}
-            {...register("redeemTicketType")}
-          >
-            <option value={1}>Bronze</option>
-            <option value={2}>Sliver</option>
-            <option value={3}>Gold</option>
-          </select>
-        </div>
-      </div>
-      <div className={styles.buttonContainer}>
-        <button
-          className={styles.web3TicketButton}
-          onClick={handleSubmit(handleRedeemTicket)}
-          disabled={isRedeeming}
-        >
-          {isRedeeming ? (
-            <RotatingLines strokeColor="#eff0f2" height="20" width="20" />
-          ) : (
-            "Redeem Ticket"
-          )}
-        </button>
-      </div>
-      {allowSync && (
+    <div>
+      {allowSync ? (
         <div className={styles.buttonContainer}>
           <button
             className={styles.web3TicketButton}
@@ -256,6 +198,70 @@ function TicketFilter({
               "Sync"
             )}
           </button>
+        </div>
+      ) : (
+        <div>
+          <div className={styles.ticketInfoContainer}>
+            <h3>Your current tickets</h3>
+            <div>Bronze: {tickets[0]?.amount}</div>
+            <div>Sliver: {tickets[1]?.amount}</div>
+            <div>Gold: {tickets[2]?.amount}</div>
+          </div>
+          <div className={styles.formOuterContainer}>
+            <div className={styles.formContainer}>
+              <select
+                className={styles.selection}
+                {...register("buyTicketType")}
+              >
+                <option value={1}>Bronze</option>
+                <option value={2}>Sliver</option>
+                <option value={3}>Gold</option>
+              </select>
+              <input
+                className={styles.numberInput}
+                placeholder="fill in number of tickets"
+                {...register("ticketAmount")}
+              />
+            </div>
+          </div>
+          <div className={styles.buttonContainer}>
+            <button
+              className={styles.web3TicketButton}
+              onClick={handleSubmit(handleBuyTicket)}
+              disabled={isBuying}
+            >
+              {isBuying ? (
+                <RotatingLines strokeColor="#eff0f2" height="20" width="20" />
+              ) : (
+                "Buy Ticket"
+              )}
+            </button>
+          </div>
+          <div className={styles.formOuterContainer}>
+            <div className={styles.formContainer}>
+              <select
+                className={styles.redeemSelection}
+                {...register("redeemTicketType")}
+              >
+                <option value={1}>Bronze</option>
+                <option value={2}>Sliver</option>
+                <option value={3}>Gold</option>
+              </select>
+            </div>
+          </div>
+          <div className={styles.buttonContainer}>
+            <button
+              className={styles.web3TicketButton}
+              onClick={handleSubmit(handleRedeemTicket)}
+              disabled={isRedeeming}
+            >
+              {isRedeeming ? (
+                <RotatingLines strokeColor="#eff0f2" height="20" width="20" />
+              ) : (
+                "Redeem Ticket"
+              )}
+            </button>
+          </div>
         </div>
       )}
     </div>

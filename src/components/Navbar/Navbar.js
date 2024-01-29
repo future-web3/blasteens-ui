@@ -4,30 +4,30 @@ import React from "react";
 
 function Navbar() {
   return (
-    <div>
-      <nav className={styles.navBarContainer}>
-        <div>
+    <div className={styles.navBarContainer}>
+      <ul>
+        <li>
           <Link to="/">Home</Link>
-        </div>
-        <div>
+        </li>
+        <li>
           <Link to="/about">About</Link>
-        </div>
-        <div>
+        </li>
+        <li>
           <Link to="/game-glossary/escape-from-germs">Germs</Link>
-        </div>
-        <div>
+        </li>
+        <li>
           <Link to="/game-glossary/tommy-jumping">Tom</Link>
-        </div>
-        <div>
+        </li>
+        <li>
           <Link to="/game-glossary/snowman-defender">Snowman</Link>
-        </div>
-        <div>
+        </li>
+        <li>
           <Link to="/game-glossary/emoji-match">Emoji</Link>
-        </div>
-        <div>
+        </li>
+        <li>
           <Link to="/crypto-dungeon">Crypto Dungeon</Link>
-        </div>
-      </nav>
+        </li>
+      </ul>
       <Outlet />
     </div>
   );
