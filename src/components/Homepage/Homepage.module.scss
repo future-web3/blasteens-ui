@@ -1,42 +1,58 @@
 @import "../../variables.module.scss";
 
 .homepageContainer {
-  display: flex;
-  flex-direction: column;
   width: 100%;
-  height: auto;
+  height: max-content;
   background-color: $background-color;
   text-align: center;
   justify-content: center;
   align-items: center;
-  padding: 20px;
-}
 
-.homepageTitle {
-  flex: 1;
+  .homepageTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10%;
 
-  h1 a {
-    color: aqua;
+    h1 a {
+      color: aqua;
+    }
+  }
+
+  .homepageMain {
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    .homepageBackground {
+      width: 1600px;
+      height: 800px;
+      background-color: $background-color;
+      background-image: url("./homepage.png");
+      background-size: 100% 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
   }
 }
 
 .homepageGames {
   display: flex;
   flex-direction: column;
-  height: 800px;
-  width: 1200px;
-  background-color: yellow;
+  height: 350px;
+  width: 1000px;
   padding: 20px;
   gap: 40px;
   overflow-y: scroll;
+  position: relative;
+  top: 200px;
+  left: 260px;
 
   .homepageSection {
     flex: 1;
     display: grid;
-    grid-template-rows: 1fr 4fr;
+    grid-template-rows: 1fr 6fr;
     width: 100%;
     height: auto;
-    background-color: red;
 
     h1 {
       grid-row-start: 1;
@@ -44,7 +60,7 @@
       text-align: start;
       align-items: center;
       width: 100%;
-      background-color: aqua;
+      color: $primary-color;
     }
 
     hr {

@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./GameCard.module.scss";
 import { gameConfigs } from "../../configs/gameConfig";
+import gameViewStyles from "../GameView/GameView.module.scss";
 
 function GameCard({ gameId }) {
   const logoUrl = `/assets/games/${gameConfigs[gameId]["key"]}/logo.png`;
@@ -15,7 +16,15 @@ function GameCard({ gameId }) {
         <img src={logoUrl} alt="LOGO" />
       </div>
       <div className={styles.gameCardButton}>
-        <button>PLAY</button>
+        <button
+          className={
+            (gameViewStyles.gameGlossaryWeb3Button,
+            gameViewStyles.btn,
+            gameViewStyles.drawBorder)
+          }
+        >
+          PLAY
+        </button>
       </div>
     </div>
   );

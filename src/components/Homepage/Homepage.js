@@ -4,6 +4,7 @@ import styles from "./Homepage.module.scss";
 import { gameListConfigs } from "../../configs/gameListConfig";
 import GameCard from "../GameCard/GameCard";
 
+
 function Homepage() {
   return (
     <div className={styles.homepageContainer}>
@@ -12,21 +13,25 @@ function Homepage() {
           <Link to="/about">ArcadeXplore</Link>
         </h1>
       </div>
-      <div className={styles.homepageGames}>
-        <div className={styles.homepageSection}>
-          <h1>Indie Games</h1>
-          <div className={styles.homepageCards}>
-            {gameListConfigs["gameGlossary"].map((gameId) => (
-              <GameCard gameId={gameId} />
-            ))}
-          </div>
-        </div>
-        <div className={styles.homepageSection}>
-          <h1>Game Glossary</h1>
-          <div className={styles.homepageCards}>
-            {gameListConfigs["gameGlossary"].map((gameId) => (
-              <GameCard gameId={gameId} />
-            ))}
+      <div className={styles.homepageMain}>
+        <div className={styles.homepageBackground}>
+          <div className={styles.homepageGames}>
+            <div className={styles.homepageSection}>
+              <h1>Indie Games</h1>
+              <div className={styles.homepageCards}>
+                {gameListConfigs["gameGlossary"].map((gameId) => (
+                  <GameCard gameId={gameId} />
+                ))}
+              </div>
+            </div>
+            <div className={styles.homepageSection}>
+              <h1>Game Glossary</h1>
+              <div className={styles.homepageCards}>
+                {gameListConfigs["gameGlossary"].map((gameId) => (
+                  <GameCard gameId={gameId} />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
