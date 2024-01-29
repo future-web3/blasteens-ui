@@ -1,13 +1,17 @@
 import { useParams } from "react-router-dom";
 import styles from "./GameView.module.scss";
 import React, { useEffect, useMemo } from "react";
-import { useAccount, useConnect, useNetwork, useWalletClient } from "wagmi";
+import { useAccount, useConnect, useNetwork } from "wagmi";
 
 import { gameGlossaryConfigs } from "../../configs/gameGlossaryConfig";
 import Phaser from "phaser";
 import { getABI, getContractAddress } from "../../helpers/network";
 import { checkTicket } from "../../helpers/contracts";
-import { useGameSelector, useGameDispatch } from "phaser-simple-game-sdk";
+import {
+  useGameSelector,
+  useGameDispatch,
+  gameLeaderboardActions,
+} from "phaser-simple-game-sdk";
 import { gameTicketActions } from "phaser-simple-game-sdk";
 import TicketFilter from "./TicketFilter/TicketFilter";
 import Leaderboard from "../Leaderboard/Leaderboard";
@@ -35,8 +39,15 @@ function GameView() {
 
   const dispatch = useGameDispatch();
 
+  const games = useGameSelector((state) => state.gameTicket.games);
+
+  if (!games[transformedGameId] && gameGlossaryConfigs[transformedGameId]) {
+    dispatch(gameTicketActions.addGame(transformedGameId));
+    dispatch(gameLeaderboardActions.addGame(transformedGameId));
+  }
+
   const numberOfLives = useGameSelector(
-    (state) => state.gameTicket.games[transformedGameId].numberOfLives,
+    (state) => state.gameTicket.games[transformedGameId]?.numberOfLives || 0,
   );
   const showTicketWindow = useGameSelector(
     (state) => state.gameTicket.showTicketWindow,

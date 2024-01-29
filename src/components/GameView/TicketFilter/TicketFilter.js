@@ -10,7 +10,7 @@ import {
   gameTicketActions,
   gameLeaderboardActions,
 } from "phaser-simple-game-sdk";
-import { checkTicket } from "../../../helpers/contracts";
+import { checkScore, checkTicket } from "../../../helpers/contracts";
 import { RotatingLines } from "react-loader-spinner";
 import { emitter } from "../../../utils/emitter";
 import events from "../../../constants/events";
@@ -33,12 +33,14 @@ function TicketFilter({
 
   const dispatch = useGameDispatch();
   const tickets = useGameSelector((state) => state.gameTicket.tickets);
-  const score = useGameSelector(
-    (state) => state.gameLeaderboard[transformedGameId].score,
-  );
-  const allowSync = useGameSelector(
-    (state) => state.gameLeaderboard[transformedGameId].allowSync,
-  );
+  const score =
+    useGameSelector(
+      (state) => state.gameLeaderboard[transformedGameId]?.score,
+    ) || 0;
+  const allowSync =
+    useGameSelector(
+      (state) => state.gameLeaderboard[transformedGameId]?.allowSync,
+    ) || false;
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
@@ -177,6 +179,18 @@ function TicketFilter({
     const args = [address, score];
 
     try {
+      const currentLeaderboard = await checkScore(
+        gameLeaderboardContract,
+        transformedGameId,
+      );
+      console.log(currentLeaderboard[9].points);
+      if (
+        !currentLeaderboard ||
+        Number(score) <= Number(currentLeaderboard[9].points)
+      ) {
+        setIsSyncing(false);
+        return;
+      }
       const txReceiptForSyncing = await writeContract({
         ...gameLeaderboardContract,
         account: walletClientData.account.address,

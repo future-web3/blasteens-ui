@@ -24,9 +24,10 @@ function Individual({ rank, points, addressLink, address }) {
 
 function Leaderboard({ address, gameLeaderboardContract, transformedGameId }) {
   const [individuals, setIndividuals] = useState([]);
-  const allowSync = useGameSelector(
-    (state) => state.gameLeaderboard[transformedGameId].allowSync,
-  );
+  const allowSync =
+    useGameSelector(
+      (state) => state.gameLeaderboard[transformedGameId]?.allowSync,
+    ) || false;
 
   useEffect(() => {
     const checkScoreHandler = async () => {
