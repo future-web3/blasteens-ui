@@ -1,0 +1,43 @@
+@import "../../variables.module.scss";
+
+.individualContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: auto;
+  margin: 5px;
+
+  .individualInner {
+    display: flex;
+    width: auto;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+
+    a {
+      text-decoration: none;
+      font-size: smaller;
+    }
+  }
+}
+
+.leaderboardContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-size: smaller;
+  h2 {
+    padding-top: 5px;
+    font-style: italic;
+    color: $background-color;
+  }
+
+  .stickyHeader {
+    min-height: 50px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: $border-color;
+  }
+}

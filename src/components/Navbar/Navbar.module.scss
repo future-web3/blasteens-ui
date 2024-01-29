@@ -1,33 +1,83 @@
+@import "../../variables.module.scss";
+
+* {
+  box-sizing: border-box;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 .navBarContainer {
-  display: flex;
-  justify-content: center;
-  padding: 30px;
-  
-  position: sticky;
-  .navBarWrapper{
+  min-width: 100vw;
+  height: 5vh;
+  min-height: 50px;
+  flex-direction: row;
+  display: block;
+  background: linear-gradient(to bottom, $navbar-color, $background-color);
+
+  //@media screen and (max-width: $breakpoint-xl) {
+  //  width: max-content;
+  //}
+
+  ul {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 90%;
-    .linksContainer{
-      width: 50%;
-      display: flex;
-      flex-direction: row;
-      align-items: start;
-      justify-content: space-evenly;
-      gap: 10%;
-    }
-    .menuButton{
-      visibility: hidden;
-    }
-    @media screen and (max-width: 700px){
-      .linksContainer{
-        visibility: hidden;
+    justify-content: space-around;
+    height: 100%;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  li {
+    display: block;
+    float: left;
+    text-align: center;
+    width: auto;
+    height: 100%;
+    transition: all ease-in-out 0.2s;
+
+    &.different {
+      border: none;
+      position: relative;
+
+      &:hover {
+        border: none;
       }
-      .menuButton{
-        visibility: visible;
+
+      &::after {
+        content: "";
+        position: absolute;
+        width: 0px;
+        height: 100px;
+        left: 50%;
+        bottom: 0;
+        background-color: $primary-color;
+        transition: all ease-in-out 0.2s;
       }
+
+      &:hover::after {
+        width: 100%;
+        left: 0;
+      }
+    }
+
+    &:hover {
+      border-bottom: 5px solid $primary-color;
+    }
+  }
+
+  a {
+    display: block;
+    float: left;
+    color: $font-color;
+    width: 100%;
+    padding: 0 0.5em;
+    line-height: 50px;
+    text-decoration: none;
+    font-weight: bold;
+
+    &:hover {
+      color: $primary-color;
     }
   }
 }

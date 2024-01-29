@@ -7,9 +7,6 @@ import UI from "./UI.js";
 export const config = {
   title: "Tommy Jumping",
   type: Phaser.AUTO,
-  parent: "game-glossary-frame",
-  width: 640,
-  height: 360,
   pixelArt: true,
   physics: {
     default: "arcade",
@@ -19,5 +16,15 @@ export const config = {
       },
     },
   },
+  // parent: "gameDisplay",
+  // width: 640,
+  // height: 360,
+  scale: {
+    parent: "gameDisplay",
+		mode: Phaser.Scale.FIT,
+    width: 640,
+    height: 360,
+  },
+	autoCenter: Phaser.Scale.CENTER_VERTICALLY,
   scene: [Preloader, UI, Play, Menu],
 };

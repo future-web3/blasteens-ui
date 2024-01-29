@@ -2,6 +2,9 @@ import Phaser from "phaser";
 import Germs from "./Germs.js";
 import Player from "./Player.js";
 import Pickups from "./Pickups.js";
+import store from "../../store";
+import { gameTicketActions } from "../../store/modules/gameTicketSlice";
+import { gameLeaderboardActions } from "../../store/modules/gameLeaderboardSlice";
 
 export default class MainGame extends Phaser.Scene {
   constructor() {
@@ -16,6 +19,8 @@ export default class MainGame extends Phaser.Scene {
     this.score = 0;
     this.highscore = 0;
     this.newHighscore = false;
+
+    this.store = store;
   }
 
   create() {
@@ -57,10 +62,10 @@ export default class MainGame extends Phaser.Scene {
     });
 
     this.physics.add.overlap(this.player, this.pickups, (player, pickup) =>
-      this.playerHitPickup(player, pickup)
+      this.playerHitPickup(player, pickup),
     );
     this.physics.add.overlap(this.player, this.germs, (player, germ) =>
-      this.playerHitGerm(player, germ)
+      this.playerHitGerm(player, germ),
     );
   }
 
@@ -96,6 +101,8 @@ export default class MainGame extends Phaser.Scene {
     this.player.kill();
     this.germs.stop();
 
+    this.store.dispatch(gameTicketActions.useLives());
+
     this.sound.stopAll();
     this.sound.play("fail");
 
@@ -109,9 +116,24 @@ export default class MainGame extends Phaser.Scene {
 
     if (this.newHighscore) {
       this.registry.set("highscore", this.score);
+      this.store.dispatch(
+        gameLeaderboardActions.updateGameScore({
+          gameName: "escapeFromGerms",
+          score: this.score,
+        }),
+      );
     }
 
     this.input.once("pointerdown", () => {
+      const state = this.store.getState();
+      if (state.gameTicket.numberOfLives === 0) {
+        this.store.dispatch(
+          gameLeaderboardActions.toggleSyncPermission({
+            gameName: "escapeFromGerms",
+            allowSync: true,
+          }),
+        );
+      }
       this.scene.start("MainMenu");
     });
   }

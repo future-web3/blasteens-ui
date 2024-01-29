@@ -1,0 +1,112 @@
+@import "../../variables.module.scss";
+
+.nftContainer {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  height: auto;
+  margin: 10px auto;
+
+  .nftInner {
+    display: flex;
+    width: 100%;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+
+    a {
+      text-decoration: none;
+      font-size: smaller;
+      padding: 0;
+    }
+
+    img {
+      border: 5px solid $background-color;
+      border-image: conic-gradient(
+          from var(--angle),
+          $background-color,
+          $primary-color 0.1turn,
+          $primary-color 0.15turn,
+          $background-color 0.25turn
+        )
+        30;
+      animation: borderRotate var(--duration) linear infinite forwards;
+    }
+  }
+
+  hr {
+    border-color: $border-color;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+.inventoryContainer {
+  h2 {
+    padding-top: 5px;
+    font-style: italic;
+    color: $background-color;
+  }
+  .stickyHeader {
+    min-height: 50px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: $border-color;
+  }
+}
+
+@keyframes borderRotate {
+  100% {
+    --angle: 420deg;
+  }
+}
+
+@keyframes borderRadial {
+  20% {
+    --gradX: 100%;
+    --gradY: 50%;
+  }
+  40% {
+    --gradX: 100%;
+    --gradY: 100%;
+  }
+  60% {
+    --gradX: 50%;
+    --gradY: 100%;
+  }
+  80% {
+    --gradX: 0%;
+    --gradY: 50%;
+  }
+  100% {
+    --gradX: 50%;
+    --gradY: 0%;
+  }
+}
+
+:root {
+  --duration: 10000ms;
+  --angle: 90deg;
+  --gradX: 100%;
+  --gradY: 50%;
+}
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 90deg;
+  inherits: true;
+}
+
+@property --gradX {
+  syntax: "<percentage>";
+  initial-value: 50%;
+  inherits: true;
+}
+
+@property --gradY {
+  syntax: "<percentage>";
+  initial-value: 0%;
+  inherits: true;
+}

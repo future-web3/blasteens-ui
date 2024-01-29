@@ -36,7 +36,7 @@ export default class Preloader extends Phaser.Scene {
 
   create() {
     if (this.sound.locked) {
-      this.loadText.setText("Click to Start");
+      this.loadText.setText("Redeem");
 
       this.input.once("pointerdown", () => {
         this.scene.start("MainMenu");
