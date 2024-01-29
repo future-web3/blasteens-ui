@@ -38,8 +38,6 @@ function TicketFilter({
     (state) => state.gameLeaderboard[transformedGameId].allowSync,
   );
 
-  console.log(allowSync);
-
   const { register, handleSubmit } = useForm({
     defaultValues: {
       buyTicketType: 1,
