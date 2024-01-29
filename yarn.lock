@@ -9395,12 +9395,14 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha512-7EAHlyLHI56VEIdK57uwHdHKIaAGbnXPiw0yWbarQZOKaKpvUIgW0jWRVLiatnM+XXlSwsanIBH/hzGMJulMow==
 
-phaser-simple-game-sdk@1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/phaser-simple-game-sdk/-/phaser-simple-game-sdk-1.0.2.tgz#ef92d42be9b6e9586635b454175d042f9d585d76"
-  integrity sha512-Ol66WHJNj+KO5tMhMbK18idVZGeqPKfk+ljo6wDiu2NqKRbpeWKYjPDFr7DQspz7VrgvfUrl0VhnDVK2EiNdgg==
+phaser-simple-game-sdk@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/phaser-simple-game-sdk/-/phaser-simple-game-sdk-1.1.1.tgz#a76c4ca439b51c7e69773f2f90fd1f77327d9e14"
+  integrity sha512-j7vypufi6D/ugnmttbM00ZDVEETmBCv98Iomdf2ACniJkfz953knNpSP/MTnHx/9650RredvVnkf0XpGGfxU0w==
   dependencies:
     "@reduxjs/toolkit" "^2.1.0"
+    react "^18.2.0"
+    react-dom "^18.2.0"
     react-redux "^9.1.0"
 
 phaser@^3.70.0:

@@ -2,9 +2,6 @@ import Phaser from "phaser";
 import Germs from "./Germs.js";
 import Player from "./Player.js";
 import Pickups from "./Pickups.js";
-
-import { gameTicketActions } from "../../store/modules/gameTicketSlice";
-import { gameLeaderboardActions } from "../../store/modules/gameLeaderboardSlice";
 import { createGameSDK } from "phaser-simple-game-sdk";
 
 export default class MainGame extends Phaser.Scene {

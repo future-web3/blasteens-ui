@@ -7,8 +7,8 @@ import { gameGlossaryConfigs } from "../../configs/gameGlossaryConfig";
 import Phaser from "phaser";
 import { getABI, getContractAddress } from "../../helpers/network";
 import { checkTicket } from "../../helpers/contracts";
-import { useDispatch, useSelector } from "react-redux";
-import { gameTicketActions } from "../../store/modules/gameTicketSlice";
+import { useGameSelector, useGameDispatch } from "phaser-simple-game-sdk";
+import { gameTicketActions } from "phaser-simple-game-sdk";
 import TicketFilter from "./TicketFilter/TicketFilter";
 import Leaderboard from "../Leaderboard/Leaderboard";
 import Inventory from "../Inventory/Inventory";
@@ -33,12 +33,12 @@ function GameView() {
 
   const transformedGameId = transformId(gameId);
 
-  const dispatch = useDispatch();
+  const dispatch = useGameDispatch();
 
-  const numberOfLives = useSelector(
+  const numberOfLives = useGameSelector(
     (state) => state.gameTicket.games[transformedGameId].numberOfLives,
   );
-  const showTicketWindow = useSelector(
+  const showTicketWindow = useGameSelector(
     (state) => state.gameTicket.showTicketWindow,
   );
 

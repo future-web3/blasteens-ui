@@ -6,12 +6,14 @@ import { useGameDispatch, useGameSelector } from "phaser-simple-game-sdk";
 import { writeContract } from "@wagmi/core";
 import { useWaitForTransaction, useWalletClient } from "wagmi";
 import BN from "bignumber.js";
-import { gameTicketActions } from "../../../store/modules/gameTicketSlice";
+import {
+  gameTicketActions,
+  gameLeaderboardActions,
+} from "phaser-simple-game-sdk";
 import { checkTicket } from "../../../helpers/contracts";
 import { RotatingLines } from "react-loader-spinner";
 import { emitter } from "../../../utils/emitter";
 import events from "../../../constants/events";
-import { gameLeaderboardActions } from "../../../store/modules/gameLeaderboardSlice";
 
 function TicketFilter({
   transformedGameId,

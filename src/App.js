@@ -5,8 +5,7 @@ import { goerli } from "wagmi/chains";
 import { createConfig, WagmiConfig, mainnet, configureChains } from "wagmi";
 import { jsonRpcProvider } from "@wagmi/core/providers/jsonRpc";
 import config from "./configs";
-import { Provider } from "react-redux";
-import store from "../src/store/index";
+import { GameProvider } from "phaser-simple-game-sdk";
 
 function App() {
   const { publicClient } = configureChains(
@@ -28,7 +27,7 @@ function App() {
 
   return (
     <WagmiConfig config={wagmiConfig}>
-      <Provider store={store}>
+      <GameProvider>
         <Routes>
           <Route path="/" element={<Navbar />}>
             <Route index element={<div>Homepage</div>} />
@@ -40,7 +39,7 @@ function App() {
             <Route path="*" element={<div>404 Not Found</div>} />
           </Route>
         </Routes>
-      </Provider>
+      </GameProvider>
     </WagmiConfig>
   );
 }
