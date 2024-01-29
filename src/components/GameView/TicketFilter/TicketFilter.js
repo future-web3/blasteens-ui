@@ -7,7 +7,7 @@ import { writeContract } from "@wagmi/core";
 import { useWaitForTransaction, useWalletClient } from "wagmi";
 import BN from "bignumber.js";
 import { gameTicketActions } from "../../../store/modules/gameTicketSlice";
-import { checkTicket } from "../../../helpers/ticket";
+import { checkTicket } from "../../../helpers/contracts";
 import { RotatingLines } from "react-loader-spinner";
 import { emitter } from "../../../utils/emitter";
 import events from "../../../constants/events";
@@ -37,6 +37,8 @@ function TicketFilter({
   const allowSync = useSelector(
     (state) => state.gameLeaderboard[transformedGameId].allowSync,
   );
+
+  console.log(allowSync);
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
@@ -193,6 +195,7 @@ function TicketFilter({
     <div>
       {allowSync ? (
         <div className={styles.buttonContainer}>
+          <h3 className={styles.score}>Score: {score}</h3>
           <button
             className={
               (gameViewStyles.gameGlossaryWeb3Button,
@@ -207,6 +210,23 @@ function TicketFilter({
             ) : (
               "Sync"
             )}
+          </button>
+          <button
+            className={
+              (gameViewStyles.gameGlossaryWeb3Button,
+              gameViewStyles.btn,
+              gameViewStyles.drawBorder)
+            }
+            onClick={() => {
+              dispatch(
+                gameLeaderboardActions.toggleSyncPermission({
+                  gameName: transformedGameId,
+                  allowSync: false,
+                }),
+              );
+            }}
+          >
+            Restart
           </button>
         </div>
       ) : (

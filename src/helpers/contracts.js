@@ -64,3 +64,44 @@ export const mapTicket = (data) => {
     },
   ];
 };
+
+export const checkScore = async (gameLeaderboardContract, gameName) => {
+  const contracts = [];
+  for (let i = 0; i < 10; i++) {
+    contracts.push({
+      ...gameLeaderboardContract,
+      functionName: "leaderboard",
+      args: [i],
+    });
+  }
+
+  const data = await readContracts({
+    contracts,
+  });
+
+  return mapScore(data, gameName);
+};
+
+export const mapScore = async (data, gameName) => {
+  let rank = 0;
+  return data
+    .map((item) => {
+      rank += 1;
+      if (item.status === "success") {
+        if (item.result[1].toString() === 0) {
+          return null;
+        }
+        return {
+          rank,
+          address: item.result[0],
+          points: `${item.result[1].toString()}`,
+        };
+      }
+      return {
+        rank,
+        address: "-",
+        points: "-",
+      };
+    })
+    .filter((item) => item !== null);
+};
