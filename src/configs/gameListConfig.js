@@ -1,4 +1,9 @@
 export const gameListConfigs = {
-  indieGame: [4],
-  gameGlossary: [0, 1, 2, 3],
+  indieGame: ["cryptoDungeon"],
+  gameGlossary: [
+    "escapeFromGerms",
+    "tommyJumping",
+    "snowmanDefender",
+    "emojiMatch",
+  ],
 };
