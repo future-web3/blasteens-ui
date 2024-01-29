@@ -1,5 +1,8 @@
 import styles from "./Leaderboard.module.scss";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { checkScore } from "../../helpers/contracts";
+import { formatHash } from "../../helpers/network";
+import { useSelector } from "react-redux";
 
 function Individual({ rank, points, addressLink, address }) {
   return (
@@ -12,25 +15,33 @@ function Individual({ rank, points, addressLink, address }) {
       </div>
       <div className={styles.individualInner} style={{ flex: 3 }}>
         <a href={addressLink} target="_blank" rel="noopener noreferrer">
-          {address}
+          {formatHash(address)}
         </a>
       </div>
     </div>
   );
 }
 
-function Leaderboard() {
-  const individuals = Array.from({ length: 30 }, (_, index) => ({
-    rank: index + 1,
-    points: 1982 + index * 100,
-    transactionLink: `https://etherscan.io/tx/0x${index.toString(16)}`,
-    address: `#0xA2d...Azxc`,
-  }));
+function Leaderboard({ address, gameLeaderboardContract, transformedGameId }) {
+  const [individuals, setIndividuals] = useState([]);
+  const allowSync = useSelector(
+    (state) => state.gameLeaderboard[transformedGameId].allowSync,
+  );
+
+  useEffect(() => {
+    const checkScoreHandler = async () => {
+      if (!address || !gameLeaderboardContract) return;
+      const data = await checkScore(gameLeaderboardContract, transformedGameId);
+      setIndividuals(data);
+    };
+
+    checkScoreHandler();
+  }, [address, gameLeaderboardContract, allowSync]);
 
   return (
     <div className={styles.leaderboardContainer}>
       <h2 className={styles.stickyHeader}>Leaderboard</h2>
-      {individuals.map((individual, index) => (
+      {individuals?.map((individual, index) => (
         <Individual key={index} {...individual} />
       ))}
     </div>
