@@ -117,7 +117,6 @@ function TicketFilter({
 
   const handleRedeemTicket = async (data) => {
     setIsRedeeming(true);
-    console.log(data);
     const args = [Number(data.redeemTicketType)];
     const targetTicket = tickets.find(
       (ticket) => ticket.type.toString() === data.redeemTicketType.toString(),
