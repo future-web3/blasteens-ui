@@ -15,9 +15,9 @@
   display: block;
   background: linear-gradient(to bottom, $navbar-color, $background-color);
 
-  //@media screen and (max-width: $breakpoint-xl) {
-  //  width: max-content;
-  //}
+  @media screen and (max-width: $breakpoint-xl) {
+    width: fit-content;
+  }
 
   ul {
     display: flex;

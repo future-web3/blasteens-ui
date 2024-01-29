@@ -3,7 +3,7 @@ import styles from "./GameView.module.scss";
 import React, { useEffect, useMemo } from "react";
 import { useAccount, useConnect, useNetwork, useWalletClient } from "wagmi";
 
-import { gameGlossaryConfigs } from "../../configs/gameGlossaryConfig";
+import { gameConfigs } from "../../configs/gameConfig";
 import Phaser from "phaser";
 import { getABI, getContractAddress } from "../../helpers/network";
 import { checkTicket } from "../../helpers/ticket";
@@ -25,7 +25,7 @@ function GameView() {
 
   const numberOfLives = useSelector((state) => state.gameTicket.numberOfLives);
   const showTicketWindow = useSelector(
-    (state) => state.gameTicket.showTicketWindow,
+    (state) => state.gameTicket.showTicketWindow
   );
 
   const { gameId } = useParams();
@@ -39,7 +39,7 @@ function GameView() {
   };
 
   const transformedGameId = transformId(gameId);
-  const targetGame = gameGlossaryConfigs[transformedGameId];
+  const targetGame = gameConfigs[transformedGameId];
 
   const gameTicketContract = useMemo(() => {
     const address = getContractAddress("TICKET", netId);
