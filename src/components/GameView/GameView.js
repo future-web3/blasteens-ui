@@ -3,7 +3,7 @@ import styles from "./GameView.module.scss";
 import React, { useEffect, useMemo } from "react";
 import { useAccount, useConnect, useNetwork, useWalletClient } from "wagmi";
 
-import { gameConfigs } from "../../configs/gameConfig";
+import { gameGlossaryConfigs } from "../../configs/gameGlossaryConfig";
 import Phaser from "phaser";
 import { getABI, getContractAddress } from "../../helpers/network";
 import { checkTicket } from "../../helpers/ticket";
@@ -16,20 +16,6 @@ import Inventory from "../Inventory/Inventory";
 let game = null;
 
 function GameView() {
-  const { connect, connectors } = useConnect();
-  const { address, isConnected } = useAccount();
-  const { chain } = useNetwork();
-  const netId = chain ? chain.id : 1;
-
-  const dispatch = useDispatch();
-
-  const numberOfLives = useSelector((state) => state.gameTicket.numberOfLives);
-  const showTicketWindow = useSelector(
-    (state) => state.gameTicket.showTicketWindow
-  );
-
-  const { gameId } = useParams();
-
   const transformId = (id) => {
     let words = id.split("-");
     let transformedWords = words.map((word, index) => {
@@ -38,8 +24,25 @@ function GameView() {
     return transformedWords.join("");
   };
 
+  const { connect, connectors } = useConnect();
+  const { address, isConnected } = useAccount();
+  const { chain } = useNetwork();
+  const netId = chain ? chain.id : 1;
+
+  const { gameId } = useParams();
+
   const transformedGameId = transformId(gameId);
-  const targetGame = gameConfigs[transformedGameId];
+
+  const dispatch = useDispatch();
+
+  const numberOfLives = useSelector(
+    (state) => state.gameTicket.games[transformedGameId].numberOfLives,
+  );
+  const showTicketWindow = useSelector(
+    (state) => state.gameTicket.showTicketWindow,
+  );
+
+  const targetGame = gameGlossaryConfigs[transformedGameId];
 
   const gameTicketContract = useMemo(() => {
     const address = getContractAddress("TICKET", netId);
