@@ -1,14 +1,15 @@
 import styles from "./Inventory.module.scss";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useAccount } from "wagmi";
 
-function NFT({ name, addressLink, imageURL }) {
-  console.log(imageURL);
+function NFT({ name, addressLink, imageURL, amount }) {
   return (
     <div className={styles.nftContainer}>
       <div className={styles.nftInner} style={{ flex: 1 }}>
         <h3>
           <a href={addressLink} target="_blank" rel="noopener noreferrer">
-            {name}
+            {name} * {amount ?? 0}
           </a>
         </h3>
       </div>
@@ -21,39 +22,55 @@ function NFT({ name, addressLink, imageURL }) {
 }
 
 function Inventory() {
-  const [nfts, setNfts] = useState([]);
+  const { isConnected } = useAccount();
 
-  useEffect(() => {
-    setNfts([
-      {
-        name: "NFT1",
-        addressLink: "https://example.com/nft1",
-        imageURL: "./demo1.png",
-      },
-      {
-        name: "NFT2",
-        addressLink: "https://example.com/nft2",
-        imageURL: "./demo2.png",
-      },
-      {
-        name: "NFT3",
-        addressLink: "https://example.com/nft3",
-        imageURL: "./demo3.png",
-      },
-      {
-        name: "NFT4",
-        addressLink: "https://example.com/nft4",
-        imageURL: "./demo4.png",
-      },
-    ]);
-  }, []);
+  const tickets = useSelector((state) => state.gameTicket.tickets);
+
+  const nfts = [
+    {
+      name: "BRONZE",
+      addressLink: "https://example.com/nft1",
+      imageURL: "./demo1.png",
+      type: 1,
+    },
+    {
+      name: "SILVER",
+      addressLink: "https://example.com/nft2",
+      imageURL: "./demo2.png",
+      type: 2,
+    },
+    {
+      name: "GOLD",
+      addressLink: "https://example.com/nft3",
+      imageURL: "./demo3.png",
+      type: 3,
+    },
+  ];
+
+  const updatedTickets = tickets.map((ticket) => {
+    const nftInfo = nfts.find((nft) => nft.type === ticket.type);
+    return {
+      ...ticket,
+      ...nftInfo,
+    };
+  });
 
   return (
     <div className={styles.inventoryContainer}>
       <h2 className={styles.stickyHeader}>Inventory</h2>
-      {nfts.map((nft, index) => (
-        <NFT key={index} {...nft} />
-      ))}
+      {isConnected ? (
+        <>
+          {updatedTickets.map((nft, index) => (
+            <NFT key={index} {...nft} />
+          ))}
+        </>
+      ) : (
+        <>
+          {nfts.map((nft, index) => (
+            <NFT key={index} {...nft} />
+          ))}
+        </>
+      )}
     </div>
   );
 }

@@ -1,14 +1,4 @@
-//.filter {
-//  width: 100%;
-//  height: 100vh;
-//  position: absolute;
-//  background: gray;
-//  opacity: 0.8;
-//  display: flex;
-//  flex-direction: column;
-//  justify-content: center;
-//  align-content: center;
-//  top: 0;
+@import "../../../variables.module";
 
 .ticketInfoContainer {
   display: flex;
@@ -28,6 +18,7 @@
     justify-content: space-between;
     gap: 10px;
     margin-bottom: 20px;
+    margin-top: 20px;
     .selection {
       padding: 10px;
       width: 150px;
@@ -47,12 +38,4 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  .web3TicketButton {
-    min-width: 300px;
-    font-size: 20px;
-    padding: 10px;
-    margin-bottom: 20px;
-    cursor: pointer;
-  }
 }

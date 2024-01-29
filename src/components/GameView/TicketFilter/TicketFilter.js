@@ -1,4 +1,5 @@
 import styles from "./TicketFilter.module.scss";
+import gameViewStyles from "../GameView.module.scss";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -188,7 +189,11 @@ function TicketFilter({
       {allowSync ? (
         <div className={styles.buttonContainer}>
           <button
-            className={styles.web3TicketButton}
+            className={
+              (gameViewStyles.gameGlossaryWeb3Button,
+              gameViewStyles.btn,
+              gameViewStyles.drawBorder)
+            }
             onClick={handleSubmit(handleSyncScore)}
             disabled={isSyncing}
           >
@@ -201,12 +206,6 @@ function TicketFilter({
         </div>
       ) : (
         <div>
-          <div className={styles.ticketInfoContainer}>
-            <h3>Your current tickets</h3>
-            <div>Bronze: {tickets[0]?.amount}</div>
-            <div>Sliver: {tickets[1]?.amount}</div>
-            <div>Gold: {tickets[2]?.amount}</div>
-          </div>
           <div className={styles.formOuterContainer}>
             <div className={styles.formContainer}>
               <select
@@ -226,7 +225,11 @@ function TicketFilter({
           </div>
           <div className={styles.buttonContainer}>
             <button
-              className={styles.web3TicketButton}
+              className={
+                (gameViewStyles.gameGlossaryWeb3Button,
+                gameViewStyles.btn,
+                gameViewStyles.drawBorder)
+              }
               onClick={handleSubmit(handleBuyTicket)}
               disabled={isBuying}
             >
@@ -251,7 +254,11 @@ function TicketFilter({
           </div>
           <div className={styles.buttonContainer}>
             <button
-              className={styles.web3TicketButton}
+              className={
+                (gameViewStyles.gameGlossaryWeb3Button,
+                gameViewStyles.btn,
+                gameViewStyles.drawBorder)
+              }
               onClick={handleSubmit(handleRedeemTicket)}
               disabled={isRedeeming}
             >

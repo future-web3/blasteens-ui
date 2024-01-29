@@ -102,12 +102,6 @@ function GameView() {
 
   useEffect(() => {
     if (!game || !address || !gameTicketContract) return;
-
-    // emitter.on(events.SYNC_SCORE);
-    //
-    // return () => {
-    //   emitter.off(events.SYNC_SCORE);
-    // };
   }, [game, address, dispatch, gameTicketContract]);
 
   const handleConnectWallet = async () => {
