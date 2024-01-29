@@ -2,9 +2,7 @@ import Phaser from "phaser";
 import Germs from "./Germs.js";
 import Player from "./Player.js";
 import Pickups from "./Pickups.js";
-import store from "../../store";
-import { gameTicketActions } from "../../store/modules/gameTicketSlice";
-import { gameLeaderboardActions } from "../../store/modules/gameLeaderboardSlice";
+import { gameSDK } from "../../gameSDK/gameSDK";
 
 export default class MainGame extends Phaser.Scene {
   constructor() {
@@ -20,7 +18,7 @@ export default class MainGame extends Phaser.Scene {
     this.highscore = 0;
     this.newHighscore = false;
 
-    this.store = store;
+    this.sdk = new gameSDK("escapeFromGerms");
   }
 
   create() {
@@ -101,7 +99,7 @@ export default class MainGame extends Phaser.Scene {
     this.player.kill();
     this.germs.stop();
 
-    this.store.dispatch(gameTicketActions.useLives("escapeFromGerms"));
+    this.sdk.useLives();
 
     this.sound.stopAll();
     this.sound.play("fail");
@@ -116,24 +114,11 @@ export default class MainGame extends Phaser.Scene {
 
     if (this.newHighscore) {
       this.registry.set("highscore", this.score);
-      this.store.dispatch(
-        gameLeaderboardActions.updateGameScore({
-          gameName: "escapeFromGerms",
-          score: this.score,
-        }),
-      );
+      this.sdk.updateHighScore(this.score);
     }
 
     this.input.once("pointerdown", () => {
-      const state = this.store.getState();
-      if (state.gameTicket.games["escapeFromGerms"].numberOfLives === 0) {
-        this.store.dispatch(
-          gameLeaderboardActions.toggleSyncPermission({
-            gameName: "escapeFromGerms",
-            allowSync: true,
-          }),
-        );
-      }
+      this.sdk.endGame(() => {});
       this.scene.start("MainMenu");
     });
   }

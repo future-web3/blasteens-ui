@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import Track from "./Track.js";
 import Player from "./Player.js";
+import { gameSDK } from "../../gameSDK/gameSDK";
 
 export default class MainGame extends Phaser.Scene {
   constructor() {
@@ -16,6 +17,8 @@ export default class MainGame extends Phaser.Scene {
     this.scoreTimer = null;
     this.scoreText = null;
     this.highscoreText = null;
+
+    this.sdk = new gameSDK("snowmanDefender");
   }
 
   create() {
@@ -110,22 +113,14 @@ export default class MainGame extends Phaser.Scene {
       this.highscoreText.setText("NEW!");
 
       this.registry.set("highscore", this.score);
+      this.sdk.updateHighScore(this.score);
     }
 
-    this.input.keyboard.once(
-      "keydown-SPACE",
-      () => {
-        this.scene.start("MainMenu");
-      },
-      this
-    );
+    this.sdk.useLives();
 
-    this.input.once(
-      "pointerdown",
-      () => {
-        this.scene.start("MainMenu");
-      },
-      this
-    );
+    this.input.keyboard.once("keydown-SPACE", () => {
+      this.sdk.endGame(() => {});
+      this.scene.start("MainMenu");
+    });
   }
 }

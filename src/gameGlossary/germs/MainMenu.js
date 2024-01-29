@@ -1,11 +1,10 @@
 import Phaser from "phaser";
-import store from "../../store/index";
-import { gameTicketActions } from "../../store/modules/gameTicketSlice";
+import { gameSDK } from "../../gameSDK/gameSDK";
 
 export default class MainMenu extends Phaser.Scene {
   constructor() {
     super("MainMenu");
-    this.store = store;
+    this.sdk = new gameSDK("escapeFromGerms");
   }
 
   create() {
@@ -29,12 +28,9 @@ export default class MainMenu extends Phaser.Scene {
     this.add.bitmapText(400, 500, "slime", "Click to Play", 40).setOrigin(0.5);
 
     this.input.on("pointerdown", () => {
-      const state = this.store.getState();
-      if (state.gameTicket.games["escapeFromGerms"].numberOfLives > 0) {
+      this.sdk.startGame(() => {
         this.scene.start("MainGame");
-      } else {
-        this.store.dispatch(gameTicketActions.setShowTicketWindow(true));
-      }
+      });
     });
   }
 

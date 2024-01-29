@@ -1,8 +1,10 @@
 import Phaser from "phaser";
+import { gameSDK } from "../../gameSDK/gameSDK";
 
 export default class MainMenu extends Phaser.Scene {
   constructor() {
     super("MainMenu");
+    this.sdk = new gameSDK("snowmanDefender");
   }
 
   create() {
@@ -63,16 +65,10 @@ export default class MainMenu extends Phaser.Scene {
       },
     });
 
-    this.input.keyboard.once(
-      "keydown-SPACE",
-      () => {
+    this.input.keyboard.once("keydown-SPACE", () => {
+      this.sdk.startGame(() => {
         this.scene.start("MainGame");
-      },
-      this
-    );
-
-    this.input.once("pointerdown", () => {
-      this.scene.start("MainGame");
+      });
     });
   }
 }
