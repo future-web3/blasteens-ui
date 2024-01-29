@@ -2,9 +2,21 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   tickets: [],
-  numberOfLives: 0,
   showTicketWindow: false,
-  score: 0,
+  games: {
+    escapeFromGerms: {
+      numberOfLives: 0,
+    },
+    tommyJumping: {
+      numberOfLives: 0,
+    },
+    snowmanDefender: {
+      numberOfLives: 0,
+    },
+    emojiMatch: {
+      numberOfLives: 0,
+    },
+  },
 };
 
 const gameTicketSlice = createSlice({
@@ -15,10 +27,12 @@ const gameTicketSlice = createSlice({
       state.tickets = action.payload;
     },
     setNumberOfLives(state, action) {
-      state.numberOfLives = action.payload;
+      const { gameName, numberOfLives } = action.payload;
+      state.games[gameName].numberOfLives = numberOfLives;
     },
-    useLives(state) {
-      state.numberOfLives -= 1;
+    useLives(state, action) {
+      const gameName = action.payload;
+      state.games[gameName].numberOfLives -= 1;
     },
     setShowTicketWindow(state, action) {
       state.showTicketWindow = action.payload;

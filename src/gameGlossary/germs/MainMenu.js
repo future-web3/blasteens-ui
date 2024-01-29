@@ -30,7 +30,7 @@ export default class MainMenu extends Phaser.Scene {
 
     this.input.on("pointerdown", () => {
       const state = this.store.getState();
-      if (state.gameTicket.numberOfLives > 0) {
+      if (state.gameTicket.games["escapeFromGerms"].numberOfLives > 0) {
         this.scene.start("MainGame");
       } else {
         this.store.dispatch(gameTicketActions.setShowTicketWindow(true));
