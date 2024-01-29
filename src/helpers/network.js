@@ -17,3 +17,7 @@ export const getContractAddress = (contractType, netId) => {
   if (contractType === "BOARD") return config.gameLeaderBoardContract;
   return "0x";
 };
+
+export const formatHash = (txHash, chars = 6) => {
+  return `${txHash.substring(0, chars + 2)}...${txHash.substring(txHash.length - chars)}`;
+};

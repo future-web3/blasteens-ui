@@ -6,7 +6,7 @@ import { useAccount, useConnect, useNetwork, useWalletClient } from "wagmi";
 import { gameGlossaryConfigs } from "../../configs/gameGlossaryConfig";
 import Phaser from "phaser";
 import { getABI, getContractAddress } from "../../helpers/network";
-import { checkTicket } from "../../helpers/ticket";
+import { checkTicket } from "../../helpers/contracts";
 import { useDispatch, useSelector } from "react-redux";
 import { gameTicketActions } from "../../store/modules/gameTicketSlice";
 import TicketFilter from "./TicketFilter/TicketFilter";
@@ -130,7 +130,11 @@ function GameView() {
       </header>
       <div className={styles.gameGlossaryContent}>
         <div className={styles.gameGlossarySideBlock}>
-          <Leaderboard />
+          <Leaderboard
+            address={address}
+            gameLeaderboardContract={gameLeaderboardContract}
+            transformedGameId={transformedGameId}
+          />
         </div>
         <div className={styles.gameGlossaryFrame}>
           <div id="gameDisplay"></div>
