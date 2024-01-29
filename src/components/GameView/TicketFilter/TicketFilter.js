@@ -96,7 +96,12 @@ function TicketFilter({
         setRedeemingPendingHash("");
         const updatedTickets = await checkTicket(gameTicketContract, address);
         dispatch(gameTicketActions.setTickets(updatedTickets));
-        dispatch(gameTicketActions.setNumberOfLives(livesRedeemed));
+        dispatch(
+          gameTicketActions.setNumberOfLives({
+            gameName: transformedGameId,
+            numberOfLives: livesRedeemed,
+          }),
+        );
         dispatch(gameTicketActions.setShowTicketWindow(false));
         console.log(">>>>>>>>>Redeeming success");
       }

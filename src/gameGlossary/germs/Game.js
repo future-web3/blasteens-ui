@@ -101,7 +101,7 @@ export default class MainGame extends Phaser.Scene {
     this.player.kill();
     this.germs.stop();
 
-    this.store.dispatch(gameTicketActions.useLives());
+    this.store.dispatch(gameTicketActions.useLives("escapeFromGerms"));
 
     this.sound.stopAll();
     this.sound.play("fail");
@@ -126,7 +126,7 @@ export default class MainGame extends Phaser.Scene {
 
     this.input.once("pointerdown", () => {
       const state = this.store.getState();
-      if (state.gameTicket.numberOfLives === 0) {
+      if (state.gameTicket.games["escapeFromGerms"].numberOfLives === 0) {
         this.store.dispatch(
           gameLeaderboardActions.toggleSyncPermission({
             gameName: "escapeFromGerms",
