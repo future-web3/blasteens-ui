@@ -2,7 +2,7 @@ import styles from "./TicketFilter.module.scss";
 import gameViewStyles from "../GameView.module.scss";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useGameDispatch, useGameSelector } from "phaser-simple-game-sdk";
 import { writeContract } from "@wagmi/core";
 import { useWaitForTransaction, useWalletClient } from "wagmi";
 import BN from "bignumber.js";
@@ -29,12 +29,12 @@ function TicketFilter({
 
   const { data: walletClientData } = useWalletClient();
 
-  const dispatch = useDispatch();
-  const tickets = useSelector((state) => state.gameTicket.tickets);
-  const score = useSelector(
+  const dispatch = useGameDispatch();
+  const tickets = useGameSelector((state) => state.gameTicket.tickets);
+  const score = useGameSelector(
     (state) => state.gameLeaderboard[transformedGameId].score,
   );
-  const allowSync = useSelector(
+  const allowSync = useGameSelector(
     (state) => state.gameLeaderboard[transformedGameId].allowSync,
   );
 
