@@ -24,7 +24,7 @@ function Arcade() {
   const { connect, connectors } = useConnect();
   const { address, isConnected } = useAccount();
   const { chain } = useNetwork();
-  const netId = chain ? chain.id : 1;
+  const netId = chain ? chain.id : 5;
 
   const { gameId } = useParams();
 
@@ -133,60 +133,57 @@ function Arcade() {
         <hr />
       </header>
       <div className={styles.gameGlossaryContent}>
-        {/* <div className={styles.gameGlossarySideBlock}>
+        <div className={styles.gameGlossarySideBlock}>
           <Leaderboard
-            address={address}
             gameLeaderboardContract={gameLeaderboardContract}
             transformedGameId={transformedGameId}
           />
-        </div> */}
-        <div className={styles.gameGlossaryFrame}>
-          <div className={styles.gameGlossaryFrameContainer} style={{ backgroundImage: `url('/images/arcade-frame.png')` }}>
-            <div style={{ maxWidth: '500px', marginLeft: '-20px', marginTop: '-20px' }}>
-              <div id="gameDisplay" />
-            </div>
-          </div>
-          {!isConnected && (
-            <div
-              className={styles.gameGlossaryFilter}
-              style={{
-                backgroundImage: `url('/assets/games/${targetGame.key}/background.png')`,
-              }}
-            >
-              <div className={styles.gameGlossaryMenuContainer}>
-                <button
-                  className={
-                    (styles.gameGlossaryWeb3Button,
-                      styles.btn,
-                      styles.drawBorder)
-                  }
-                  onClick={handleConnectWallet}
-                >
-                  Connect Your Wallet
-                </button>
-              </div>
-            </div>
-          )}
-          {/* {showTicketWindow && isConnected && (
-            <div
-              className={`${styles.gameGlossaryFilter} ${styles.ticketInfoContainer}`}
-            >
-              <div
-                className={`${styles.gameGlossaryMenuContainer} ${styles.gameGlossaryMenuContainerForTicket}`}
-              >
-                <TicketFilter
-                  transformedGameId={transformedGameId}
-                  address={address}
-                  gameTicketContract={gameTicketContract}
-                  gameLeaderboardContract={gameLeaderboardContract}
-                />
-              </div>
-            </div>
-          )} */}
         </div>
-        {/* <div className={styles.gameGlossarySideBlock}>
+        <div className={styles.gameGlossaryFrameContainer} style={{ backgroundImage: `url('/images/arcade-frame.png')` }}>
+          <div style={{ maxWidth: '680px', marginLeft: '-20px', marginTop: '-20px', position: 'relative' }}>
+            {isConnected
+              ? <div id="gameDisplay" />
+              : <div
+                className={styles.gameGlossaryFilter}
+                style={{
+                  backgroundImage: `url('/assets/games/${targetGame.key}/background.png')`,
+                }}
+              >
+                <div className={styles.gameGlossaryMenuContainer}>
+                  <button
+                    className={
+                      (styles.gameGlossaryWeb3Button,
+                        styles.btn,
+                        styles.drawBorder)
+                    }
+                    onClick={handleConnectWallet}
+                  >
+                    Connect Your Wallet
+                  </button>
+                </div>
+              </div>}
+
+            {showTicketWindow && isConnected && (
+              <div
+                className={`${styles.gameGlossaryFilter} ${styles.ticketInfoContainer}`}
+              >
+                <div
+                  className={`${styles.gameGlossaryMenuContainer} ${styles.gameGlossaryMenuContainerForTicket}`}
+                >
+                  <TicketFilter
+                    transformedGameId={transformedGameId}
+                    address={address}
+                    gameTicketContract={gameTicketContract}
+                    gameLeaderboardContract={gameLeaderboardContract}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+        <div className={styles.gameGlossarySideBlock}>
           <Inventory />
-        </div> */}
+        </div>
       </div>
     </div>
   );
