@@ -1,7 +1,7 @@
-import { config as germsConfig } from '../gameGlossary/germs/main'
-import { config as tomConfig } from '../gameGlossary/tom/main'
-import { config as snowmanConfig } from '../gameGlossary/snowman/main'
-import { config as emojiConfig } from '../gameGlossary/emoji/main'
+import { config as germsConfig } from '../arcade/germs/main'
+import { config as tomConfig } from '../arcade/tom/main'
+import { config as snowmanConfig } from '../arcade/snowman/main'
+import { config as emojiConfig } from '../arcade/emoji/main'
 
 export const gameConfigs = {
   escapeFromGerms: {
