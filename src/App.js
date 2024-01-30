@@ -7,6 +7,7 @@ import { createConfig, WagmiConfig, mainnet, configureChains } from "wagmi";
 import { jsonRpcProvider } from "@wagmi/core/providers/jsonRpc";
 import config from "./configs";
 import { GameProvider } from "phaser-simple-game-sdk";
+import Market from "./pages/Market/Market";
 
 function App() {
   const { publicClient } = configureChains(
@@ -18,7 +19,7 @@ function App() {
           http: `https://eth-goerli.g.alchemy.com/v2/${config.alchemyKey}`,
         }),
       }),
-    ],
+    ]
   );
 
   const wagmiConfig = createConfig({
@@ -37,6 +38,7 @@ function App() {
               <Route path=":gameId" element={<Arcade />} />
             </Route>
             <Route path="*" element={<div>404 Not Found</div>} />
+            <Route path="market" element={<Market />} />
           </Route>
         </Routes>
       </GameProvider>

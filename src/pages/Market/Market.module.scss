@@ -1,0 +1,139 @@
+@import "../../variables.module.scss";
+
+.outerLayer{
+    width: 100%vw;
+    background-color: $background-color;
+}
+
+.grid{
+    max-width: fit-content;
+    margin: auto;
+    color: $font-color;
+    display: grid;
+    padding-top: 50px;
+    min-height: 95vh;
+    grid-template-columns: repeat(10, 1fr);
+    
+    .leftSection{
+        grid-column: span 3;
+       
+        .assetSection{
+            border-bottom: 5px solid $font-color;
+            border-right: 5px solid $font-color;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex-shrink: 0;
+            gap: 10px;
+            font-family: "Chakra Petch";
+            text-align: center;
+            z-index: 9;
+
+            .h2{
+                font-size: 40px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;    
+            }
+    
+            .h3{
+                font-size: 32px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+            }
+    
+            .p{
+                color: #7DDE92;
+                text-align: center;
+                font-size: 32px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+            }
+        }
+
+        .filterSection{
+            display: flex;
+            flex-direction: column;
+        
+            gap: 5px
+        }
+    }
+
+    .rightSection{
+        grid-column: span 7;
+        
+        margin-left: -5px;
+
+        .NftsContainer{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 53px;
+            border-left: 5px solid $font-color;
+            border-bottom: 5px solid $font-color;
+            padding: 13px;
+            z-index: 10;
+        }
+    }
+}
+
+
+
+
+.NftCard{
+    width: fit-content;
+    padding: 9px;
+    .image{
+        width: 253px;
+        height: 154.508px;
+    }
+
+    .infoSection{
+        max-width: 253px;
+        display: flex;
+        justify-content: space-between;
+
+        .p{
+            color: #FFF;
+            font-family: "Chakra Petch";
+            font-size: 40px;
+            font-style: normal;
+            font-weight: 300;
+            line-height: normal;
+        }
+        
+    }
+}
+
+.buyButton{
+    border-radius: 10px;
+    background: #7D7A92;
+    color: greenyellow;
+    width: 104px;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Chakra Petch";
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.sellButton{
+    border-radius: 10px;
+    background: #7D7A92;
+    color: #F64740;
+    width: 104px;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Chakra Petch";
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
