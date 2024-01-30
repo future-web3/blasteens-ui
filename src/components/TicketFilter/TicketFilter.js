@@ -155,25 +155,22 @@ function TicketFilter({
         console.log(">>>>>>>>>Sync success");
       }
       setIsSyncing(false);
+      if (numberOfLives > 0) {
+        dispatch(
+          gameTicketActions.setShowTicketWindow(false),
+        )
+      }
       dispatch(
         gameLeaderboardActions.toggleSyncPermission({
           gameName: transformedGameId,
           allowSync: false,
         }),
-      );
-      emitter.emit(events.SYNC_FINISH);
+      )
     },
     onError() {
       setSyncPendingHash("");
       setIsSyncing(false);
-      dispatch(
-        gameLeaderboardActions.toggleSyncPermission({
-          gameName: transformedGameId,
-          allowSync: false,
-        }),
-      );
       console.log(">>>>>>>>>Sync finish,but your score is too low");
-      emitter.emit(events.SYNC_FINISH);
     },
   });
 
