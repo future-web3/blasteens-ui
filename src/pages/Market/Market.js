@@ -61,7 +61,6 @@ const Filter = () => {
     <div className={styles.filterWrapper}>
       <h2 className={styles.h2}>{selectedGame}</h2>
       <select value={selectedGame} onChange={e => setSelectedGame(e.target.value)} className={styles.select}>
-        <option value=''>Select a Game</option>
         {filterOptions.map((game, index) => (
           <option key={index} value={game.name}>
             {game.name}
