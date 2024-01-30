@@ -2,7 +2,7 @@ import styles from "./Leaderboard.module.scss";
 import React, { useEffect, useState } from "react";
 import { checkScore } from "../../helpers/contracts";
 import { formatHash } from "../../helpers/network";
-import { useGameSelector } from "phaser-simple-game-sdk";
+import { useGameSelector } from "blast-game-sdk";
 
 function Individual({ rank, points, addressLink, address }) {
   return (
