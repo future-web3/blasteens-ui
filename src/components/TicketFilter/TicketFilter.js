@@ -42,6 +42,8 @@ function TicketFilter({
       (state) => state.gameLeaderboard[transformedGameId]?.allowSync,
     ) || false;
 
+  const numberOfLives = useGameSelector(state => state.gameTicket.games[transformedGameId]?.numberOfLives ?? 0)
+
   const { register, handleSubmit } = useForm({
     defaultValues: {
       buyTicketType: 1,
@@ -126,6 +128,7 @@ function TicketFilter({
       (ticket) => ticket.type.toString() === data.redeemTicketType.toString(),
     );
     setLivesRedeemed(Number(targetTicket.numberOfLives));
+    dispatch(gameLeaderboardActions.resetGameScore(transformedGameId))
 
     try {
       const txReceiptForRedeeming = await writeContract({
@@ -234,12 +237,18 @@ function TicketFilter({
                 gameViewStyles.drawBorder)
             }
             onClick={() => {
-              dispatch(
-                gameLeaderboardActions.toggleSyncPermission({
-                  gameName: transformedGameId,
-                  allowSync: false,
-                }),
-              );
+              if (numberOfLives > 0) {
+                dispatch(
+                  gameTicketActions.setShowTicketWindow(false),
+                );
+              } else {
+                dispatch(
+                  gameLeaderboardActions.toggleSyncPermission({
+                    gameName: transformedGameId,
+                    allowSync: false,
+                  }),
+                );
+              }
             }}
           >
             Restart
