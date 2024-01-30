@@ -1,9 +1,5 @@
 export const gameListConfigs = {
-  indieGame: ["cryptoDungeon"],
-  gameGlossary: [
-    "escapeFromGerms",
-    "tommyJumping",
-    "snowmanDefender",
-    "emojiMatch",
-  ],
-};
+  aaaGame: ['treasureHunters'],
+  indieGame: ['cryptoDungeon', 'spaceRacers'],
+  arcade: ['escapeFromGerms', 'tommyJumping', 'snowmanDefender', 'emojiMatch']
+}
