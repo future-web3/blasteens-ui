@@ -1,5 +1,5 @@
 import styles from "./TicketFilter.module.scss";
-import gameViewStyles from "../../../pages/Arcade/Arcade.module.scss";
+import gameViewStyles from "../../pages/Arcade/Arcade.module.scss";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useGameDispatch, useGameSelector } from "phaser-simple-game-sdk";
@@ -10,10 +10,10 @@ import {
   gameTicketActions,
   gameLeaderboardActions,
 } from "phaser-simple-game-sdk";
-import { checkScore, checkTicket } from "../../../helpers/contracts";
+import { checkScore, checkTicket } from "../../helpers/contracts";
 import { RotatingLines } from "react-loader-spinner";
-import { emitter } from "../../../utils/emitter";
-import events from "../../../constants/events";
+import { emitter } from "../../utils/emitter";
+import events from "../../constants/events";
 
 function TicketFilter({
   transformedGameId,
@@ -215,8 +215,8 @@ function TicketFilter({
           <button
             className={
               (gameViewStyles.gameGlossaryWeb3Button,
-              gameViewStyles.btn,
-              gameViewStyles.drawBorder)
+                gameViewStyles.btn,
+                gameViewStyles.drawBorder)
             }
             onClick={handleSubmit(handleSyncScore)}
             disabled={isSyncing}
@@ -230,8 +230,8 @@ function TicketFilter({
           <button
             className={
               (gameViewStyles.gameGlossaryWeb3Button,
-              gameViewStyles.btn,
-              gameViewStyles.drawBorder)
+                gameViewStyles.btn,
+                gameViewStyles.drawBorder)
             }
             onClick={() => {
               dispatch(
@@ -268,8 +268,8 @@ function TicketFilter({
             <button
               className={
                 (gameViewStyles.gameGlossaryWeb3Button,
-                gameViewStyles.btn,
-                gameViewStyles.drawBorder)
+                  gameViewStyles.btn,
+                  gameViewStyles.drawBorder)
               }
               onClick={handleSubmit(handleBuyTicket)}
               disabled={isBuying}
@@ -297,8 +297,8 @@ function TicketFilter({
             <button
               className={
                 (gameViewStyles.gameGlossaryWeb3Button,
-                gameViewStyles.btn,
-                gameViewStyles.drawBorder)
+                  gameViewStyles.btn,
+                  gameViewStyles.drawBorder)
               }
               onClick={handleSubmit(handleRedeemTicket)}
               disabled={isRedeeming}

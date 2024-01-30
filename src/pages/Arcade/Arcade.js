@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import styles from "./Arcade.module.scss";
 import React, { useEffect, useMemo } from "react";
-import { useAccount, useConnect, useNetwork, useWalletClient } from "wagmi";
+import { useAccount, useConnect, useNetwork } from "wagmi";
 
 import { gameConfigs } from "../../configs/gameConfig";
 import Phaser from "phaser";
@@ -13,7 +13,7 @@ import {
   gameTicketActions,
   gameLeaderboardActions,
 } from "phaser-simple-game-sdk";
-import TicketFilter from "../../components/GameView/TicketFilter/TicketFilter";
+import TicketFilter from "../../components/TicketFilter/TicketFilter";
 import Leaderboard from "../../components/Leaderboard/Leaderboard";
 import Inventory from "../../components/Inventory/Inventory";
 
@@ -160,8 +160,8 @@ function Arcade() {
                 <button
                   className={
                     (styles.gameGlossaryWeb3Button,
-                    styles.btn,
-                    styles.drawBorder)
+                      styles.btn,
+                      styles.drawBorder)
                   }
                   onClick={handleConnectWallet}
                 >
