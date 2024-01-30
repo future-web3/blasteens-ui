@@ -1,6 +1,6 @@
 import styles from "./Inventory.module.scss";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
+import { useGameSelector } from "phaser-simple-game-sdk";
 import { useAccount } from "wagmi";
 
 function NFT({ name, addressLink, imageURL, amount }) {
@@ -24,7 +24,7 @@ function NFT({ name, addressLink, imageURL, amount }) {
 function Inventory() {
   const { isConnected } = useAccount();
 
-  const tickets = useSelector((state) => state.gameTicket.tickets);
+  const tickets = useGameSelector((state) => state.gameTicket.tickets);
 
   const nfts = [
     {

@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import styles from "./GameView.module.scss";
+import styles from "./Arcade.module.scss";
 import React, { useEffect, useMemo } from "react";
 import { useAccount, useConnect, useNetwork, useWalletClient } from "wagmi";
 
@@ -7,15 +7,19 @@ import { gameConfigs } from "../../configs/gameConfig";
 import Phaser from "phaser";
 import { getABI, getContractAddress } from "../../helpers/network";
 import { checkTicket } from "../../helpers/contracts";
-import { useDispatch, useSelector } from "react-redux";
-import { gameTicketActions } from "../../store/modules/gameTicketSlice";
-import TicketFilter from "./TicketFilter/TicketFilter";
-import Leaderboard from "../Leaderboard/Leaderboard";
-import Inventory from "../Inventory/Inventory";
+import {
+  useGameSelector,
+  useGameDispatch,
+  gameTicketActions,
+  gameLeaderboardActions,
+} from "phaser-simple-game-sdk";
+import TicketFilter from "../../components/GameView/TicketFilter/TicketFilter";
+import Leaderboard from "../../components/Leaderboard/Leaderboard";
+import Inventory from "../../components/Inventory/Inventory";
 
 let game = null;
 
-function GameView() {
+function Arcade() {
   const transformId = (id) => {
     let words = id.split("-");
     let transformedWords = words.map((word, index) => {
@@ -33,13 +37,20 @@ function GameView() {
 
   const transformedGameId = transformId(gameId);
 
-  const dispatch = useDispatch();
+  const dispatch = useGameDispatch();
 
-  const numberOfLives = useSelector(
-    (state) => state.gameTicket.games[transformedGameId].numberOfLives
+  const games = useGameSelector((state) => state.gameTicket.games);
+
+  if (!games[transformedGameId] && gameConfigs[transformedGameId]) {
+    dispatch(gameTicketActions.addGame(transformedGameId));
+    dispatch(gameLeaderboardActions.addGame(transformedGameId));
+  }
+
+  const numberOfLives = useGameSelector(
+    (state) => state.gameTicket.games[transformedGameId]?.numberOfLives || 0,
   );
-  const showTicketWindow = useSelector(
-    (state) => state.gameTicket.showTicketWindow
+  const showTicketWindow = useGameSelector(
+    (state) => state.gameTicket.showTicketWindow,
   );
 
   const targetGame = gameConfigs[transformedGameId];
@@ -196,4 +207,4 @@ function GameView() {
     </div>
   );
 }
-export default GameView;
+export default Arcade;

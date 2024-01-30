@@ -1,17 +1,19 @@
 import styles from "./TicketFilter.module.scss";
-import gameViewStyles from "../GameView.module.scss";
+import gameViewStyles from "../../../pages/Arcade/Arcade.module.scss";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useGameDispatch, useGameSelector } from "phaser-simple-game-sdk";
 import { writeContract } from "@wagmi/core";
 import { useWaitForTransaction, useWalletClient } from "wagmi";
 import BN from "bignumber.js";
-import { gameTicketActions } from "../../../store/modules/gameTicketSlice";
-import { checkTicket } from "../../../helpers/contracts";
+import {
+  gameTicketActions,
+  gameLeaderboardActions,
+} from "phaser-simple-game-sdk";
+import { checkScore, checkTicket } from "../../../helpers/contracts";
 import { RotatingLines } from "react-loader-spinner";
 import { emitter } from "../../../utils/emitter";
 import events from "../../../constants/events";
-import { gameLeaderboardActions } from "../../../store/modules/gameLeaderboardSlice";
 
 function TicketFilter({
   transformedGameId,
@@ -22,21 +24,23 @@ function TicketFilter({
   const [isBuying, setIsBuying] = useState(false);
   const [isRedeeming, setIsRedeeming] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
-  const [syncPendingHash, setSyncPendingHash] = useState("");
   const [livesRedeemed, setLivesRedeemed] = useState(0);
+  const [syncPendingHash, setSyncPendingHash] = useState("");
   const [buyingPendingHash, setBuyingPendingHash] = useState("");
   const [redeemingPendingHash, setRedeemingPendingHash] = useState("");
 
   const { data: walletClientData } = useWalletClient();
 
-  const dispatch = useDispatch();
-  const tickets = useSelector((state) => state.gameTicket.tickets);
-  const score = useSelector(
-    (state) => state.gameLeaderboard[transformedGameId].score,
-  );
-  const allowSync = useSelector(
-    (state) => state.gameLeaderboard[transformedGameId].allowSync,
-  );
+  const dispatch = useGameDispatch();
+  const tickets = useGameSelector((state) => state.gameTicket.tickets);
+  const score =
+    useGameSelector(
+      (state) => state.gameLeaderboard[transformedGameId]?.score,
+    ) || 0;
+  const allowSync =
+    useGameSelector(
+      (state) => state.gameLeaderboard[transformedGameId]?.allowSync,
+    ) || false;
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
@@ -175,6 +179,20 @@ function TicketFilter({
     const args = [address, score];
 
     try {
+      const currentLeaderboard = await checkScore(
+        gameLeaderboardContract,
+        transformedGameId,
+      );
+      if (!currentLeaderboard) {
+        setIsSyncing(false);
+        return;
+      }
+      if (currentLeaderboard.length >= 10) {
+        if (Number(score) <= Number(currentLeaderboard[9].points)) {
+          setIsSyncing(false);
+          return;
+        }
+      }
       const txReceiptForSyncing = await writeContract({
         ...gameLeaderboardContract,
         account: walletClientData.account.address,

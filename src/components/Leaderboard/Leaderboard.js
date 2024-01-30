@@ -2,7 +2,7 @@ import styles from "./Leaderboard.module.scss";
 import React, { useEffect, useState } from "react";
 import { checkScore } from "../../helpers/contracts";
 import { formatHash } from "../../helpers/network";
-import { useSelector } from "react-redux";
+import { useGameSelector } from "phaser-simple-game-sdk";
 
 function Individual({ rank, points, addressLink, address }) {
   return (
@@ -24,9 +24,10 @@ function Individual({ rank, points, addressLink, address }) {
 
 function Leaderboard({ address, gameLeaderboardContract, transformedGameId }) {
   const [individuals, setIndividuals] = useState([]);
-  const allowSync = useSelector(
-    (state) => state.gameLeaderboard[transformedGameId].allowSync,
-  );
+  const allowSync =
+    useGameSelector(
+      (state) => state.gameLeaderboard[transformedGameId]?.allowSync,
+    ) || false;
 
   useEffect(() => {
     const checkScoreHandler = async () => {

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./GameCard.module.scss";
 import { gameConfigs } from "../../configs/gameConfig";
-import gameViewStyles from "../GameView/GameView.module.scss";
+import gameViewStyles from "../../pages/Arcade/Arcade.module.scss";
 
 function GameCard({ gameId }) {
   const logoUrl = `/assets/games/${gameConfigs[gameId]["key"]}/logo.png`;

@@ -100,7 +100,7 @@ export const mapScore = async (data, gameName) => {
       return {
         rank,
         address: "-",
-        points: "-",
+        points: "0",
       };
     })
     .filter((item) => item !== null);
