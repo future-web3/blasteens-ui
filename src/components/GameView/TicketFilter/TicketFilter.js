@@ -1,5 +1,5 @@
 import styles from "./TicketFilter.module.scss";
-import gameViewStyles from "../GameView.module.scss";
+import gameViewStyles from "../../../pages/Arcade/Arcade.module.scss";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useGameDispatch, useGameSelector } from "phaser-simple-game-sdk";

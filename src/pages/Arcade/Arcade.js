@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
-import styles from "./GameView.module.scss";
+import styles from "./Arcade.module.scss";
 import React, { useEffect, useMemo } from "react";
-import { useAccount, useConnect, useNetwork } from "wagmi";
+import { useAccount, useConnect, useNetwork, useWalletClient } from "wagmi";
 
-import { gameGlossaryConfigs } from "../../configs/gameGlossaryConfig";
+import { gameConfigs } from "../../configs/gameConfig";
 import Phaser from "phaser";
 import { getABI, getContractAddress } from "../../helpers/network";
 import { checkTicket } from "../../helpers/contracts";
@@ -13,13 +13,13 @@ import {
   gameTicketActions,
   gameLeaderboardActions,
 } from "phaser-simple-game-sdk";
-import TicketFilter from "./TicketFilter/TicketFilter";
-import Leaderboard from "../Leaderboard/Leaderboard";
-import Inventory from "../Inventory/Inventory";
+import TicketFilter from "../../components/GameView/TicketFilter/TicketFilter";
+import Leaderboard from "../../components/Leaderboard/Leaderboard";
+import Inventory from "../../components/Inventory/Inventory";
 
 let game = null;
 
-function GameView() {
+function Arcade() {
   const transformId = (id) => {
     let words = id.split("-");
     let transformedWords = words.map((word, index) => {
@@ -41,7 +41,7 @@ function GameView() {
 
   const games = useGameSelector((state) => state.gameTicket.games);
 
-  if (!games[transformedGameId] && gameGlossaryConfigs[transformedGameId]) {
+  if (!games[transformedGameId] && gameConfigs[transformedGameId]) {
     dispatch(gameTicketActions.addGame(transformedGameId));
     dispatch(gameLeaderboardActions.addGame(transformedGameId));
   }
@@ -53,7 +53,7 @@ function GameView() {
     (state) => state.gameTicket.showTicketWindow,
   );
 
-  const targetGame = gameGlossaryConfigs[transformedGameId];
+  const targetGame = gameConfigs[transformedGameId];
 
   const gameTicketContract = useMemo(() => {
     const address = getContractAddress("TICKET", netId);
@@ -207,4 +207,4 @@ function GameView() {
     </div>
   );
 }
-export default GameView;
+export default Arcade;

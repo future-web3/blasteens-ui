@@ -13,16 +13,16 @@ function Navbar() {
           <Link to="/about">About</Link>
         </li>
         <li>
-          <Link to="/game-glossary/escape-from-germs">Germs</Link>
+          <Link to="/arcade/escape-from-germs">Germs</Link>
         </li>
         <li>
-          <Link to="/game-glossary/tommy-jumping">Tom</Link>
+          <Link to="/arcade/tommy-jumping">Tom</Link>
         </li>
         <li>
-          <Link to="/game-glossary/snowman-defender">Snowman</Link>
+          <Link to="/arcade/snowman-defender">Snowman</Link>
         </li>
         <li>
-          <Link to="/game-glossary/emoji-match">Emoji</Link>
+          <Link to="/arcade/emoji-match">Emoji</Link>
         </li>
         <li>
           <Link to="/crypto-dungeon">Crypto Dungeon</Link>

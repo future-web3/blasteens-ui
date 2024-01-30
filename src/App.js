@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
-import GameView from "./components/GameView/GameView";
+import Homepage from "./pages/Homepage/Homepage";
+import Arcade from "./pages/Arcade/Arcade";
 import { goerli } from "wagmi/chains";
 import { createConfig, WagmiConfig, mainnet, configureChains } from "wagmi";
 import { jsonRpcProvider } from "@wagmi/core/providers/jsonRpc";
@@ -30,12 +31,11 @@ function App() {
       <GameProvider>
         <Routes>
           <Route path="/" element={<Navbar />}>
-            <Route index element={<div>Homepage</div>} />
+            <Route index element={<Homepage />} />
             <Route path="about" element={<div>About Us</div>} />
-            <Route path="game-glossary">
-              <Route path=":gameId" element={<GameView />} />
+            <Route path="arcade">
+              <Route path=":gameId" element={<Arcade />} />
             </Route>
-            <Route path="crypto-dungeon" element={<div>Crypto Dungeon</div>} />
             <Route path="*" element={<div>404 Not Found</div>} />
           </Route>
         </Routes>
