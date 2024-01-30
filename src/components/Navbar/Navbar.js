@@ -1,5 +1,6 @@
 import { Outlet, Link } from "react-router-dom";
 import styles from "./Navbar.module.scss";
+import { FaWallet } from "react-icons/fa";
 import React from "react";
 
 function Navbar() {
@@ -25,9 +26,13 @@ function Navbar() {
           <Link to="/arcade/emoji-match">Emoji</Link>
         </li>
         <li>
-          <Link to="/crypto-dungeon">Crypto Dungeon</Link>
+          <div className={styles.walletIconContainer}>
+            <FaWallet />
+            Connect
+          </div>
         </li>
       </ul>
+
       <Outlet />
     </div>
   );

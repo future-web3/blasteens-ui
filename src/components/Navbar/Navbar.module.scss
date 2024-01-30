@@ -80,4 +80,12 @@
       color: $primary-color;
     }
   }
+
+  .walletIconContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: $font-color;
+    font-weight: bold;
+  }
 }
