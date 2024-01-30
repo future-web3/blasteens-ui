@@ -12,8 +12,6 @@ import {
 } from "blast-game-sdk";
 import { checkScore, checkTicket } from "../../helpers/contracts";
 import { RotatingLines } from "react-loader-spinner";
-import { emitter } from "../../utils/emitter";
-import events from "../../constants/events";
 
 function TicketFilter({
   transformedGameId,

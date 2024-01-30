@@ -21,10 +21,10 @@ export const config = {
   // height: 360,
   scale: {
     parent: "gameDisplay",
-		mode: Phaser.Scale.FIT,
+    mode: Phaser.Scale.FIT,
     width: 640,
     height: 360,
   },
-	autoCenter: Phaser.Scale.CENTER_VERTICALLY,
+  // autoCenter: Phaser.Scale.CENTER_VERTICALLY,
   scene: [Preloader, UI, Play, Menu],
 };
