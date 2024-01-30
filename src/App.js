@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
+import Homepage from "./components/Homepage/Homepage";
 import GameView from "./components/GameView/GameView";
 import { goerli } from "wagmi/chains";
 import { createConfig, WagmiConfig, mainnet, configureChains } from "wagmi";
@@ -18,7 +19,7 @@ function App() {
           http: `https://eth-goerli.g.alchemy.com/v2/${config.alchemyKey}`,
         }),
       }),
-    ],
+    ]
   );
 
   const wagmiConfig = createConfig({
@@ -31,7 +32,7 @@ function App() {
       <Provider store={store}>
         <Routes>
           <Route path="/" element={<Navbar />}>
-            <Route index element={<div>Homepage</div>} />
+            <Route index element={<Homepage />} />
             <Route path="about" element={<div>About Us</div>} />
             <Route path="game-glossary">
               <Route path=":gameId" element={<GameView />} />
