@@ -22,7 +22,7 @@ function Individual({ rank, points, addressLink, address }) {
   );
 }
 
-function Leaderboard({ address, gameLeaderboardContract, transformedGameId }) {
+function Leaderboard({ gameLeaderboardContract, transformedGameId }) {
   const [individuals, setIndividuals] = useState([]);
   const allowSync =
     useGameSelector(
@@ -31,13 +31,12 @@ function Leaderboard({ address, gameLeaderboardContract, transformedGameId }) {
 
   useEffect(() => {
     const checkScoreHandler = async () => {
-      if (!address || !gameLeaderboardContract) return;
       const data = await checkScore(gameLeaderboardContract, transformedGameId);
       setIndividuals(data);
     };
 
     checkScoreHandler();
-  }, [address, gameLeaderboardContract, allowSync]);
+  }, [gameLeaderboardContract, allowSync, transformedGameId]);
 
   return (
     <div className={styles.leaderboardContainer}>
