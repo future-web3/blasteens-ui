@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import Track from "./Track.js";
 import Player from "./Player.js";
+import { createGameSDK } from "blast-game-sdk";
 
 export default class MainGame extends Phaser.Scene {
   constructor() {
@@ -10,17 +11,15 @@ export default class MainGame extends Phaser.Scene {
     this.tracks = null;
 
     this.score = 0;
-    this.highscore = 0;
     this.infoPanel = null;
 
     this.scoreTimer = null;
     this.scoreText = null;
-    this.highscoreText = null;
+    this.sdk = createGameSDK('snowmanDefender')
   }
 
   create() {
     this.score = 0;
-    this.highscore = this.registry.get("highscore");
 
     this.add.image(512, 384, "background");
 
@@ -36,15 +35,9 @@ export default class MainGame extends Phaser.Scene {
     this.add.image(0, 0, "overlay").setOrigin(0);
 
     this.add.image(16, 0, "sprites", "panel-score").setOrigin(0);
-    this.add.image(1024 - 16, 0, "sprites", "panel-best").setOrigin(1, 0);
 
     this.infoPanel = this.add.image(512, 384, "sprites", "controls");
     this.scoreText = this.add.text(140, 2, this.score, {
-      fontFamily: "Arial",
-      fontSize: 32,
-      color: "#ffffff",
-    });
-    this.highscoreText = this.add.text(820, 2, this.highscore, {
       fontFamily: "Arial",
       fontSize: 32,
       color: "#ffffff",
@@ -104,28 +97,15 @@ export default class MainGame extends Phaser.Scene {
 
     this.player.stop();
 
+    this.sdk.useLives();
+
     this.scoreTimer.destroy();
 
-    if (this.score > this.highscore) {
-      this.highscoreText.setText("NEW!");
+    this.sdk.updateHighScore(this.score);
+    this.sdk.endGame(() => { });
 
-      this.registry.set("highscore", this.score);
-    }
-
-    this.input.keyboard.once(
-      "keydown-SPACE",
-      () => {
-        this.scene.start("MainMenu");
-      },
-      this
-    );
-
-    this.input.once(
-      "pointerdown",
-      () => {
-        this.scene.start("MainMenu");
-      },
-      this
-    );
+    this.input.once("pointerdown", () => {
+      this.scene.start("MainMenu");
+    });
   }
 }
