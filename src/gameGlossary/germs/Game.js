@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import Germs from "./Germs.js";
 import Player from "./Player.js";
 import Pickups from "./Pickups.js";
-import { createGameSDK } from "phaser-simple-game-sdk";
+import { createGameSDK } from "blast-game-sdk";
 
 export default class MainGame extends Phaser.Scene {
   constructor() {
@@ -15,16 +15,12 @@ export default class MainGame extends Phaser.Scene {
     this.introText = null;
     this.scoreText = null;
     this.score = 0;
-    this.highscore = 0;
-    this.newHighscore = false;
 
     this.sdk = createGameSDK("escapeFromGerms");
   }
 
   create() {
     this.score = 0;
-    this.highscore = this.registry.get("highscore");
-    this.newHighscore = false;
 
     this.add.image(400, 300, "background").setScale(2);
 
@@ -79,18 +75,20 @@ export default class MainGame extends Phaser.Scene {
 
     this.scoreText.setText("Score   " + this.score);
 
-    if (!this.newHighscore && this.score > this.highscore) {
-      if (this.highscore > 0) {
-        //  Only play the victory sound if they actually set a new highscore
-        this.sound.play("victory");
-      } else {
-        this.sound.play("pickup");
-      }
+    this.sound.play("victory");
 
-      this.newHighscore = true;
-    } else {
-      this.sound.play("pickup");
-    }
+    // if (!this.newHighscore && this.score > this.highscore) {
+    //   if (this.highscore > 0) {
+    //     //  Only play the victory sound if they actually set a new highscore
+    //     this.sound.play("victory");
+    //   } else {
+    //     this.sound.play("pickup");
+    //   }
+
+    //   this.newHighscore = true;
+    // } else {
+    //   this.sound.play("pickup");
+    // }
 
     this.pickups.collect(pickup);
   }
@@ -112,13 +110,10 @@ export default class MainGame extends Phaser.Scene {
       duration: 300,
     });
 
-    if (this.newHighscore) {
-      this.registry.set("highscore", this.score);
-      this.sdk.updateHighScore(this.score);
-    }
+    this.sdk.updateHighScore(this.score);
+    this.sdk.endGame(() => { });
 
     this.input.once("pointerdown", () => {
-      this.sdk.endGame(() => {});
       this.scene.start("MainMenu");
     });
   }

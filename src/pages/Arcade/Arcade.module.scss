@@ -134,6 +134,17 @@
   }
 }
 
+.gameGlossaryFrameContainer {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-width: 800px;
+  min-height: 800px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .gameGlossaryFrame {
   flex: 4;
   display: flex;

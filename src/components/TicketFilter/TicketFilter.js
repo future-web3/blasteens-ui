@@ -2,18 +2,16 @@ import styles from "./TicketFilter.module.scss";
 import gameViewStyles from "../../pages/Arcade/Arcade.module.scss";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useGameDispatch, useGameSelector } from "phaser-simple-game-sdk";
+import { useGameDispatch, useGameSelector } from "blast-game-sdk";
 import { writeContract } from "@wagmi/core";
 import { useWaitForTransaction, useWalletClient } from "wagmi";
 import BN from "bignumber.js";
 import {
   gameTicketActions,
   gameLeaderboardActions,
-} from "phaser-simple-game-sdk";
+} from "blast-game-sdk";
 import { checkScore, checkTicket } from "../../helpers/contracts";
 import { RotatingLines } from "react-loader-spinner";
-import { emitter } from "../../utils/emitter";
-import events from "../../constants/events";
 
 function TicketFilter({
   transformedGameId,
@@ -41,6 +39,8 @@ function TicketFilter({
     useGameSelector(
       (state) => state.gameLeaderboard[transformedGameId]?.allowSync,
     ) || false;
+
+  const numberOfLives = useGameSelector(state => state.gameTicket.games[transformedGameId]?.numberOfLives ?? 0)
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
@@ -126,6 +126,7 @@ function TicketFilter({
       (ticket) => ticket.type.toString() === data.redeemTicketType.toString(),
     );
     setLivesRedeemed(Number(targetTicket.numberOfLives));
+    dispatch(gameLeaderboardActions.resetGameScore(transformedGameId))
 
     try {
       const txReceiptForRedeeming = await writeContract({
@@ -152,25 +153,22 @@ function TicketFilter({
         console.log(">>>>>>>>>Sync success");
       }
       setIsSyncing(false);
+      if (numberOfLives > 0) {
+        dispatch(
+          gameTicketActions.setShowTicketWindow(false),
+        )
+      }
       dispatch(
         gameLeaderboardActions.toggleSyncPermission({
           gameName: transformedGameId,
           allowSync: false,
         }),
-      );
-      emitter.emit(events.SYNC_FINISH);
+      )
     },
     onError() {
       setSyncPendingHash("");
       setIsSyncing(false);
-      dispatch(
-        gameLeaderboardActions.toggleSyncPermission({
-          gameName: transformedGameId,
-          allowSync: false,
-        }),
-      );
       console.log(">>>>>>>>>Sync finish,but your score is too low");
-      emitter.emit(events.SYNC_FINISH);
     },
   });
 
@@ -234,12 +232,18 @@ function TicketFilter({
                 gameViewStyles.drawBorder)
             }
             onClick={() => {
-              dispatch(
-                gameLeaderboardActions.toggleSyncPermission({
-                  gameName: transformedGameId,
-                  allowSync: false,
-                }),
-              );
+              if (numberOfLives > 0) {
+                dispatch(
+                  gameTicketActions.setShowTicketWindow(false),
+                );
+              } else {
+                dispatch(
+                  gameLeaderboardActions.toggleSyncPermission({
+                    gameName: transformedGameId,
+                    allowSync: false,
+                  }),
+                );
+              }
             }}
           >
             Restart

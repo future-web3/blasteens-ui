@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-import { createGameSDK } from "phaser-simple-game-sdk";
+import { createGameSDK } from "blast-game-sdk";
 
 export default class MainMenu extends Phaser.Scene {
   constructor() {
