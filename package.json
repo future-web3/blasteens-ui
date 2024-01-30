@@ -19,6 +19,7 @@
     "react-redux": "^9.1.0",
     "react-router-dom": "^6.9.0",
     "react-scripts": "5.0.1",
+    "react-widgets": "^5.8.4",
     "sass": "^1.70.0",
     "viem": "^1.20.0",
     "wagmi": "^1.2",
