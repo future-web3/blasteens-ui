@@ -24,8 +24,8 @@ function TicketFilter({
   const [isBuying, setIsBuying] = useState(false);
   const [isRedeeming, setIsRedeeming] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
-  const [syncPendingHash, setSyncPendingHash] = useState("");
   const [livesRedeemed, setLivesRedeemed] = useState(0);
+  const [syncPendingHash, setSyncPendingHash] = useState("");
   const [buyingPendingHash, setBuyingPendingHash] = useState("");
   const [redeemingPendingHash, setRedeemingPendingHash] = useState("");
 
@@ -183,13 +183,15 @@ function TicketFilter({
         gameLeaderboardContract,
         transformedGameId,
       );
-      console.log(currentLeaderboard[9].points);
-      if (
-        !currentLeaderboard ||
-        Number(score) <= Number(currentLeaderboard[9].points)
-      ) {
+      if (!currentLeaderboard) {
         setIsSyncing(false);
         return;
+      }
+      if (currentLeaderboard.length >= 10) {
+        if (Number(score) <= Number(currentLeaderboard[9].points)) {
+          setIsSyncing(false);
+          return;
+        }
       }
       const txReceiptForSyncing = await writeContract({
         ...gameLeaderboardContract,

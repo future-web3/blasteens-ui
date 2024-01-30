@@ -10,9 +10,9 @@ import { checkTicket } from "../../helpers/contracts";
 import {
   useGameSelector,
   useGameDispatch,
+  gameTicketActions,
   gameLeaderboardActions,
 } from "phaser-simple-game-sdk";
-import { gameTicketActions } from "phaser-simple-game-sdk";
 import TicketFilter from "./TicketFilter/TicketFilter";
 import Leaderboard from "../Leaderboard/Leaderboard";
 import Inventory from "../Inventory/Inventory";
