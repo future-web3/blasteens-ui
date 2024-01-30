@@ -12,22 +12,15 @@ import {
   useGameDispatch,
   gameTicketActions,
   gameLeaderboardActions,
-} from "phaser-simple-game-sdk";
+} from "blast-game-sdk";
 import TicketFilter from "../../components/TicketFilter/TicketFilter";
 import Leaderboard from "../../components/Leaderboard/Leaderboard";
 import Inventory from "../../components/Inventory/Inventory";
+import { transformId } from "../../helpers/utils";
 
 let game = null;
 
 function Arcade() {
-  const transformId = (id) => {
-    let words = id.split("-");
-    let transformedWords = words.map((word, index) => {
-      return index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1);
-    });
-    return transformedWords.join("");
-  };
-
   const { connect, connectors } = useConnect();
   const { address, isConnected } = useAccount();
   const { chain } = useNetwork();
@@ -140,15 +133,19 @@ function Arcade() {
         <hr />
       </header>
       <div className={styles.gameGlossaryContent}>
-        <div className={styles.gameGlossarySideBlock}>
+        {/* <div className={styles.gameGlossarySideBlock}>
           <Leaderboard
             address={address}
             gameLeaderboardContract={gameLeaderboardContract}
             transformedGameId={transformedGameId}
           />
-        </div>
+        </div> */}
         <div className={styles.gameGlossaryFrame}>
-          <div id="gameDisplay"></div>
+          <div className={styles.gameGlossaryFrameContainer} style={{ backgroundImage: `url('/images/arcade-frame.png')` }}>
+            <div style={{ maxWidth: '500px', marginLeft: '-20px', marginTop: '-20px' }}>
+              <div id="gameDisplay" />
+            </div>
+          </div>
           {!isConnected && (
             <div
               className={styles.gameGlossaryFilter}
@@ -170,7 +167,7 @@ function Arcade() {
               </div>
             </div>
           )}
-          {showTicketWindow && isConnected && (
+          {/* {showTicketWindow && isConnected && (
             <div
               className={`${styles.gameGlossaryFilter} ${styles.ticketInfoContainer}`}
             >
@@ -185,24 +182,11 @@ function Arcade() {
                 />
               </div>
             </div>
-          )}
+          )} */}
         </div>
-        <div className={styles.gameGlossarySideBlock}>
+        {/* <div className={styles.gameGlossarySideBlock}>
           <Inventory />
-        </div>
-      </div>
-      <div className={styles.gameGlossaryDescription}>
-        <hr />
-        <h3>About this Game</h3>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
+        </div> */}
       </div>
     </div>
   );

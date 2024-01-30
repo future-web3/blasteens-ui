@@ -21,6 +21,6 @@ export const config = {
     width: 1024,
     height: 768,
   },
-  autoCenter: Phaser.Scale.CENTER_VERTICALLY,
+  // autoCenter: Phaser.Scale.CENTER_VERTICALLY,
   scene: [Boot, Preloader, MainMenu, MainGame],
 };

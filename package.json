@@ -9,9 +9,9 @@
     "@testing-library/user-event": "^13.5.0",
     "@web3modal/wagmi": "^3.5.7",
     "bignumber.js": "^9.1.2",
+    "blast-game-sdk": "1.0.3-beta",
     "ethers": "5.7.2",
     "phaser": "^3.70.0",
-    "phaser-simple-game-sdk": "1.1.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.49.3",
@@ -49,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "eslint": "^8.2.0",
     "prettier": "^3.2.4"
   }
