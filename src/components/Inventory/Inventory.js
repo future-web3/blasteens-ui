@@ -1,6 +1,6 @@
 import styles from "./Inventory.module.scss";
 import React from "react";
-import { useGameSelector } from "phaser-simple-game-sdk";
+import { useGameSelector } from "blast-game-sdk";
 import { useAccount } from "wagmi";
 
 function NFT({ name, addressLink, imageURL, amount }) {

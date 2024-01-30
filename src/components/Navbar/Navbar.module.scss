@@ -81,4 +81,26 @@
       color: $primary-color;
     }
   }
+
+  .walletIconContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $font-color;
+    font-weight: bold;
+    height: 100%;
+    cursor: pointer;
+  }
+
+  .avatarContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    .avatar {
+      height: 25px;
+      width: 25px;
+      border-radius: 100%;
+    }
+  }
 }
