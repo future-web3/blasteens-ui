@@ -25,6 +25,7 @@
             justify-content: center;
             flex-shrink: 0;
             gap: 10px;
+            padding: 40px 0px;
             font-family: "Chakra Petch";
             text-align: center;
             z-index: 9;
@@ -56,20 +57,77 @@
         .filterSection{
             display: flex;
             flex-direction: column;
-        
-            gap: 5px
+            padding: 40px 0;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+
+            .filterWrapper{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+                .h2{
+                    color: #FFC906;
+                    text-align: center;
+                    font-family: "Chakra Petch";
+                    font-size: 32px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                }
+
+                .select{
+                    margin: 20px 0;
+                }
+
+                .optionList{
+                    width: 80%;
+                    height: auto;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    
+
+                    .optionItem{
+                        display: flex;
+                        gap: 10px
+                    }
+
+                    .optionLabel{
+                        width: 80%;
+                        color: #BEBEBE;
+                        text-align: center;
+                        font-family: "Chakra Petch";
+                        font-size: 20px;
+                        font-style: normal;
+                        font-weight: 700;
+                        line-height: normal;
+                    }
+
+
+                }
+
+
+               
+
+            }
+
+
+
+
         }
     }
 
     .rightSection{
         grid-column: span 7;
-        
         margin-left: -5px;
 
         .NftsContainer{
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 53px;
+            gap: 49px;
             border-left: 5px solid $font-color;
             border-bottom: 5px solid $font-color;
             padding: 13px;
@@ -78,15 +136,12 @@
     }
 }
 
-
-
-
 .NftCard{
     width: fit-content;
     padding: 9px;
     .image{
-        width: 253px;
-        height: 154.508px;
+        width: 250px;
+        height: 160px;
     }
 
     .infoSection{
@@ -101,8 +156,7 @@
             font-style: normal;
             font-weight: 300;
             line-height: normal;
-        }
-        
+        }   
     }
 }
 
