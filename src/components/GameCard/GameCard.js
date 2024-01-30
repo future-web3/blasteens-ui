@@ -5,7 +5,7 @@ import gameViewStyles from "../../pages/Arcade/Arcade.module.scss";
 
 function GameCard({ gameId }) {
   const logoUrl = `/assets/games/${gameConfigs[gameId]["key"]}/logo.png`;
-  console.log(logoUrl);
+
   return (
     <div className={styles.gameCardContainer}>
       <h3>{gameConfigs[gameId]["name"]}</h3>
@@ -19,8 +19,8 @@ function GameCard({ gameId }) {
         <button
           className={
             (gameViewStyles.gameGlossaryWeb3Button,
-            gameViewStyles.btn,
-            gameViewStyles.drawBorder)
+              gameViewStyles.btn,
+              gameViewStyles.drawBorder)
           }
         >
           PLAY
