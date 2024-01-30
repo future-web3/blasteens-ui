@@ -1,7 +1,7 @@
 @import "../../variables.module";
 
 @mixin btn-border-drawing(
-  $color: $territory-color,
+  $color: $success-color,
   $hover: $black,
   $width: 100px,
   $vertical: top,
@@ -193,7 +193,7 @@
 
 .drawBorder {
   @include btn-border-drawing(
-    $territory-color,
+    $success-color,
     $primary-color,
     2px,
     bottom,

@@ -1,4 +1,4 @@
-@import "../../variables.module.scss";
+@import '../../variables.module.scss';
 
 * {
   box-sizing: border-box;
@@ -45,7 +45,7 @@
       }
 
       &::after {
-        content: "";
+        content: '';
         position: absolute;
         width: 0px;
         height: 100px;
@@ -78,6 +78,28 @@
 
     &:hover {
       color: $primary-color;
+    }
+  }
+
+  .walletIconContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $font-color;
+    font-weight: bold;
+    height: 100%;
+    cursor: pointer;
+  }
+
+  .avatarContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    .avatar {
+      height: 25px;
+      width: 25px;
+      border-radius: 100%;
     }
   }
 }
