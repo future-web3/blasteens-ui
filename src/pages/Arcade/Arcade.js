@@ -12,7 +12,7 @@ import {
   useGameDispatch,
   gameTicketActions,
   gameLeaderboardActions,
-} from "phaser-simple-game-sdk";
+} from "blast-game-sdk";
 import TicketFilter from "../../components/TicketFilter/TicketFilter";
 import Leaderboard from "../../components/Leaderboard/Leaderboard";
 import Inventory from "../../components/Inventory/Inventory";

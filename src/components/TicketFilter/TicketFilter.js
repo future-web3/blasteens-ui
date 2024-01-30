@@ -2,14 +2,14 @@ import styles from "./TicketFilter.module.scss";
 import gameViewStyles from "../../pages/Arcade/Arcade.module.scss";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useGameDispatch, useGameSelector } from "phaser-simple-game-sdk";
+import { useGameDispatch, useGameSelector } from "blast-game-sdk";
 import { writeContract } from "@wagmi/core";
 import { useWaitForTransaction, useWalletClient } from "wagmi";
 import BN from "bignumber.js";
 import {
   gameTicketActions,
   gameLeaderboardActions,
-} from "phaser-simple-game-sdk";
+} from "blast-game-sdk";
 import { checkScore, checkTicket } from "../../helpers/contracts";
 import { RotatingLines } from "react-loader-spinner";
 import { emitter } from "../../utils/emitter";

@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import Germs from "./Germs.js";
 import Player from "./Player.js";
 import Pickups from "./Pickups.js";
-import { createGameSDK } from "phaser-simple-game-sdk";
+import { createGameSDK } from "blast-game-sdk";
 
 export default class MainGame extends Phaser.Scene {
   constructor() {
@@ -118,7 +118,7 @@ export default class MainGame extends Phaser.Scene {
     }
 
     this.input.once("pointerdown", () => {
-      this.sdk.endGame(() => {});
+      this.sdk.endGame(() => { });
       this.scene.start("MainMenu");
     });
   }

@@ -6,7 +6,7 @@ import { goerli } from "wagmi/chains";
 import { createConfig, WagmiConfig, mainnet, configureChains } from "wagmi";
 import { jsonRpcProvider } from "@wagmi/core/providers/jsonRpc";
 import config from "./configs";
-import { GameProvider } from "phaser-simple-game-sdk";
+import { GameProvider } from "blast-game-sdk";
 
 function App() {
   const { publicClient } = configureChains(
