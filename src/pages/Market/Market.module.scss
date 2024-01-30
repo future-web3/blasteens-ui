@@ -17,7 +17,7 @@
     
     .leftSection{
         grid-column: span 3;
-       
+
         .assetSection{
             border-bottom: 5px solid $font-color;
             border-right: 5px solid $font-color;
@@ -106,18 +106,8 @@
                         font-weight: 700;
                         line-height: normal;
                     }
-
-
                 }
-
-
-               
-
             }
-
-
-
-
         }
     }
 
@@ -133,6 +123,8 @@
             border-bottom: 5px solid $font-color;
             padding: 13px;
             z-index: 10;
+            max-height: 30vh;
+            overflow: scroll;
         }
     }
 }

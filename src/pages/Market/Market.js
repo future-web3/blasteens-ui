@@ -5,6 +5,12 @@ import styles from './Market.module.scss'
 const userOwnNft = [
   { image: '/images/nft6.jpeg', button: 'Sell' },
   { image: '/images/nft6.jpeg', button: 'Sell' },
+  { image: '/images/nft6.jpeg', button: 'Sell' },
+  { image: '/images/nft6.jpeg', button: 'Sell' },
+  { image: '/images/nft6.jpeg', button: 'Sell' },
+  { image: '/images/nft6.jpeg', button: 'Sell' },
+  { image: '/images/nft6.jpeg', button: 'Sell' },
+  { image: '/images/nft6.jpeg', button: 'Sell' },
   { image: '/images/nft6.jpeg', button: 'Sell' }
 ]
 
@@ -114,7 +120,7 @@ const Market = () => {
             ))}
           </div>
           <div>
-            <div className={styles.NftsContainer} style={{ borderBottom: 'none' }}>
+            <div className={styles.NftsContainer} style={{ borderBottom: 'none', maxHeight: '55vh' }}>
               {nftStore.map((nft, index) => (
                 <NftCard imgURL={nft.image} key={index} buttonAction={nft.button} />
               ))}
