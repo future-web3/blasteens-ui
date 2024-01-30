@@ -105,11 +105,8 @@ function Arcade() {
     };
 
     checkTicketHandler();
-  }, [address, gameTicketContract]);
-
-  useEffect(() => {
-    if (!game || !address || !gameTicketContract) return;
-  }, [game, address, dispatch, gameTicketContract]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [address, gameTicketContract, numberOfLives]);
 
   const handleConnectWallet = async () => {
     try {
@@ -129,7 +126,7 @@ function Arcade() {
     <div className={styles.gameGlossaryContainer}>
       <header className={styles.gameGlossaryHeader}>
         <h1>{targetGame.name}</h1>
-        <p>You have {numberOfLives} times of chance</p>
+        <p>Remaining chance {numberOfLives}</p>
         <hr />
       </header>
       <div className={styles.gameGlossaryContent}>

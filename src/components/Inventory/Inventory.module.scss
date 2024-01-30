@@ -31,7 +31,7 @@
           $background-color 0.25turn
         )
         30;
-      max-width: 200px;
+      max-width: 150px;
       padding: 10px;
       animation: borderRotate var(--duration) linear infinite forwards;
     }
@@ -45,17 +45,18 @@
 }
 
 .inventoryContainer {
-  h2 {
-    padding-top: 5px;
-    font-style: italic;
-    color: $background-color;
-  }
   .stickyHeader {
-    min-height: 50px;
+    min-height: 108px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: sticky;
     top: 0;
     z-index: 100;
     background-color: $border-color;
+    padding-top: 5px;
+    color: $primary-color;
+    font-size: 36px;
   }
 }
 

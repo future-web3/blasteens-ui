@@ -98,6 +98,14 @@
   margin-bottom: 10px;
 }
 
+.gameGlossaryHeader p {
+  color: $font-color;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
 .gameGlossaryContent {
   display: flex;
   flex-direction: row;
