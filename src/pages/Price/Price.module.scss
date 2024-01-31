@@ -105,6 +105,9 @@
               justify-content: center;
               width: 50%;
               height:100%;
+              border-radius: 20px;
+              padding-top: 10px;
+              padding-bottom: 10px;
               background-color: transparent;
             }
           }
@@ -186,8 +189,12 @@
 }
 
 @keyframes switchLeftToRight{
-  from{
-    
+  from {
+    transform: translateX(0%);
+  }
+
+  to {
+    transform: translateX(100%);
   }
 }
 

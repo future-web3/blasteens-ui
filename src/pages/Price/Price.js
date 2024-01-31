@@ -45,9 +45,8 @@ export default function Price() {
         <div className={styles.controlSection}>
           <div className={styles.controlButtons}>
             <div className={styles.switch}>
-              <div className= {isGamer? styles.selected : styles.notSelected} onClick = {()=>setIsGamer(true)}>Gamer</div>
-              <div className={isGamer? styles.notSelected: styles.selected} onClick={() => setIsGamer(false)}>Developer</div>
-            </div>
+              <div className= {isGamer ? styles.selected : styles.notSelected} onClick = {()=>setIsGamer(true)}>Gamer</div>
+              <div className={isGamer ? styles.notSelected : styles.selected} onClick={() => setIsGamer(false)}>Developer</div>            </div>
             <div className={styles.selectSection}>
                 <div className={isOpen?  styles.selectedNameOpen: styles.selectedName} onClick={() => setIsOpen(!isOpen)}>{selected.Name}</div>
                 {isOpen && <div className={styles.dropdown}>
