@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import styles from './Aboutus.module.scss'
-import { set } from 'react-hook-form'
 
 const questionList = [
   {
