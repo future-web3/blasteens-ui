@@ -1,0 +1,30 @@
+@import '../../variables.module';
+
+.notFoundContainer {
+  height: 100vh;
+  width: 100vw;
+  background-color: $background-color;
+  color: $font-color;
+  display: flex;
+  flex-direction: column;
+
+  .notFoundLogo {
+    flex: 1;
+    text-align: center;
+  }
+  .notFoundText {
+    flex: 1;
+    display: flex;
+    text-align: center;
+  }
+  .notFoundWarn {
+    flex: 2;
+    width: 100%;
+    height: auto;
+    display: block;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
