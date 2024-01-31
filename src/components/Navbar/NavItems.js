@@ -3,10 +3,13 @@ import { Link } from 'react-router-dom'
 import styles from './Navbar.module.scss'
 import { FaWallet } from 'react-icons/fa'
 import { useAccount, useConnect } from 'wagmi'
+import { useMediaQuery } from 'react-responsive'
 
 const NavItems = ({ className }) => {
   const { connect, connectors } = useConnect()
   const { isConnected } = useAccount()
+
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1280px)' })
 
   const handleConnectWallet = async () => {
     try {
@@ -35,7 +38,7 @@ const NavItems = ({ className }) => {
       <li className={styles.linkInfoWrapper}>
         <Link to='/about'>About Us</Link>
       </li>
-      <li>
+      {!isTabletOrMobile && <li>
         {isConnected ? (
           <div className={styles.avatarContainer}>
             <img className={styles.avatar} src='/images/nft6.jpeg' alt="avatar" />
@@ -49,7 +52,7 @@ const NavItems = ({ className }) => {
             <FaWallet className={styles.walletIconContainer} />
           </div>
         )}
-      </li>
+      </li>}
     </ul>
   )
 }

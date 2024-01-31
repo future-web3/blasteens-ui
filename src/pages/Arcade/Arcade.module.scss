@@ -10,6 +10,7 @@
 
   @media screen and (max-width: $breakpoint-xl) {
     overflow-y: auto !important;
+    min-width: 100px;
   }
 
   &::before,
@@ -117,7 +118,7 @@
   @media screen and (max-width: $breakpoint-xl) {
     order: 2;
     max-height: 600px;
-    min-width: 400px;
+    max-width: 600px;
     overflow-y: auto;
     overflow-x: hidden;
   }
@@ -127,11 +128,16 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  min-width: 1000px;
-  min-height: 1000px;
+  width: 1000px;
+  height: 1000px;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media screen and (max-width: $breakpoint-xl) {
+    width: 400px;
+    height: 400px;
+  }
 }
 
 .ticketInfoContainer {
@@ -153,6 +159,13 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+
+  @media screen and (max-width: $breakpoint-xl) {
+    min-width: 250px;
+    min-height: 180px;
+    max-width: 250px;
+    max-height: 180px;
+  }
 }
 
 .arcadeMenuContainer {
@@ -172,6 +185,19 @@
   right: 0;
   bottom: 0;
   margin: auto;
+
+  @media screen and (max-width: $breakpoint-xl) {
+    width: 175px;
+    height: 175px;
+  }
+}
+
+.arcadeGameContainer {
+  max-width: 680px;
+  margin-left: -20px;
+  margin-top: -20px;
+  position: relative;
+  order: 1
 }
 
 .arcadeMenuContainerForTicket {
@@ -194,6 +220,12 @@
   font: 700 1.2rem $font-family;
   padding: 5em;
   letter-spacing: 0.05rem;
+}
+
+.desktopOnlyWrapper {
+  width: 100px;
+  cursor: pointer;
+  border: none;
 }
 
 .btn:focus {

@@ -12,6 +12,7 @@ import TicketFilter from '../../components/TicketFilter/TicketFilter'
 import Leaderboard from '../../components/Leaderboard/Leaderboard'
 import Inventory from '../../components/Inventory/Inventory'
 import { transformId } from '../../helpers/utils'
+import { useMediaQuery } from 'react-responsive'
 
 let game = null
 
@@ -20,6 +21,7 @@ function Arcade() {
   const { address, isConnected } = useAccount()
   const { chain } = useNetwork()
   const netId = chain ? chain.id : 5
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1280px)' })
 
   const { gameId } = useParams()
 
@@ -76,7 +78,7 @@ function Arcade() {
   }, [netId])
 
   useEffect(() => {
-    if (!isConnected || !targetGame) {
+    if (!isConnected || !targetGame || isTabletOrMobile) {
       if (game) {
         game.destroy(true)
         game = null
@@ -92,7 +94,7 @@ function Arcade() {
       game.destroy(true)
       game = null
     }
-  }, [isConnected, address, targetGame])
+  }, [isConnected, address, targetGame, isTabletOrMobile])
 
   useEffect(() => {
     const checkTicketHandler = async () => {
@@ -134,9 +136,22 @@ function Arcade() {
           <Leaderboard gameLeaderboardContract={gameLeaderboardContract} transformedGameId={transformedGameId} />
         </div>
         <div className={styles.arcadeFrameContainer} style={{ backgroundImage: `url('/images/arcade-frame.png')` }}>
-          <div style={{ maxWidth: '680px', marginLeft: '-20px', marginTop: '-20px', position: 'relative', order: 1 }}>
+          <div className={styles.arcadeGameContainer}>
             {isConnected ? (
-              <div id='gameDisplay' />
+              <div>
+                {!isTabletOrMobile ? <div id='gameDisplay' /> : <div
+                  className={styles.arcadeFilter}
+                  style={{
+                    backgroundImage: `url('/assets/games/${targetGame.key}/background.png')`
+                  }}
+                >
+                  <div className={styles.arcadeMenuContainer}>
+                    <div className={(styles.btn, styles.drawBorder)}>
+                      Desktop Only
+                    </div>
+                  </div>
+                </div>}
+              </div>
             ) : (
               <div
                 className={styles.arcadeFilter}
@@ -145,14 +160,16 @@ function Arcade() {
                 }}
               >
                 <div className={styles.arcadeMenuContainer}>
-                  <button className={(styles.arcadeWeb3Button, styles.btn, styles.drawBorder)} onClick={handleConnectWallet}>
+                  {!isTabletOrMobile ? <button className={(styles.arcadeWeb3Button, styles.btn, styles.drawBorder)} onClick={handleConnectWallet}>
                     Connect Your Wallet
-                  </button>
+                  </button> : <div className={(styles.btn, styles.drawBorder)}>
+                    Desktop Only
+                  </div>}
                 </div>
               </div>
             )}
 
-            {showTicketWindow && isConnected && (
+            {showTicketWindow && isConnected && !isTabletOrMobile && (
               <div className={`${styles.arcadeFilter} ${styles.ticketInfoContainer}`}>
                 <div className={`${styles.arcadeMenuContainer} ${styles.arcadeMenuContainerForTicket}`}>
                   <TicketFilter
