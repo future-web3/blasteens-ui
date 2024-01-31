@@ -8,6 +8,7 @@ import { createConfig, WagmiConfig, mainnet, configureChains } from "wagmi";
 import { jsonRpcProvider } from "@wagmi/core/providers/jsonRpc";
 import config from "./configs";
 import { GameProvider } from "blast-game-sdk";
+import Market from "./pages/Market/Market";
 
 function App() {
   const { publicClient } = configureChains(
@@ -19,7 +20,7 @@ function App() {
           http: `https://eth-goerli.g.alchemy.com/v2/${config.alchemyKey}`,
         }),
       }),
-    ],
+    ]
   );
 
   const wagmiConfig = createConfig({
@@ -39,6 +40,7 @@ function App() {
             </Route>
             <Route path="price" element={<Price />} />
             <Route path="*" element={<div>404 Not Found</div>} />
+            <Route path="market" element={<Market />} />
           </Route>
         </Routes>
       </GameProvider>
