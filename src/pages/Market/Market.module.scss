@@ -13,7 +13,7 @@
     padding-top: 50px;
     min-height: 95vh;
     grid-template-columns: repeat(10, 1fr);
-    
+
     .leftSection{
         grid-column: span 3;
 
@@ -34,22 +34,22 @@
                 font-size: 40px;
                 font-style: normal;
                 font-weight: 400;
-                line-height: normal;    
+                line-height: normal;
             }
-    
+
             .h3{
                 font-size: 32px;
                 font-style: normal;
                 font-weight: 700;
                 line-height: normal;
             }
-            
+
             .indicator{
                 display: flex;
                 align-items: center;
                 justify-content: center;
             }
-    
+
             .p{
                 color: #7DDE92;
                 text-align: center;
@@ -94,7 +94,7 @@
                     display: flex;
                     flex-direction: column;
                     gap: 10px;
-                    
+
 
                     .optionItem{
                         display: flex;
@@ -129,7 +129,7 @@
             padding: 13px;
             z-index: 10;
             max-height: 30vh;
-            overflow: scroll;
+            overflow: auto;
         }
     }
 }
@@ -154,7 +154,7 @@
             font-style: normal;
             font-weight: 300;
             line-height: normal;
-        }   
+        }
     }
 }
 

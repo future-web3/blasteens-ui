@@ -10,70 +10,39 @@
 
 .navBarContainer {
   min-width: 100vw;
-  height: 5vh;
+  height: auto;
   min-height: 50px;
   flex-direction: row;
   display: block;
   background: linear-gradient(to bottom, $navbar-color, $background-color);
 
-  @media screen and (max-width: $breakpoint-xl) {
-    width: fit-content;
-  }
-
-  ul {
+  .infoWrapper {
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    height: 100%;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
     margin: 0 auto;
-    text-align: center;
   }
 
-  li {
-    display: block;
-    float: left;
-    text-align: center;
-    width: auto;
-    height: 100%;
-    transition: all ease-in-out 0.2s;
+  .menuWrapper {
+    display: none;
 
-    &.different {
-      border: none;
-      position: relative;
-
-      &:hover {
-        border: none;
-      }
-
-      &::after {
-        content: '';
-        position: absolute;
-        width: 0px;
-        height: 100px;
-        left: 50%;
-        bottom: 0;
-        background-color: $primary-color;
-        transition: all ease-in-out 0.2s;
-      }
-
-      &:hover::after {
-        width: 100%;
-        left: 0;
-      }
+    @media screen and (max-width: $breakpoint-xl) {
+      display: flex;
     }
+  }
 
-    &:hover {
-      border-bottom: 5px solid $primary-color;
-    }
+  .logoImg {
+    max-height: 70px;
+    cursor: pointer;
   }
 
   a {
     display: block;
-    float: left;
     color: $font-color;
-    width: 100%;
+    font-family: $font-family;
+    font-size: 24px;
     padding: 0 0.5em;
-    line-height: 50px;
     text-decoration: none;
     font-weight: bold;
 
@@ -90,6 +59,11 @@
     font-weight: bold;
     height: 100%;
     cursor: pointer;
+    width: 30px;
+
+    &:hover {
+      color: $primary-color;
+    }
   }
 
   .avatarContainer {
@@ -97,10 +71,73 @@
     align-items: center;
     justify-content: center;
     height: 100%;
+
     .avatar {
-      height: 25px;
-      width: 25px;
+      height: 30px;
+      width: 30px;
       border-radius: 100%;
     }
+  }
+}
+
+.linkDetailsWapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  flex: 0.7;
+  text-align: center;
+
+  @media screen and (max-width: $breakpoint-xl) {
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+  }
+}
+
+.linkInfoWrapper {
+  display: block;
+  float: left;
+  text-align: center;
+  width: auto;
+  height: 100%;
+  transition: all ease-in-out 0.2s;
+
+  &.different {
+    border: none;
+    position: relative;
+
+    &:hover {
+      border: none;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 0px;
+      height: 100px;
+      left: 50%;
+      bottom: 0;
+      background-color: $primary-color;
+      transition: all ease-in-out 0.2s;
+    }
+
+    &:hover::after {
+      width: 100%;
+      left: 0;
+    }
+  }
+
+  &:hover {
+    border-bottom: 5px solid $primary-color;
+  }
+}
+
+.navItemsWapper {
+  display: flex;
+
+  @media screen and (max-width: $breakpoint-xl) {
+    display: none;
   }
 }

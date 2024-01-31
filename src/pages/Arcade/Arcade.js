@@ -134,7 +134,7 @@ function Arcade() {
           <Leaderboard gameLeaderboardContract={gameLeaderboardContract} transformedGameId={transformedGameId} />
         </div>
         <div className={styles.arcadeFrameContainer} style={{ backgroundImage: `url('/images/arcade-frame.png')` }}>
-          <div style={{ maxWidth: '680px', marginLeft: '-20px', marginTop: '-20px', position: 'relative' }}>
+          <div style={{ maxWidth: '680px', marginLeft: '-20px', marginTop: '-20px', position: 'relative', order: 1 }}>
             {isConnected ? (
               <div id='gameDisplay' />
             ) : (

@@ -1,62 +1,25 @@
 import { Outlet, Link } from 'react-router-dom'
 import styles from './Navbar.module.scss'
-import { FaWallet } from 'react-icons/fa'
-import React from 'react'
-import { useAccount, useConnect } from 'wagmi'
+import { BiMenu } from "react-icons/bi";
+import { FaTimes } from "react-icons/fa";
+import NavItems from './NavItems';
+import { useState } from 'react';
 
 function Navbar() {
-  const { connect, connectors } = useConnect()
-  const { isConnected } = useAccount()
-
-  const handleConnectWallet = async () => {
-    try {
-      if (!isConnected) {
-        connect({ connector: connectors[0] })
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  const [openMenu, setOpenMenu] = useState(false)
 
   return (
     <div className={styles.navBarContainer}>
-      <ul>
-        <li>
-          <Link to='/'>Home</Link>
-        </li>
-        <li>
-          <Link to='/about'>About</Link>
-        </li>
-        <li>
-          <Link to='/arcade/escape-from-germs'>Germs</Link>
-        </li>
-        <li>
-          <Link to='/arcade/tommy-jumping'>Tom</Link>
-        </li>
-        <li>
-          <Link to='/arcade/snowman-defender'>Snowman</Link>
-        </li>
-        <li>
-          <Link to='/arcade/emoji-match'>Emoji</Link>
-        </li>
-        <li>
-          {isConnected ? (
-            <div className={styles.avatarContainer}>
-              <img className={styles.avatar} src='/images/nft6.jpeg' alt="avatar" />
-            </div>
-          ) : (
-            <div
-              className={styles.walletIconContainer}
-              onClick={() => {
-                handleConnectWallet()
-              }}
-            >
-              <FaWallet />
-            </div>
-          )}
-        </li>
-      </ul>
-
+      <div className={styles.infoWrapper}>
+        <Link to="/">
+          <img src='/images/blasteens-transparent.png' alt='blasteen logo' className={styles.logoImg} />
+        </Link>
+        <NavItems className={styles.navItemsWapper} />
+        <div className={styles.menuWrapper} onClick={() => setOpenMenu(!openMenu)}>
+          {openMenu ? <FaTimes className={styles.walletIconContainer} /> : <BiMenu className={styles.walletIconContainer} />}
+        </div>
+      </div>
+      {openMenu && <NavItems className={styles.menuWrapper} />}
       <Outlet />
     </div>
   )

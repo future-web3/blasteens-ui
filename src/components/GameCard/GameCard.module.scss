@@ -14,7 +14,11 @@
     grid-row-start: 1;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
+
+    @media screen and (max-width: $breakpoint-xl) {
+      justify-content: flex-start;
+    }
   }
 
   .gameCardButtonBox {
@@ -105,14 +109,14 @@
 
     img {
       width: 80%;
-      height: 80%;
+
+      @media screen and (max-width: $breakpoint-md) {
+        width: 100%;
+      }
     }
   }
 
   .gameCardDescription {
-    grid-column-start: 2;
-    grid-column-end: 3;
-    grid-row-start: 2;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -11,7 +11,7 @@ function Homepage() {
         <hr />
         <div className={styles.homepageCards}>
           {gameListConfigs['arcade'].map(id => (
-            <GameCard gameId={id} />
+            <GameCard gameId={id} key={id} />
           ))}
         </div>
       </div>
@@ -21,7 +21,7 @@ function Homepage() {
         <div className={styles.homepageCards}>
           {' '}
           {gameListConfigs['indieGame'].map(id => (
-            <GameCard gameId={id} />
+            <GameCard gameId={id} key={id} />
           ))}
         </div>
       </div>
@@ -30,7 +30,7 @@ function Homepage() {
         <hr />
         <div className={styles.homepageCards}>
           {gameListConfigs['aaaGame'].map(id => (
-            <GameCard gameId={id} />
+            <GameCard gameId={id} key={id} />
           ))}
         </div>
       </div>

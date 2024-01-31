@@ -31,7 +31,7 @@
           $background-color 0.25turn
         )
         30;
-      max-width: 150px;
+      width: 116px;
       padding: 10px;
       animation: borderRotate var(--duration) linear infinite forwards;
     }
@@ -50,8 +50,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    position: sticky;
-    top: 0;
     z-index: 100;
     background-color: $border-color;
     padding-top: 5px;
