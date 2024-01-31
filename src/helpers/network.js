@@ -37,7 +37,6 @@ export const getNonceForForwarder = async (
 
   try {
     const trustedForwarder = getTrustedForwarder(netId, provider);
-    console.log('>>>>>>>>>trustedForwarder', trustedForwarder)
     const nonce = await trustedForwarder.getNonce(address);
     return nonce.toString();
   } catch (error) {
