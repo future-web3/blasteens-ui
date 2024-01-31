@@ -63,6 +63,18 @@ function Arcade() {
     }
   }, [netId])
 
+  const forwarderContract = useMemo(() => {
+    const address = getContractAddress('FORWARDER', netId)
+    const abi = getABI('FORWARDER')
+    if (!address || !abi) {
+      return null
+    }
+    return {
+      address,
+      abi
+    }
+  }, [netId])
+
   useEffect(() => {
     if (!isConnected || !targetGame) {
       if (game) {
@@ -86,15 +98,12 @@ function Arcade() {
     const checkTicketHandler = async () => {
       if (!address || !gameTicketContract) return
       const data = await checkTicket(gameTicketContract, address)
-      console.log('>>>>>>>>>data', data)
+      console.log('>>>>>>>>>ticketData', data)
       dispatch(gameTicketActions.setTickets(data))
       if (numberOfLives <= 0) {
         dispatch(gameTicketActions.setShowTicketWindow(true))
-      } else {
-        dispatch(gameTicketActions.setShowTicketWindow(false))
       }
     }
-
     checkTicketHandler();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address, gameTicketContract, numberOfLives]);
@@ -151,6 +160,7 @@ function Arcade() {
                     address={address}
                     gameTicketContract={gameTicketContract}
                     gameLeaderboardContract={gameLeaderboardContract}
+                    forwarderContract={forwarderContract}
                   />
                 </div>
               </div>
