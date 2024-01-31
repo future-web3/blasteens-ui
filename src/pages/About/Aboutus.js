@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styles from './Aboutus.module.scss'
+import { getAdjacentElements } from '../../helpers/utils'
 
 const questionList = [
   {
@@ -28,23 +29,6 @@ const questionList = [
       'Our motivation stems from a desire to create meaningful, positive impacts within our community. By providing a platform that combines education, creativity, and entertainment, we aim to empower individuals to learn, grow, and connect in new and exciting ways. We believe in the power of community and the potential of every individual to make a difference. Join us in our mission to inspire, educate, and entertain.'
   }
 ]
-
-function getAdjacentElements(arr, index) {
-  const len = arr.length
-  let newPrev, newNext
-
-  if (index < 0 || len <= 0) return
-
-  index - 1 >= 0 ? (newPrev = index - 1) : (newPrev = index + len - 1)
-  index + 1 >= len ? (newNext = index + 1 - len) : (newNext = index + 1)
-
-  return {
-    newPrev,
-    newNext
-  }
-}
-
-getAdjacentElements(questionList, 1)
 
 const Aboutus = () => {
   const [selectedIndex, setSelectedIndex] = useState(0)
