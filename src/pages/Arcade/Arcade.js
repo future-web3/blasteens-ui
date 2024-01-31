@@ -63,6 +63,18 @@ function Arcade() {
     }
   }, [netId])
 
+  const forwarderContract = useMemo(() => {
+    const address = getContractAddress('FORWARDER', netId)
+    const abi = getABI('FORWARDER')
+    if (!address || !abi) {
+      return null
+    }
+    return {
+      address,
+      abi
+    }
+  }, [netId])
+
   useEffect(() => {
     if (!isConnected || !targetGame) {
       if (game) {
@@ -86,21 +98,15 @@ function Arcade() {
     const checkTicketHandler = async () => {
       if (!address || !gameTicketContract) return
       const data = await checkTicket(gameTicketContract, address)
-      console.log('>>>>>>>>>data', data)
+      console.log('>>>>>>>>>ticketData', data)
       dispatch(gameTicketActions.setTickets(data))
       if (numberOfLives <= 0) {
         dispatch(gameTicketActions.setShowTicketWindow(true))
-      } else {
-        dispatch(gameTicketActions.setShowTicketWindow(false))
       }
     }
-
-    checkTicketHandler()
-  }, [address, gameTicketContract])
-
-  useEffect(() => {
-    if (!game || !address || !gameTicketContract) return
-  }, [game, address, dispatch, gameTicketContract])
+    checkTicketHandler();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [address, gameTicketContract, numberOfLives]);
 
   const handleConnectWallet = async () => {
     try {
@@ -120,7 +126,7 @@ function Arcade() {
     <div className={styles.arcadeContainer}>
       <header className={styles.arcadeHeader}>
         <h1>{targetGame.name}</h1>
-        <p>You have {numberOfLives} times of chance</p>
+        <p>Remaining chance {numberOfLives}</p>
         <hr />
       </header>
       <div className={styles.arcadeContent}>
@@ -154,6 +160,7 @@ function Arcade() {
                     address={address}
                     gameTicketContract={gameTicketContract}
                     gameLeaderboardContract={gameLeaderboardContract}
+                    forwarderContract={forwarderContract}
                   />
                 </div>
               </div>

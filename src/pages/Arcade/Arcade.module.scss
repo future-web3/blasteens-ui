@@ -91,6 +91,12 @@
   margin-bottom: 10px;
 }
 
+.arcadeHeader p {
+  color: $font-color;
+  font-size: 20px;
+  margin: 5px 0;
+}
+
 .arcadeContent {
   display: flex;
   flex-direction: row;

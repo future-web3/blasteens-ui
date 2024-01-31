@@ -2,15 +2,18 @@ import styles from './TicketFilter.module.scss'
 import gameViewStyles from '../../pages/Arcade/Arcade.module.scss'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useGameDispatch, useGameSelector } from 'blast-game-sdk'
 import { writeContract } from '@wagmi/core'
-import { useWaitForTransaction, useWalletClient } from 'wagmi'
+import { useWaitForTransaction, useWalletClient, useAccount, useNetwork } from 'wagmi'
 import BN from 'bignumber.js'
-import { gameTicketActions, gameLeaderboardActions } from 'blast-game-sdk'
+import { gameTicketActions, gameLeaderboardActions, useGameDispatch, useGameSelector } from 'blast-game-sdk'
 import { checkScore, checkTicket } from '../../helpers/contracts'
 import { RotatingLines } from 'react-loader-spinner'
+import { getNonceForForwarder, getABI } from '../../helpers/network'
+import { handleSignTrustedForwarderMessage } from '../../helpers/eip721'
+import { useEthersSigner, useEthersProvider } from '../../hooks'
+import { ethers } from 'ethers'
 
-function TicketFilter({ transformedGameId, address, gameTicketContract, gameLeaderboardContract }) {
+function TicketFilter({ transformedGameId, address, gameTicketContract, gameLeaderboardContract, forwarderContract }) {
   const [isBuying, setIsBuying] = useState(false)
   const [isRedeeming, setIsRedeeming] = useState(false)
   const [isSyncing, setIsSyncing] = useState(false)
@@ -20,6 +23,12 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, gameLead
   const [redeemingPendingHash, setRedeemingPendingHash] = useState('')
 
   const { data: walletClientData } = useWalletClient()
+  const { address: walletAddress } = useAccount()
+  const { chain } = useNetwork()
+  const signer = useEthersSigner(walletClientData)
+  const provider = useEthersProvider()
+  const netId = chain?.id ?? 5
+  const leaderboardInterface = new ethers.utils.Interface(getABI('BOARD'))
 
   const dispatch = useGameDispatch()
   const tickets = useGameSelector(state => state.gameTicket.tickets)
@@ -35,6 +44,35 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, gameLead
       redeemTicketType: 1
     }
   })
+
+  const handleSignMessage = async () => {
+    if (!netId || !provider || !walletAddress) return
+
+    const encodeFunctionData = leaderboardInterface.encodeFunctionData(
+      'addScore',
+      [address, score]
+    );
+
+    try {
+      const nonce = await getNonceForForwarder(netId, provider, walletAddress);
+      if (!nonce) return undefined
+      const signature = await handleSignTrustedForwarderMessage(
+        netId,
+        signer,
+        nonce,
+        encodeFunctionData
+      );
+      if (!signature) return undefined
+      const signatureData = {
+        forwarderData: signature.message,
+        signature: signature.signature,
+      };
+      return signatureData
+    } catch (error) {
+      console.error(`Sign Forwarder Message error: ${error.message}`)
+      return undefined
+    }
+  };
 
   useWaitForTransaction({
     hash: buyingPendingHash,
@@ -153,7 +191,6 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, gameLead
 
   const handleSyncScore = async () => {
     setIsSyncing(true)
-    const args = [address, score]
 
     try {
       const currentLeaderboard = await checkScore(gameLeaderboardContract, transformedGameId)
@@ -167,16 +204,18 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, gameLead
           return
         }
       }
+      const forwarderSignatureData = await handleSignMessage()
+      if (!forwarderSignatureData) return
       const txReceiptForSyncing = await writeContract({
-        ...gameLeaderboardContract,
+        ...forwarderContract,
         account: walletClientData.account.address,
-        args,
-        functionName: 'addScore'
+        args: [forwarderSignatureData.forwarderData, forwarderSignatureData.signature],
+        functionName: 'execute'
       })
       console.log(txReceiptForSyncing)
       setSyncPendingHash(txReceiptForSyncing.hash)
     } catch (error) {
-      console.log(error)
+      console.error('handleSyncScore', error.message)
       setIsSyncing(false)
     }
   }

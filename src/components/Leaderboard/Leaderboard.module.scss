@@ -27,17 +27,41 @@
   flex-direction: column;
   width: 100%;
   font-size: smaller;
-  h2 {
-    padding-top: 5px;
-    font-style: italic;
-    color: $background-color;
-  }
 
   .stickyHeader {
-    min-height: 50px;
     position: sticky;
     top: 0;
     z-index: 100;
     background-color: $border-color;
+    padding: 5px;
+
+    h2 {
+      font-size: 36px;
+      padding-top: 5px;
+      color: $primary-color;
+    }
+
+    .prizeInfoContainer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .infoText {
+          color: #fff;
+          font-size: 16px;
+          font-weight: 400;
+          margin: 5px 0;
+          text-align: left;
+      }
+
+      .claimBtn {
+        border-radius: 5px;
+        background-color: $primary-color;
+        padding: 5px;
+        color: $navbar-color;
+        font-size: 20px;
+        font-weight: 700;
+      }
+    }
   }
 }

@@ -2,7 +2,7 @@ import { Outlet, Link } from 'react-router-dom'
 import styles from './Navbar.module.scss'
 import { FaWallet } from 'react-icons/fa'
 import React from 'react'
-import { useAccount, useConnect, useNetwork } from 'wagmi'
+import { useAccount, useConnect } from 'wagmi'
 
 function Navbar() {
   const { connect, connectors } = useConnect()
@@ -42,7 +42,7 @@ function Navbar() {
         <li>
           {isConnected ? (
             <div className={styles.avatarContainer}>
-              <img className={styles.avatar} src='/images/nft6.jpeg' />
+              <img className={styles.avatar} src='/images/nft6.jpeg' alt="avatar" />
             </div>
           ) : (
             <div
