@@ -1,0 +1,74 @@
+@import '../../variables.module';
+
+.outerSection{
+    height: 100vh;
+    background-color: $background-color;
+}
+
+.container{
+    max-height: 90%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.jackpotSection{
+    position: relative;
+    min-width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.highlightedText{
+    color: #FFC906;
+    font-family: "Chakra Petch";
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+
+.textSection{
+    color: #FFF;
+    font-family: "Chakra Petch";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.carousel{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: start;
+}
+
+.selectedText{
+    color: #FFC906;
+    text-align: center;
+    font-family: "Chakra Petch";
+    font-size: 2.0rem;
+    font-style: italic;
+    font-weight: 700;
+    line-height: normal;
+    cursor: pointer;
+}
+
+.carouselSelect{
+    color: rgba(190, 190, 190, 0.50);
+    text-align: center;
+    font-family: "Chakra Petch";
+    font-size: 32px;
+    font-style: italic;
+    font-weight: 500;
+    line-height: normal;
+    cursor: pointer;
+}
