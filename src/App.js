@@ -9,6 +9,7 @@ import { jsonRpcProvider } from "@wagmi/core/providers/jsonRpc";
 import config from "./configs";
 import { GameProvider } from "blast-game-sdk";
 import Market from "./pages/Market/Market";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const { publicClient } = configureChains(
