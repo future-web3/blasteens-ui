@@ -2,7 +2,6 @@ import React from 'react'
 import styles from './GameCard.module.scss'
 import { Link } from 'react-router-dom'
 import { gameConfigs } from '../../configs/gameConfig'
-import gameViewStyles from '../../pages/Arcade/Arcade.module.scss'
 
 function GameCard({ gameId }) {
   const logoUrl = `/assets/games/${gameConfigs[gameId]['key']}/logo.png`
