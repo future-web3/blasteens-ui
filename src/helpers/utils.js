@@ -6,6 +6,10 @@ export const transformId = id => {
   return transformedWords.join('')
 }
 
+export const formatHash = (txHash, chars = 6) => {
+  return `${txHash.substring(0, chars + 2)}...${txHash.substring(txHash.length - chars)}`
+}
+
 export function getAdjacentElements(arr, index) {
   const len = arr.length
   let newPrev, newNext
