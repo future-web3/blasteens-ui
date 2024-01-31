@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from 'react'
-import styles from './Price.module.scss'
+import styles from './Prize.module.scss'
 import Data from './testData.json'
 import Footer from '../../components/Footer/Footer'
 
