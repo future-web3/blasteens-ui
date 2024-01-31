@@ -40,7 +40,16 @@ function Leaderboard({ gameLeaderboardContract, transformedGameId }) {
 
   return (
     <div className={styles.leaderboardContainer}>
-      <h2 className={styles.stickyHeader}>Leaderboard</h2>
+      <div className={styles.stickyHeader}>
+        <h2>Leaderboard</h2>
+        <div className={styles.prizeInfoContainer}>
+          <div>
+            <p className={styles.infoText}>Prize Pool: 10.2345 blast</p>
+            <p className={styles.infoText}>Count Down: 01:23:08</p>
+          </div>
+          <button className={styles.claimBtn}>Claim</button>
+        </div>
+      </div>
       {individuals?.map((individual, index) => (
         <Individual key={index} {...individual} />
       ))}

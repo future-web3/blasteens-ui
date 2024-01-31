@@ -1,1 +1,44 @@
-@import "../../variables.module";
+@import '../../variables.module';
+
+.homepageContainer {
+  background-color: $background-color;
+  color: $primary-color;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 2%;
+
+  .homepageSection {
+    width: 100%;
+    height: auto;
+    flex: 1;
+    flex-direction: column;
+
+    h1 {
+      padding-left: 5%;
+      flex: 1;
+      width: 100%;
+      height: auto;
+      font-weight: bolder;
+    }
+
+    hr {
+      position: relative;
+      color: $primary-color;
+      height: 2px;
+      background-color: $primary-color;
+      border: none;
+    }
+
+    .homepageCards {
+      width: 100%;
+      padding: 10px;
+      display: grid;
+      row-gap: 10px;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+    }
+  }
+}
