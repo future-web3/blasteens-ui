@@ -131,45 +131,30 @@ function Arcade() {
         <p>Remaining chance {numberOfLives}</p>
         <hr />
       </header>
-      <div className={styles.arcadeContent}>
+      {!isTabletOrMobile ? <div className={styles.arcadeContent}>
         <div className={styles.arcadeSideBlock}>
           <Leaderboard gameLeaderboardContract={gameLeaderboardContract} transformedGameId={transformedGameId} />
         </div>
         <div className={styles.arcadeFrameContainer} style={{ backgroundImage: `url('/images/arcade-frame.png')` }}>
           <div className={styles.arcadeGameContainer}>
-            {isConnected ? (
-              <div>
-                {!isTabletOrMobile ? <div id='gameDisplay' /> : <div
+            {isConnected ?
+              <div id='gameDisplay' /> : (
+                <div
                   className={styles.arcadeFilter}
                   style={{
                     backgroundImage: `url('/assets/games/${targetGame.key}/background.png')`
                   }}
                 >
                   <div className={styles.arcadeMenuContainer}>
-                    <div className={(styles.btn, styles.drawBorder)}>
+                    {!isTabletOrMobile ? <button className={(styles.arcadeWeb3Button, styles.btn, styles.drawBorder)} onClick={handleConnectWallet}>
+                      Connect Your Wallet
+                    </button> : <div className={(styles.btn, styles.drawBorder)}>
                       Desktop Only
-                    </div>
+                    </div>}
                   </div>
-                </div>}
-              </div>
-            ) : (
-              <div
-                className={styles.arcadeFilter}
-                style={{
-                  backgroundImage: `url('/assets/games/${targetGame.key}/background.png')`
-                }}
-              >
-                <div className={styles.arcadeMenuContainer}>
-                  {!isTabletOrMobile ? <button className={(styles.arcadeWeb3Button, styles.btn, styles.drawBorder)} onClick={handleConnectWallet}>
-                    Connect Your Wallet
-                  </button> : <div className={(styles.btn, styles.drawBorder)}>
-                    Desktop Only
-                  </div>}
                 </div>
-              </div>
-            )}
-
-            {showTicketWindow && isConnected && !isTabletOrMobile && (
+              )}
+            {showTicketWindow && isConnected && (
               <div className={`${styles.arcadeFilter} ${styles.ticketInfoContainer}`}>
                 <div className={`${styles.arcadeMenuContainer} ${styles.arcadeMenuContainerForTicket}`}>
                   <TicketFilter
@@ -187,7 +172,32 @@ function Arcade() {
         <div className={styles.arcadeSideBlock}>
           <Inventory />
         </div>
-      </div>
+      </div> : <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+        <div className={styles.arcadeFrameContainer} style={{ backgroundImage: `url('/images/arcade-frame.png')` }}>
+          <div className={styles.arcadeGameContainer}>
+            <div
+              className={styles.arcadeFilter}
+              style={{
+                backgroundImage: `url('/assets/games/${targetGame.key}/background.png')`
+              }}
+            >
+              <div className={styles.arcadeMenuContainer}>
+                <div className={(styles.btn, styles.drawBorder)}>
+                  Desktop Only
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className={styles.mobileInfoContainer}>
+          <div className={styles.arcadeSideBlock}>
+            <Leaderboard gameLeaderboardContract={gameLeaderboardContract} transformedGameId={transformedGameId} />
+          </div>
+          <div className={styles.arcadeSideBlock}>
+            <Inventory />
+          </div>
+        </div>
+      </div>}
     </div>
   )
 }
