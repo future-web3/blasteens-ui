@@ -14,7 +14,7 @@ function NFT({ name, addressLink, imageURL, amount }) {
         </h3>
       </div>
       <div className={styles.nftInner} style={{ flex: 3 }}>
-        <img src={require(`${imageURL}`)} alt={name} />
+        <img src={imageURL} alt={name} />
       </div>
       <hr />
     </div>
@@ -30,19 +30,19 @@ function Inventory() {
     {
       name: "BRONZE",
       addressLink: "https://example.com/nft1",
-      imageURL: "./demo1.png",
+      imageURL: "/images/ticket-bronze.png",
       type: 1,
     },
     {
       name: "SILVER",
       addressLink: "https://example.com/nft2",
-      imageURL: "./demo2.png",
+      imageURL: "/images/ticket-silver.png",
       type: 2,
     },
     {
       name: "GOLD",
       addressLink: "https://example.com/nft3",
-      imageURL: "./demo3.png",
+      imageURL: "/images/ticket-gold.png",
       type: 3,
     },
   ];
