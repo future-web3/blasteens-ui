@@ -15,7 +15,7 @@ function Individual({ rank, points, addressLink, address }) {
       </div>
       <div className={styles.individualInner} style={{ flex: 3 }}>
         <a href={addressLink} target="_blank" rel="noopener noreferrer">
-          {formatHash(address)}
+          {formatHash(address, 4)}
         </a>
       </div>
     </div>
