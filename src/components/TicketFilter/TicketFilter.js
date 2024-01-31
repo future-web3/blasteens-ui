@@ -216,7 +216,6 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, gameLead
       setSyncPendingHash(txReceiptForSyncing.hash)
     } catch (error) {
       console.error('handleSyncScore', error.message)
-    } finally {
       setIsSyncing(false)
     }
   }
