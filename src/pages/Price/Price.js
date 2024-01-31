@@ -1,12 +1,24 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import styles from './Price.module.scss'
 import Data from './testData.json'
-import Listbox from "react-widgets/Listbox"
 
 export default function Price() {
   const [isGamer, setIsGamer] = useState(true);
   const [selected, setSelected] = useState(Data.data[0]);
+  const [isOpen, setIsOpen] = useState(false);
   
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (isOpen && !event.target.closest(`.${styles.selectSection}`)) {
+        setIsOpen(false);
+      }
+    };
+  
+    document.addEventListener('click', handleOutsideClick);
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, [isOpen]);
 
   return (
     <div className = {styles.page}>
@@ -34,18 +46,19 @@ export default function Price() {
           <div className={styles.controlButtons}>
             <div className={styles.switch}>
               <div className= {isGamer? styles.selected : styles.notSelected} onClick = {()=>setIsGamer(true)}>Gamer</div>
-              <div className={isGamer? styles.notSelected:styles.selected} onClick={() => setIsGamer(false)}>Developer</div>
+              <div className={isGamer? styles.notSelected: styles.selected} onClick={() => setIsGamer(false)}>Developer</div>
             </div>
-            <div class="custom-select">
-              <select className={styles.dropdown}>
-                {Data.data.map((item)=>(
-                  <option value={item.value} onClick={() => setSelected(item.value)}>{item.Name}</option>
+            <div className={styles.selectSection}>
+                <div className={isOpen?  styles.selectedNameOpen: styles.selectedName} onClick={() => setIsOpen(!isOpen)}>{selected.Name}</div>
+                {isOpen && <div className={styles.dropdown}>
+                  {Data.data.map((item) => (
+                  <div className={styles.selectItem} onClick={() => {setSelected(item); setIsOpen(false)}}>{item.Name}</div>
                 ))}
-              </select>
+                </div>}
             </div>
           </div>
           <div className={styles.claimSection}>
-            <div>Your Yield:{} 1111 blast</div>
+            <div className = {styles.yieldText}>Your Yield:<div className={styles.textGreen}>1111 blast</div></div>
             <button className={styles.claimButton}>Claim</button>
           </div>
         </div>
