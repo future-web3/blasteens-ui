@@ -1,14 +1,6 @@
 import React from 'react'
 import styles from './Footer.module.scss'
-import { FaMailBulk,FaTwitterSquare,FaLinkedin, FaTelegram, FaLink } from "react-icons/fa";
-
-
-const icons = [
-  {name: 'twitter', link: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXX', src:'/images/'},
-  {name: 'LinkedIn', link: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXX', src:'/images/'},
-  {name: 'Email', link: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXX', src:'/images/'},
-  {name: 'Telegram', link: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXX', src:'/images/'}
-]
+import { FaMailBulk,FaTwitterSquare,FaLinkedin, FaTelegram } from "react-icons/fa";
 
 function Footer() {
   return (
