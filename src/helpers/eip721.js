@@ -1,8 +1,8 @@
 import { getContractAddress } from './network'
 
-export const createTrustedForwarderTypedData = (netId, user, nonce, data) => {
+export const createTrustedForwarderTypedData = (netId, user, nonce, data, transformedGameId) => {
   const verifyingContract = getContractAddress('FORWARDER', netId)
-  const to = getContractAddress('GAME', netId)
+  const to = getContractAddress('GAME', netId, transformedGameId)
 
   const domain = {
     name: 'MinimalForwarder',
@@ -41,11 +41,11 @@ export const createTrustedForwarderTypedData = (netId, user, nonce, data) => {
   return typedData
 }
 
-export async function handleSignTrustedForwarderMessage(netId, signer, nonce, data) {
+export async function handleSignTrustedForwarderMessage(netId, signer, nonce, data, transformedGameId) {
   if (!signer) return
 
   const user = await signer.getAddress()
-  const typedData = createTrustedForwarderTypedData(netId, user, nonce, data)
+  const typedData = createTrustedForwarderTypedData(netId, user, nonce, data, transformedGameId)
   console.log(typedData.domain, typedData.types, typedData.message)
   const signature = await signer._signTypedData(typedData.domain, typedData.types, typedData.message)
   return {

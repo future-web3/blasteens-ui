@@ -78,7 +78,7 @@ function Arcade() {
   }, [netId])
 
   const gameContract = useMemo(() => {
-    const address = getContractAddress('GAME', netId)
+    const address = getContractAddress('GAME', netId, transformedGameId)
     const abi = getABI('GAME')
     if (!address || !abi) {
       return null
