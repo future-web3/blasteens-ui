@@ -33,22 +33,19 @@
   color: $font-color;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15%;
 
-  #error-img {
-    flex: 3;
+  .errorImage {
+    max-width: 800px;
     @media screen and (max-width: $breakpoint-md) {
-      flex: 1;
+      max-width: 500px;
     }
   }
 
   .notFoundSection {
-    flex: 1;
     text-align: center;
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
 
     a {
       text-decoration: none;
