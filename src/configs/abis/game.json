@@ -1,154 +1,373 @@
 [
   {
     "inputs": [
-      { "name": "_gameId", "type": "uint256", "internalType": "uint256" },
-      { "name": "_gameName", "type": "string", "internalType": "string" },
-      { "name": "_roundLength", "type": "uint256", "internalType": "uint256" },
-      { "name": "_claimPeriod", "type": "uint256", "internalType": "uint256" },
-      { "name": "_minimalForwader", "type": "address", "internalType": "address" }
+      {
+        "internalType": "uint256",
+        "name": "_gameId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_gameName",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_roundLength",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_claimPeriod",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_minimalForwader",
+        "type": "address"
+      }
     ],
-    "stateMutability": "nonpayable"
-  },
-  { "type": "function", "name": "FIRST", "inputs": [], "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }], "stateMutability": "view" },
-  {
-    "type": "function",
-    "name": "OTHERS",
-    "inputs": [],
-    "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
-    "stateMutability": "view"
+    "stateMutability": "nonpayable",
+    "type": "constructor"
   },
   {
-    "type": "function",
-    "name": "SECOND",
-    "inputs": [],
-    "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
-    "stateMutability": "view"
-  },
-  { "type": "function", "name": "THIRD", "inputs": [], "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }], "stateMutability": "view" },
-  {
-    "type": "function",
-    "name": "addScore",
+    "anonymous": false,
     "inputs": [
-      { "name": "user", "type": "address", "internalType": "address" },
-      { "name": "score", "type": "uint256", "internalType": "uint256" }
-    ],
-    "outputs": [],
-    "stateMutability": "nonpayable"
-  },
-  { "type": "function", "name": "claimReward", "inputs": [], "outputs": [], "stateMutability": "nonpayable" },
-  {
-    "type": "function",
-    "name": "gameId",
-    "inputs": [],
-    "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "gameName",
-    "inputs": [],
-    "outputs": [{ "name": "", "type": "string", "internalType": "string" }],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "getCurrentGameBoard",
-    "inputs": [],
-    "outputs": [{ "name": "gameLeaderboard", "type": "address", "internalType": "contract GameLeaderboard" }],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "getCurrentGameRound",
-    "inputs": [],
-    "outputs": [
       {
-        "name": "",
-        "type": "tuple",
-        "internalType": "struct Game.Round",
-        "components": [
-          { "name": "length", "type": "uint256", "internalType": "uint256" },
-          { "name": "gameRound", "type": "uint256", "internalType": "uint256" },
-          { "name": "end", "type": "uint256", "internalType": "uint256" },
-          { "name": "claimPeriod", "type": "uint256", "internalType": "uint256" },
-          { "name": "gameLeaderBoard", "type": "address", "internalType": "contract GameLeaderboard" },
-          { "name": "hasClaimedBySomeone", "type": "bool", "internalType": "bool" }
-        ]
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
       }
     ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "getLeaderBoardInfo",
-    "inputs": [],
-    "outputs": [
-      {
-        "name": "",
-        "type": "tuple[]",
-        "internalType": "struct GameLeaderboard.User[]",
-        "components": [
-          { "name": "user", "type": "address", "internalType": "address" },
-          { "name": "score", "type": "uint256", "internalType": "uint256" },
-          { "name": "prizeClaimed", "type": "bool", "internalType": "bool" }
-        ]
-      }
-    ],
-    "stateMutability": "view"
-  },
-  { "type": "function", "name": "isClaiming", "inputs": [], "outputs": [{ "name": "", "type": "bool", "internalType": "bool" }], "stateMutability": "view" },
-  {
-    "type": "function",
-    "name": "isGameRunning",
-    "inputs": [],
-    "outputs": [{ "name": "", "type": "bool", "internalType": "bool" }],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "minimalForwarder",
-    "inputs": [],
-    "outputs": [{ "name": "", "type": "address", "internalType": "contract MinimalForwarder" }],
-    "stateMutability": "view"
-  },
-  { "type": "function", "name": "owner", "inputs": [], "outputs": [{ "name": "", "type": "address", "internalType": "address" }], "stateMutability": "view" },
-  { "type": "function", "name": "renounceOwnership", "inputs": [], "outputs": [], "stateMutability": "nonpayable" },
-  {
-    "type": "function",
-    "name": "round",
-    "inputs": [],
-    "outputs": [
-      { "name": "length", "type": "uint256", "internalType": "uint256" },
-      { "name": "gameRound", "type": "uint256", "internalType": "uint256" },
-      { "name": "end", "type": "uint256", "internalType": "uint256" },
-      { "name": "claimPeriod", "type": "uint256", "internalType": "uint256" },
-      { "name": "gameLeaderBoard", "type": "address", "internalType": "contract GameLeaderboard" },
-      { "name": "hasClaimedBySomeone", "type": "bool", "internalType": "bool" }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "secondsToNextRound",
-    "inputs": [],
-    "outputs": [{ "name": "seconds_", "type": "uint256", "internalType": "uint256" }],
-    "stateMutability": "view"
-  },
-  { "type": "function", "name": "startNewGameRound", "inputs": [], "outputs": [], "stateMutability": "nonpayable" },
-  {
-    "type": "function",
-    "name": "transferOwnership",
-    "inputs": [{ "name": "newOwner", "type": "address", "internalType": "address" }],
-    "outputs": [],
-    "stateMutability": "nonpayable"
-  },
-  {
-    "type": "event",
     "name": "OwnershipTransferred",
-    "inputs": [
-      { "name": "previousOwner", "type": "address", "indexed": true, "internalType": "address" },
-      { "name": "newOwner", "type": "address", "indexed": true, "internalType": "address" }
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "FIRST",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
     ],
-    "anonymous": false
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "OTHERS",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "SECOND",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "THIRD",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "score",
+        "type": "uint256"
+      }
+    ],
+    "name": "addScore",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "claimReward",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "gameId",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "gameName",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getCurrentGameBoard",
+    "outputs": [
+      {
+        "internalType": "contract GameLeaderboard",
+        "name": "gameLeaderboard",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getCurrentGameRound",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "length",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "gameRound",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "end",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "claimPeriod",
+            "type": "uint256"
+          },
+          {
+            "internalType": "contract GameLeaderboard",
+            "name": "gameLeaderBoard",
+            "type": "address"
+          },
+          {
+            "internalType": "bool",
+            "name": "hasClaimedBySomeone",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct Game.Round",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getLeaderBoardInfo",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "user",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "score",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "prizeClaimed",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct GameLeaderboard.User[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "isClaiming",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "isGameRunning",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "minimalForwarder",
+    "outputs": [
+      {
+        "internalType": "contract MinimalForwarder",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "round",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "length",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "gameRound",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "end",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "claimPeriod",
+        "type": "uint256"
+      },
+      {
+        "internalType": "contract GameLeaderboard",
+        "name": "gameLeaderBoard",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "hasClaimedBySomeone",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "secondsToNextRound",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "seconds_",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "startNewGameRound",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   }
 ]

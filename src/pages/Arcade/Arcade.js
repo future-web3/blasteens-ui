@@ -178,6 +178,7 @@ function Arcade() {
                       address={address}
                       gameTicketContract={gameTicketContract}
                       gameLeaderboardContract={gameLeaderboardContract}
+                      gameContract={gameContract}
                       forwarderContract={forwarderContract}
                     />
                   </div>

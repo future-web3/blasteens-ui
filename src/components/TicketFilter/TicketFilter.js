@@ -13,7 +13,7 @@ import { handleSignTrustedForwarderMessage } from '../../helpers/eip721'
 import { useEthersSigner, useEthersProvider } from '../../hooks'
 import { ethers } from 'ethers'
 
-function TicketFilter({ transformedGameId, address, gameTicketContract, gameLeaderboardContract, forwarderContract }) {
+function TicketFilter({ transformedGameId, address, gameTicketContract, gameLeaderboardContract, forwarderContract, gameContract }) {
   const [isBuying, setIsBuying] = useState(false)
   const [isRedeeming, setIsRedeeming] = useState(false)
   const [isSyncing, setIsSyncing] = useState(false)
@@ -28,7 +28,7 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, gameLead
   const netId = chain?.id ?? 168587773
   const signer = useEthersSigner(netId, chain?.name, walletAddress, walletClientData)
   const provider = useEthersProvider()
-  const leaderboardInterface = new ethers.utils.Interface(getABI('BOARD'))
+  const gameInterface = new ethers.utils.Interface(getABI('GAME'))
 
   const dispatch = useGameDispatch()
   const tickets = useGameSelector(state => state.gameTicket.tickets)
@@ -48,7 +48,7 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, gameLead
   const handleSignMessage = async () => {
     if (!netId || !provider || !walletAddress) return
 
-    const encodeFunctionData = leaderboardInterface.encodeFunctionData('addScore', [address, score])
+    const encodeFunctionData = gameInterface.encodeFunctionData('addScore', [address, score])
 
     try {
       const nonce = await getNonceForForwarder(netId, provider, walletAddress)

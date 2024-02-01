@@ -1,19 +1,14 @@
-import { getContractAddress } from "./network"
+import { getContractAddress } from './network'
 
-export const createTrustedForwarderTypedData = (
-  netId,
-  user,
-  nonce,
-  data,
-) => {
+export const createTrustedForwarderTypedData = (netId, user, nonce, data) => {
   const verifyingContract = getContractAddress('FORWARDER', netId)
-  const to = getContractAddress('BOARD', netId)
+  const to = getContractAddress('GAME', netId)
 
   const domain = {
     name: 'MinimalForwarder',
     version: '0.0.1',
     chainId: netId,
-    verifyingContract,
+    verifyingContract
   }
 
   const forwarderTypes = {
@@ -23,8 +18,8 @@ export const createTrustedForwarderTypedData = (
       { name: 'value', type: 'uint256' },
       { name: 'gas', type: 'uint256' },
       { name: 'nonce', type: 'uint256' },
-      { name: 'data', type: 'bytes' },
-    ],
+      { name: 'data', type: 'bytes' }
+    ]
   }
 
   const forwarderMessage = {
@@ -33,36 +28,27 @@ export const createTrustedForwarderTypedData = (
     value: 0,
     gas: 1000000,
     nonce: Number(nonce),
-    data,
+    data
   }
 
   const typedData = {
     domain,
     types: forwarderTypes,
     primaryType: 'ForwardRequest',
-    message: forwarderMessage,
+    message: forwarderMessage
   }
 
   return typedData
 }
 
-export async function handleSignTrustedForwarderMessage(
-  netId,
-  signer,
-  nonce,
-  data
-) {
-  if (!signer) return;
+export async function handleSignTrustedForwarderMessage(netId, signer, nonce, data) {
+  if (!signer) return
 
-  const user = await signer.getAddress();
-  const typedData = createTrustedForwarderTypedData(netId, user, nonce, data);
-  const signature = await signer._signTypedData(
-    typedData.domain,
-    typedData.types,
-    typedData.message
-  );
+  const user = await signer.getAddress()
+  const typedData = createTrustedForwarderTypedData(netId, user, nonce, data)
+  const signature = await signer._signTypedData(typedData.domain, typedData.types, typedData.message)
   return {
     signature,
-    ...typedData,
-  };
+    ...typedData
+  }
 }
