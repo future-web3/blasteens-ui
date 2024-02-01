@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
-import Navbar from './components/Navbar/Navbar'
+import Frame from './components/Layout/Layout'
 import Homepage from './pages/Homepage/Homepage'
 import Arcade from './pages/Arcade/Arcade'
 import Prize from "./pages/Prize/Prize";
@@ -10,7 +10,6 @@ import config from './configs'
 import { GameProvider } from 'blast-game-sdk'
 import Market from './pages/Market/Market'
 import Aboutus from './pages/About/Aboutus'
-import Footer from "./components/Footer/Footer";
 
 function App() {
   const { publicClient } = configureChains(
@@ -34,7 +33,7 @@ function App() {
     <WagmiConfig config={wagmiConfig}>
       <GameProvider>
         <Routes>
-          <Route path='/' element={<Navbar />}>
+          <Route path='/' element={<Frame />}>
             <Route index element={<Homepage />} />
             <Route path='about' element={<Aboutus />} />
             <Route path='arcade'>
