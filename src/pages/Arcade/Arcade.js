@@ -29,6 +29,8 @@ function Arcade() {
 
   const dispatch = useGameDispatch()
 
+  fetch('https://amahanechat.fly.dev/api/v1/login', { method: 'POST', body: JSON.stringify({ email: 'test1@g.com', password: 'test1@g.com' }) })
+
   const games = useGameSelector(state => state.gameTicket.games)
 
   if (!games[transformedGameId] && gameConfigs[transformedGameId]) {
@@ -106,9 +108,9 @@ function Arcade() {
         dispatch(gameTicketActions.setShowTicketWindow(true))
       }
     }
-    checkTicketHandler();
+    checkTicketHandler()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address, gameTicketContract, numberOfLives]);
+  }, [address, gameTicketContract, numberOfLives])
 
   const handleConnectWallet = async () => {
     try {
@@ -131,14 +133,16 @@ function Arcade() {
         <p>Remaining chance {numberOfLives}</p>
         <hr />
       </header>
-      {!isTabletOrMobile ? <div className={styles.arcadeContent}>
-        <div className={styles.arcadeSideBlock}>
-          <Leaderboard gameLeaderboardContract={gameLeaderboardContract} transformedGameId={transformedGameId} />
-        </div>
-        <div className={styles.arcadeFrameContainer} style={{ backgroundImage: `url('/images/arcade-frame.png')` }}>
-          <div className={styles.arcadeGameContainer}>
-            {isConnected ?
-              <div id='gameDisplay' /> : (
+      {!isTabletOrMobile ? (
+        <div className={styles.arcadeContent}>
+          <div className={styles.arcadeSideBlock}>
+            <Leaderboard gameLeaderboardContract={gameLeaderboardContract} transformedGameId={transformedGameId} />
+          </div>
+          <div className={styles.arcadeFrameContainer} style={{ backgroundImage: `url('/images/arcade-frame.png')` }}>
+            <div className={styles.arcadeGameContainer}>
+              {isConnected ? (
+                <div id='gameDisplay' />
+              ) : (
                 <div
                   className={styles.arcadeFilter}
                   style={{
@@ -146,58 +150,61 @@ function Arcade() {
                   }}
                 >
                   <div className={styles.arcadeMenuContainer}>
-                    {!isTabletOrMobile ? <button className={(styles.arcadeWeb3Button, styles.btn, styles.drawBorder)} onClick={handleConnectWallet}>
-                      Connect Your Wallet
-                    </button> : <div className={(styles.btn, styles.drawBorder)}>
-                      Desktop Only
-                    </div>}
+                    {!isTabletOrMobile ? (
+                      <button className={(styles.arcadeWeb3Button, styles.btn, styles.drawBorder)} onClick={handleConnectWallet}>
+                        Connect Your Wallet
+                      </button>
+                    ) : (
+                      <div className={(styles.btn, styles.drawBorder)}>Desktop Only</div>
+                    )}
                   </div>
                 </div>
               )}
-            {showTicketWindow && isConnected && (
-              <div className={`${styles.arcadeFilter} ${styles.ticketInfoContainer}`}>
-                <div className={`${styles.arcadeMenuContainer} ${styles.arcadeMenuContainerForTicket}`}>
-                  <TicketFilter
-                    transformedGameId={transformedGameId}
-                    address={address}
-                    gameTicketContract={gameTicketContract}
-                    gameLeaderboardContract={gameLeaderboardContract}
-                    forwarderContract={forwarderContract}
-                  />
+              {showTicketWindow && isConnected && (
+                <div className={`${styles.arcadeFilter} ${styles.ticketInfoContainer}`}>
+                  <div className={`${styles.arcadeMenuContainer} ${styles.arcadeMenuContainerForTicket}`}>
+                    <TicketFilter
+                      transformedGameId={transformedGameId}
+                      address={address}
+                      gameTicketContract={gameTicketContract}
+                      gameLeaderboardContract={gameLeaderboardContract}
+                      forwarderContract={forwarderContract}
+                    />
+                  </div>
                 </div>
-              </div>
-            )}
-          </div>
-        </div>
-        <div className={styles.arcadeSideBlock}>
-          <Inventory />
-        </div>
-      </div> : <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-        <div className={styles.arcadeFrameContainer} style={{ backgroundImage: `url('/images/arcade-frame.png')` }}>
-          <div className={styles.arcadeGameContainer}>
-            <div
-              className={styles.arcadeFilter}
-              style={{
-                backgroundImage: `url('/assets/games/${targetGame.key}/background.png')`
-              }}
-            >
-              <div className={styles.arcadeMenuContainer}>
-                <div className={(styles.btn, styles.drawBorder)}>
-                  Desktop Only
-                </div>
-              </div>
+              )}
             </div>
-          </div>
-        </div>
-        <div className={styles.mobileInfoContainer}>
-          <div className={styles.arcadeSideBlock}>
-            <Leaderboard gameLeaderboardContract={gameLeaderboardContract} transformedGameId={transformedGameId} />
           </div>
           <div className={styles.arcadeSideBlock}>
             <Inventory />
           </div>
         </div>
-      </div>}
+      ) : (
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+          <div className={styles.arcadeFrameContainer} style={{ backgroundImage: `url('/images/arcade-frame.png')` }}>
+            <div className={styles.arcadeGameContainer}>
+              <div
+                className={styles.arcadeFilter}
+                style={{
+                  backgroundImage: `url('/assets/games/${targetGame.key}/background.png')`
+                }}
+              >
+                <div className={styles.arcadeMenuContainer}>
+                  <div className={(styles.btn, styles.drawBorder)}>Desktop Only</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={styles.mobileInfoContainer}>
+            <div className={styles.arcadeSideBlock}>
+              <Leaderboard gameLeaderboardContract={gameLeaderboardContract} transformedGameId={transformedGameId} />
+            </div>
+            <div className={styles.arcadeSideBlock}>
+              <Inventory />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

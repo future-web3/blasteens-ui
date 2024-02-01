@@ -1,9 +1,9 @@
 import { Outlet, Link } from 'react-router-dom'
 import styles from './Navbar.module.scss'
-import { BiMenu } from "react-icons/bi";
-import { FaTimes } from "react-icons/fa";
-import NavItems from './NavItems';
-import { useState } from 'react';
+import { BiMenu } from 'react-icons/bi'
+import { FaTimes } from 'react-icons/fa'
+import NavItems from './NavItems'
+import { useState } from 'react'
 
 function Navbar() {
   const [openMenu, setOpenMenu] = useState(false)
@@ -11,7 +11,7 @@ function Navbar() {
   return (
     <div className={styles.navBarContainer}>
       <div className={styles.infoWrapper}>
-        <Link to="/">
+        <Link to='/'>
           <img src='/images/blasteens-transparent.png' alt='blasteen logo' className={styles.logoImg} />
         </Link>
         <NavItems className={styles.navItemsWapper} />
