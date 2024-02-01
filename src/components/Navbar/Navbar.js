@@ -1,4 +1,4 @@
-import { Outlet, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import styles from './Navbar.module.scss'
 import { BiMenu } from "react-icons/bi";
 import { FaTimes } from "react-icons/fa";
@@ -20,7 +20,6 @@ function Navbar() {
         </div>
       </div>
       {openMenu && <NavItems className={styles.menuWrapper} />}
-      <Outlet />
     </div>
   )
 }
