@@ -20,7 +20,6 @@ function Footer() {
           <div className={styles.text}>Blast is the only Ethereum L2 with native yield for ETH and stablecoins.</div>
         </div>
         <div className={styles.logo}><img src='/images/PowerByBlast.png' alt='power by blast' className={styles.logoImg} /></div>
-              
       </div> 
     </div>
   )
