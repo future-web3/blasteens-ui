@@ -1,4 +1,30 @@
 @import '../../variables.module';
+@import url('https://fonts.googleapis.com/css?family=Raleway:400');
+
+:local(:root) {
+  --d: 3000ms;
+  --angle: 90deg;
+  --gradX: 100%;
+  --gradY: 50%;
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 90deg;
+  inherits: true;
+}
+
+@property --gradX {
+  syntax: '<percentage>';
+  initial-value: 50%;
+  inherits: true;
+}
+
+@property --gradY {
+  syntax: '<percentage>';
+  initial-value: 0%;
+  inherits: true;
+}
 
 .notFoundContainer {
   height: 100vh;
@@ -8,23 +34,72 @@
   display: flex;
   flex-direction: column;
 
-  .notFoundLogo {
+  .notFoundSection {
     flex: 1;
     text-align: center;
-  }
-  .notFoundText {
-    flex: 1;
-    display: flex;
-    text-align: center;
-  }
-  .notFoundWarn {
-    flex: 2;
-    width: 100%;
-    height: auto;
-    display: block;
     img {
       width: 100%;
       height: 100%;
+      object-fit: contain;
     }
+
+    .notFoundText {
+      flex: 1;
+      display: flex;
+      font-size: larger;
+      font-weight: bold;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    a {
+      text-decoration: none;
+      color: $font-color;
+      text-align: center;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .box {
+      border: 0.35rem solid;
+      padding: 3vw;
+      border-image: conic-gradient(from var(--angle), $font-color, $primary-color 0.1turn, $primary-color 0.15turn, $font-color 0.25turn) 30;
+      animation: borderRotate var(--d) linear infinite forwards;
+      @media screen and (max-width: $breakpoint-xl) {
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+@keyframes borderRotate {
+  100% {
+    --angle: 420deg;
+  }
+}
+
+@keyframes borderRadial {
+  20% {
+    --gradX: 100%;
+    --gradY: 50%;
+  }
+  40% {
+    --gradX: 100%;
+    --gradY: 100%;
+  }
+  60% {
+    --gradX: 50%;
+    --gradY: 100%;
+  }
+  80% {
+    --gradX: 0%;
+    --gradY: 50%;
+  }
+  100% {
+    --gradX: 50%;
+    --gradY: 0%;
   }
 }

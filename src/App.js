@@ -35,14 +35,10 @@ function App() {
         <Routes>
           <Route path='/' element={<Navbar />}>
             <Route index element={<Homepage />} />
-            <Route path='about' element={<div>About Us</div>} />
             <Route path='arcade'>
               <Route path=':gameId' element={<Arcade />} />
             </Route>
             <Route path='about' element={<Aboutus />} />
-            <Route path='arcade'>
-              <Route path=':gameId' element={<Arcade />} />
-            </Route>
             <Route path='market' element={<Market />} />
           </Route>
           <Route path='*' element={<NotFound />} />
