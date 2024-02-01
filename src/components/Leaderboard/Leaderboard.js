@@ -1,8 +1,8 @@
-import styles from "./Leaderboard.module.scss";
-import React, { useEffect, useState } from "react";
-import { checkScore } from "../../helpers/contracts";
-import { formatHash } from "../../helpers/utils";
-import { useGameSelector } from "blast-game-sdk";
+import styles from './Leaderboard.module.scss'
+import React, { useEffect, useState } from 'react'
+import { checkScore } from '../../helpers/contracts'
+import { formatHash } from '../../helpers/utils'
+import { useGameSelector } from 'blast-game-sdk'
 
 function Individual({ rank, points, addressLink, address }) {
   return (
@@ -14,29 +14,27 @@ function Individual({ rank, points, addressLink, address }) {
         {points} pt
       </div>
       <div className={styles.individualInner} style={{ flex: 3 }}>
-        <a href={addressLink} target="_blank" rel="noopener noreferrer">
+        <a href={addressLink} target='_blank' rel='noopener noreferrer'>
           {formatHash(address, 4)}
         </a>
       </div>
     </div>
-  );
+  )
 }
 
-function Leaderboard({ gameLeaderboardContract, transformedGameId }) {
-  const [individuals, setIndividuals] = useState([]);
-  const allowSync =
-    useGameSelector(
-      (state) => state.gameLeaderboard[transformedGameId]?.allowSync,
-    ) || false;
+function Leaderboard({ gameLeaderboardContract, gameContract, transformedGameId }) {
+  const [individuals, setIndividuals] = useState([])
+  const allowSync = useGameSelector(state => state.gameLeaderboard[transformedGameId]?.allowSync) || false
 
   useEffect(() => {
+    if (!gameContract) return
     const checkScoreHandler = async () => {
-      const data = await checkScore(gameLeaderboardContract, transformedGameId);
-      setIndividuals(data);
-    };
+      const data = await checkScore(gameContract, transformedGameId)
+      setIndividuals(data)
+    }
 
-    checkScoreHandler();
-  }, [gameLeaderboardContract, allowSync, transformedGameId]);
+    checkScoreHandler()
+  }, [gameContract, allowSync, transformedGameId])
 
   return (
     <div className={styles.leaderboardContainer}>
@@ -54,7 +52,7 @@ function Leaderboard({ gameLeaderboardContract, transformedGameId }) {
         <Individual key={index} {...individual} />
       ))}
     </div>
-  );
+  )
 }
 
-export default Leaderboard;
+export default Leaderboard

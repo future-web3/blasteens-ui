@@ -89,6 +89,8 @@ function Arcade() {
     }
   }, [netId])
 
+  console.log(gameContract)
+
   useEffect(() => {
     if (!isConnected || !targetGame || isTabletOrMobile) {
       if (game) {
@@ -146,7 +148,7 @@ function Arcade() {
       {!isTabletOrMobile ? (
         <div className={styles.arcadeContent}>
           <div className={styles.arcadeSideBlock}>
-            <Leaderboard gameLeaderboardContract={gameLeaderboardContract} transformedGameId={transformedGameId} />
+            <Leaderboard gameLeaderboardContract={gameLeaderboardContract} gameContract={gameContract} transformedGameId={transformedGameId} />
           </div>
           <div className={styles.arcadeFrameContainer} style={{ backgroundImage: `url('/images/arcade-frame.png')` }}>
             <div className={styles.arcadeGameContainer}>

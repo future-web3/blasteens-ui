@@ -1,5 +1,5 @@
 import { readContracts } from 'wagmi'
-
+import { readContract } from '@wagmi/core'
 export const checkTicket = async (gameTicketContract, address) => {
   const data = await readContracts({
     contracts: [
@@ -63,42 +63,29 @@ export const mapTicket = data => {
   ]
 }
 
-export const checkScore = async (gameLeaderboardContract, gameName) => {
-  const contracts = []
-  for (let i = 0; i < 10; i++) {
-    contracts.push({
-      ...gameLeaderboardContract,
-      functionName: 'leaderboard',
-      args: [i]
-    })
-  }
-
-  const data = await readContracts({
-    contracts
+export const checkScore = async (gameContract, gameName) => {
+  console.log(gameContract)
+  const data = await readContract({
+    ...gameContract,
+    functionName: 'getLeaderBoardInfo',
+    args: []
   })
 
+  console.log(data)
+
+  console.log(mapScore(data))
   return mapScore(data, gameName)
 }
 
-export const mapScore = async (data, gameName) => {
+export const mapScore = data => {
   let rank = 0
   return data
     .map(item => {
       rank += 1
-      if (item.status === 'success') {
-        if (item.result[1].toString() === 0) {
-          return null
-        }
-        return {
-          rank,
-          address: item.result[0],
-          points: `${item.result[1].toString()}`
-        }
-      }
       return {
         rank,
-        address: '-',
-        points: '0'
+        address: item.user,
+        points: `${item.score.toString()}`
       }
     })
     .filter(item => item !== null)

@@ -18,7 +18,7 @@ export const getContractAddress = (contractType, netId) => {
   if (contractType === 'TICKET') return config.gameTicketContract
   if (contractType === 'BOARD') return config.gameLeaderBoardContract
   if (contractType === 'FORWARDER') return config.forwarderContract
-  if (contractType === 'GAME') return config.gameABI
+  if (contractType === 'GAME') return config.gameContract
   return '0x'
 }
 
