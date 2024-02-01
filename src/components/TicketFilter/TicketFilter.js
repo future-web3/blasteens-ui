@@ -25,9 +25,9 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, gameLead
   const { data: walletClientData } = useWalletClient()
   const { address: walletAddress } = useAccount()
   const { chain } = useNetwork()
-  const signer = useEthersSigner(walletClientData)
+  const netId = chain?.id ?? 168587773
+  const signer = useEthersSigner(netId, chain?.name, walletAddress, walletClientData)
   const provider = useEthersProvider()
-  const netId = chain?.id ?? 5
   const leaderboardInterface = new ethers.utils.Interface(getABI('BOARD'))
 
   const dispatch = useGameDispatch()
@@ -48,31 +48,23 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, gameLead
   const handleSignMessage = async () => {
     if (!netId || !provider || !walletAddress) return
 
-    const encodeFunctionData = leaderboardInterface.encodeFunctionData(
-      'addScore',
-      [address, score]
-    );
+    const encodeFunctionData = leaderboardInterface.encodeFunctionData('addScore', [address, score])
 
     try {
-      const nonce = await getNonceForForwarder(netId, provider, walletAddress);
+      const nonce = await getNonceForForwarder(netId, provider, walletAddress)
       if (!nonce) return undefined
-      const signature = await handleSignTrustedForwarderMessage(
-        netId,
-        signer,
-        nonce,
-        encodeFunctionData
-      );
+      const signature = await handleSignTrustedForwarderMessage(netId, signer, nonce, encodeFunctionData)
       if (!signature) return undefined
       const signatureData = {
         forwarderData: signature.message,
-        signature: signature.signature,
-      };
+        signature: signature.signature
+      }
       return signatureData
     } catch (error) {
       console.error(`Sign Forwarder Message error: ${error.message}`)
       return undefined
     }
-  };
+  }
 
   useWaitForTransaction({
     hash: buyingPendingHash,

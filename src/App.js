@@ -2,34 +2,61 @@ import { Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout/Layout'
 import Homepage from './pages/Homepage/Homepage'
 import Arcade from './pages/Arcade/Arcade'
-import Prize from "./pages/Prize/Prize";
+import Prize from './pages/Prize/Prize'
 import { goerli } from 'wagmi/chains'
 import { createConfig, WagmiConfig, mainnet, configureChains } from 'wagmi'
 import { jsonRpcProvider } from '@wagmi/core/providers/jsonRpc'
+// import { publicProvier } from 'wagmi/providers/public'
 import config from './configs'
 import { GameProvider } from 'blast-game-sdk'
 import Market from './pages/Market/Market'
 import NotFound from './pages/NotFound/NotFound'
 import Aboutus from './pages/About/Aboutus'
+import { defineChain } from 'viem'
+
+const blastSepolia = defineChain({
+  id: 168_587_773,
+  name: 'Blast Sepolia',
+  nativeCurrency: {
+    name: 'Ether',
+    symbol: 'ETH',
+    decimals: 18
+  },
+  rpcUrls: {
+    default: {
+      http: ['https://sepolia.blast.io']
+    },
+    public: {
+      http: ['https://sepolia.blast.io']
+    }
+  },
+  blockExplorers: {
+    default: {
+      name: 'Blastscan',
+      url: 'https://testnet.blastscan.io'
+    }
+  },
+  testnet: true
+})
+
+const { publicClient } = configureChains(
+  [blastSepolia],
+  [
+    jsonRpcProvider({
+      rpc: () => ({
+        //TODO
+        http: `https://sepolia.blast.io`
+      })
+    })
+  ]
+)
+
+const wagmiConfig = createConfig({
+  autoConnect: true,
+  publicClient
+})
 
 function App() {
-  const { publicClient } = configureChains(
-    [goerli, mainnet],
-    [
-      jsonRpcProvider({
-        rpc: () => ({
-          //TODO
-          http: `https://eth-goerli.g.alchemy.com/v2/${config.alchemyKey}`
-        })
-      })
-    ]
-  )
-
-  const wagmiConfig = createConfig({
-    autoConnect: true,
-    publicClient
-  })
-
   return (
     <WagmiConfig config={wagmiConfig}>
       <GameProvider>
@@ -39,7 +66,7 @@ function App() {
             <Route path='arcade'>
               <Route path=':gameId' element={<Arcade />} />
             </Route>
-            <Route path="prize" element={<Prize />} />
+            <Route path='prize' element={<Prize />} />
             <Route path='about' element={<Aboutus />} />
             <Route path='market' element={<Market />} />
           </Route>
