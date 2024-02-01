@@ -34,6 +34,13 @@
   display: flex;
   flex-direction: column;
 
+  #error-img {
+    flex: 3;
+    @media screen and (max-width: $breakpoint-md) {
+      flex: 1;
+    }
+  }
+
   .notFoundSection {
     flex: 1;
     text-align: center;
@@ -41,16 +48,6 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
-    }
-
-    .notFoundText {
-      flex: 1;
-      display: flex;
-      font-size: larger;
-      font-weight: bold;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
     }
 
     a {
@@ -65,10 +62,18 @@
 
     .box {
       border: 0.35rem solid;
-      padding: 3vw;
-      border-image: conic-gradient(from var(--angle), $font-color, $primary-color 0.1turn, $primary-color 0.15turn, $font-color 0.25turn) 30;
+      padding: 20px;
+      font-size: 40px;
+      border-image: conic-gradient(from var(--angle), $background-color, $fail-color 0.1turn, $fail-color 0.15turn, $background-color 0.25turn) 30;
       animation: borderRotate var(--d) linear infinite forwards;
-      @media screen and (max-width: $breakpoint-xl) {
+      color: $fail-color;
+
+      &:hover {
+        border-image: conic-gradient(from var(--angle), $background-color, $success-color 0.1turn, $success-color 0.15turn, $background-color 0.25turn) 30;
+        color: $success-color;
+      }
+
+      @media screen and (max-width: $breakpoint-md) {
         font-size: 20px;
       }
     }
