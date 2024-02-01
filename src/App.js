@@ -9,6 +9,7 @@ import config from './configs'
 import { GameProvider } from 'blast-game-sdk'
 import Market from './pages/Market/Market'
 import NotFound from './pages/NotFound/NotFound'
+import Aboutus from './pages/About/Aboutus'
 
 function App() {
   const { publicClient } = configureChains(
@@ -35,6 +36,10 @@ function App() {
           <Route path='/' element={<Navbar />}>
             <Route index element={<Homepage />} />
             <Route path='about' element={<div>About Us</div>} />
+            <Route path='arcade'>
+              <Route path=':gameId' element={<Arcade />} />
+            </Route>
+            <Route path='about' element={<Aboutus />} />
             <Route path='arcade'>
               <Route path=':gameId' element={<Arcade />} />
             </Route>
