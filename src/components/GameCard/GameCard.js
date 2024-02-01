@@ -20,8 +20,18 @@ function GameCard({ gameId }) {
       </div>
       <div className={styles.gameCardLogo}>
         <img src={logoUrl} alt='LOGO' />
+        <div className={styles.gameCardDescription}>{gameConfigs[gameId]['description']}</div>
       </div>
-      <div className={styles.gameCardDescription}>{gameConfigs[gameId]['description']}</div>
+      <div className={styles.gameCardDetail}>
+        <p>
+          <span style={{ fontWeight: 'bold' }}>Prize Pool: </span>$2000
+          <br />
+          <span style={{ fontWeight: 'bold' }}>Highest Score: </span>923
+          <br />
+          <span style={{ fontWeight: 'bold' }}> Remaining: </span>01:23:12
+          <br />
+        </p>
+      </div>
     </div>
   )
 }
