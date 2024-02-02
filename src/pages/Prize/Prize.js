@@ -23,6 +23,7 @@ export default function Price() {
 
 
   return (
+    <div>
       <div className = {styles.page}>
         <div className={styles.pricePage}>
           <div className = {styles.contentWrapper}>
@@ -34,7 +35,7 @@ export default function Price() {
               </div>
               <ul className={styles.rankTable}>
                   {Data.RankTable.map((item) => (
-                    <li key = {item.rank} className={styles.dataRow}>
+                    <li className={styles.dataRow}>
                       <div className = {styles.data}>#{item.rank}</div>
                       <div className = {styles.data}>{item.points}pt</div>
                       <div className = {styles.data}>{item.address}</div>
@@ -48,13 +49,12 @@ export default function Price() {
               <div className={styles.controlButtons}>
                 <div className={styles.switch}>
                   <div className= {isGamer ? styles.selected : styles.notSelected} onClick = {()=>setIsGamer(true)}>Gamer</div>
-                  <div className={isGamer ? styles.notSelected : styles.selected} onClick={() => setIsGamer(false)}>Developer</div>            
-                </div>
+                  <div className={isGamer ? styles.notSelected : styles.selected} onClick={() => setIsGamer(false)}>Developer</div>            </div>
                 <div className={styles.selectSection}>
                     <div className={isOpen?  styles.selectedNameOpen: styles.selectedName} onClick={() => setIsOpen(!isOpen)}>{selected.Name}</div>
                     {isOpen && <div className={styles.dropdown}>
                       {Data.data.map((item) => (
-                      <div className={styles.selectItem} onClick={() => {setSelected(item); setIsOpen(false)}} key = {item.Name}>{item.Name}</div>
+                      <div className={styles.selectItem} onClick={() => {setSelected(item); setIsOpen(false)}}>{item.Name}</div>
                     ))}
                     </div>}
                 </div>
@@ -67,5 +67,7 @@ export default function Price() {
           </div>
         </div>
       </div>
+    </div>
+   
   )
 }

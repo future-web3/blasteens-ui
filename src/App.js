@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
-import Frame from './components/Frame/Frame';
+import Layout from './components/Layout/Layout'
 import Homepage from './pages/Homepage/Homepage'
 import Arcade from './pages/Arcade/Arcade'
 import Prize from "./pages/Prize/Prize";
@@ -9,8 +9,8 @@ import { jsonRpcProvider } from '@wagmi/core/providers/jsonRpc'
 import config from './configs'
 import { GameProvider } from 'blast-game-sdk'
 import Market from './pages/Market/Market'
+import NotFound from './pages/NotFound/NotFound'
 import Aboutus from './pages/About/Aboutus'
-
 
 function App() {
   const { publicClient } = configureChains(
@@ -34,16 +34,16 @@ function App() {
     <WagmiConfig config={wagmiConfig}>
       <GameProvider>
         <Routes>
-          <Route path='/' element={<Frame />}>
+          <Route path='/' element={<Layout />}>
             <Route index element={<Homepage />} />
-            <Route path='about' element={<Aboutus />} />
             <Route path='arcade'>
               <Route path=':gameId' element={<Arcade />} />
             </Route>
             <Route path="prize" element={<Prize />} />
-            <Route path='*' element={<div>404 Not Found</div>} />
+            <Route path='about' element={<Aboutus />} />
             <Route path='market' element={<Market />} />
           </Route>
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </GameProvider>
     </WagmiConfig>
