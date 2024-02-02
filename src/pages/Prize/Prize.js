@@ -35,7 +35,7 @@ export default function Price() {
               </div>
               <ul className={styles.rankTable}>
                   {Data.RankTable.map((item) => (
-                    <li className={styles.dataRow}>
+                    <li className={styles.dataRow} id={item.rank}>
                       <div className = {styles.data}>#{item.rank}</div>
                       <div className = {styles.data}>{item.points}pt</div>
                       <div className = {styles.data}>{item.address}</div>
