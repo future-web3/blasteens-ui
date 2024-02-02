@@ -19,7 +19,7 @@ export const networkConfig = {
   netId168587773: {
     gameTicketContract: '0x347723e76631759006F0bB7C0CEa608e73fEc48F',
     gameLeaderBoardContract: '0x533798106BA364bBBeeEBE145B4f4b0dC829067A', //TODO:NO NEED THIS ANYMORE
-    gameContract: { escapeFromGerms: '0x675ACAc70E27a8DFD38d507c6115212ab11BCA6f' },
+    gameContract: { escapeFromGerms: '0xa2119EdAF604D5B6D9d4c233C9D4Defa175C080e' },
     forwarderContract: '0xB6A87320DE35F2bEFE2258162360daa3de11C788',
     rpcUrl: `https://eth-goerli.g.alchemy.com/v2/${alchemyKey}`,
     chainName: 'Blast Sepolia',

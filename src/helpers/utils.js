@@ -32,5 +32,5 @@ export function getAdjacentElements(arr, index) {
 }
 
 export const isNowBeforeGameEndTime = gameEndTime => {
-  return moment().isBefore(moment(gameEndTime))
+  return moment().isBefore(moment.unix(gameEndTime))
 }

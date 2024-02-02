@@ -35,7 +35,7 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, forwarde
   const tickets = useGameSelector(state => state.gameTicket.tickets)
   const score = useGameSelector(state => state.gameLeaderboard[transformedGameId]?.score) || 0
   const allowSync = useGameSelector(state => state.gameLeaderboard[transformedGameId]?.allowSync) || false
-
+  const gameRound = useGameSelector(state => state.gameLeaderboard[transformedGameId]?.round) || null
   const numberOfLives = useGameSelector(state => state.gameTicket.games[transformedGameId]?.numberOfLives ?? 0)
 
   const { register, handleSubmit } = useForm({
@@ -183,11 +183,13 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, forwarde
   })
 
   const handleSyncScore = async () => {
+    if (!gameRound) return
+
     setIsSyncing(true)
 
     try {
       const currentLeaderboard = await checkScore(gameContract, transformedGameId)
-      if (!currentLeaderboard || !isNowBeforeGameEndTime()) {
+      if (!currentLeaderboard || !isNowBeforeGameEndTime(gameRound.gameEndTime)) {
         dispatch(gameLeaderboardActions.resetGameScore(transformedGameId))
         setIsSyncing(false)
         return

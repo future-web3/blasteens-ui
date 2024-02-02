@@ -6,6 +6,8 @@ import { useGameSelector } from 'blast-game-sdk'
 import Countdown from 'react-countdown'
 import { writeContract } from '@wagmi/core'
 import { useAccount, useWaitForTransaction } from 'wagmi'
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 function Individual({ rank, points, addressLink, address }) {
   return (
@@ -31,14 +33,22 @@ function Leaderboard({ gameContract, transformedGameId }) {
   const allowSync = useGameSelector(state => state.gameLeaderboard[transformedGameId]?.allowSync) || false
   const round = useGameSelector(state => state.gameLeaderboard[transformedGameId]?.round) || null
   const gameStatus = useGameSelector(state => state.gameLeaderboard[transformedGameId]?.gameStatus) || null
-  const [isLoading, setIsLoading] = useState(false)
+  const [isClaimingReward, setIsClaimingReward] = useState(false)
+  const [isFetchingInfo, setIsFetchingInfo] = useState(true)
   const [pendingHash, setPendingHash] = useState('')
 
   useEffect(() => {
     if (!gameContract) return
     const leaderboardHandler = async () => {
-      const data = await checkScore(gameContract, transformedGameId)
-      setIndividuals(data)
+      try {
+        setIsFetchingInfo(true)
+        const data = await checkScore(gameContract, transformedGameId)
+        setIndividuals(data)
+      } catch (error) {
+        console.error('leaderboardHandler error', error.message)
+      } finally {
+        setIsFetchingInfo(false)
+      }
     }
     leaderboardHandler()
   }, [gameContract, allowSync, transformedGameId])
@@ -51,18 +61,18 @@ function Leaderboard({ gameContract, transformedGameId }) {
         setPendingHash('')
         console.log('>>>>>>>>>Redeeming success')
       }
-      setIsLoading(false)
+      setIsClaimingReward(false)
     },
     onError() {
       setPendingHash('')
-      setIsLoading(false)
+      setIsClaimingReward(false)
     }
   })
 
   const handleClaimReward = async () => {
     if (!address) return
     try {
-      setIsLoading(true)
+      setIsClaimingReward(true)
       const txReceiptForClaiming = await writeContract({
         ...gameContract,
         account: address,
@@ -72,7 +82,7 @@ function Leaderboard({ gameContract, transformedGameId }) {
       setPendingHash(txReceiptForClaiming.hash)
     } catch (error) {
       console.error('handleClaimReward error', error.message)
-      setIsLoading(false)
+      setIsClaimingReward(false)
     }
   }
 
@@ -105,9 +115,19 @@ function Leaderboard({ gameContract, transformedGameId }) {
           )}
         </div>
       </div>
-      {individuals?.map((individual, index) => (
-        <Individual key={index} {...individual} />
-      ))}
+      {isFetchingInfo ? (
+        <div style={{ padding: '5px' }}>
+          <SkeletonTheme baseColor={'#000000'} highlightColor={'#7d7a92'}>
+            <Skeleton count={10} className={styles.skeletonLoading} />
+          </SkeletonTheme>
+        </div>
+      ) : (
+        <div>
+          {individuals.map((individual, index) => (
+            <Individual key={index} {...individual} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

@@ -58,7 +58,7 @@ function Inventory() {
   return (
     <div className={styles.inventoryContainer}>
       <h2 className={styles.stickyHeader}>Inventory</h2>
-      {isConnected ? (
+      {isConnected && updatedTickets.length > 0 ? (
         <>
           {updatedTickets.map((nft, index) => (
             <NFT key={index} {...nft} />

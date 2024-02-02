@@ -10,6 +10,7 @@ import Market from './pages/Market/Market'
 import NotFound from './pages/NotFound/NotFound'
 import Aboutus from './pages/About/Aboutus'
 import { defineChain } from 'viem'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const blastSepolia = defineChain({
   id: 168_587_773,
