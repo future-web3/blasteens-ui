@@ -12,14 +12,14 @@ export const getABI = contractType => {
 }
 
 export const getContractAddress = (contractType, netId, transformedGameId) => {
-  if (!netId) return '0x'
+  if (!netId) return null
   const config = networkConfig[`netId${netId}`]
-  if (!config) return '0x'
+  if (!config) return null
   if (contractType === 'TICKET') return config.gameTicketContract
   if (contractType === 'BOARD') return config.gameLeaderBoardContract
   if (contractType === 'FORWARDER') return config.forwarderContract
   if (contractType === 'GAME' && transformedGameId) return config.gameContract[transformedGameId]
-  return '0x'
+  return null
 }
 
 export const getTrustedForwarder = (netId, provider) => {

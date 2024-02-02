@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 export const transformId = id => {
   const words = id.split('-')
   const transformedWords = words.map((word, index) => {
@@ -8,6 +10,10 @@ export const transformId = id => {
 
 export const formatHash = (txHash, chars = 6) => {
   return `${txHash.substring(0, chars + 2)}...${txHash.substring(txHash.length - chars)}`
+}
+
+export const formatTimeToMilliseconds = timeStamp => {
+  return moment.unix(Number(timeStamp)).valueOf()
 }
 
 export function getAdjacentElements(arr, index) {
@@ -23,4 +29,8 @@ export function getAdjacentElements(arr, index) {
     newPrev,
     newNext
   }
+}
+
+export const isNowBeforeGameEndTime = gameEndTime => {
+  return moment().isBefore(moment(gameEndTime))
 }

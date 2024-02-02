@@ -1,4 +1,4 @@
-@import "../../variables.module.scss";
+@import '../../variables.module.scss';
 
 .individualContainer {
   display: flex;
@@ -55,6 +55,12 @@
         text-align: left;
       }
 
+      .countdownSection {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
       .claimBtn {
         border-radius: 5px;
         background-color: $primary-color;
@@ -62,6 +68,7 @@
         color: $navbar-color;
         font-size: 20px;
         font-weight: 700;
+        cursor: pointer;
       }
     }
   }

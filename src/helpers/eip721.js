@@ -46,7 +46,6 @@ export async function handleSignTrustedForwarderMessage(netId, signer, nonce, da
 
   const user = await signer.getAddress()
   const typedData = createTrustedForwarderTypedData(netId, user, nonce, data, transformedGameId)
-  console.log(typedData.domain, typedData.types, typedData.message)
   const signature = await signer._signTypedData(typedData.domain, typedData.types, typedData.message)
   return {
     signature,

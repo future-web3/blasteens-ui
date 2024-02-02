@@ -2,7 +2,6 @@ import { providers } from 'ethers'
 import * as React from 'react'
 
 export function walletClientToSigner(chainId, chainName, address, walletClient) {
-  console.log('>>>>>>>>>>>walletClient', walletClient)
   if (!walletClient.transport || !walletClient.account) {
     return
   }

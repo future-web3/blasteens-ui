@@ -12,8 +12,9 @@ import { getNonceForForwarder, getABI } from '../../helpers/network'
 import { handleSignTrustedForwarderMessage } from '../../helpers/eip721'
 import { useEthersSigner, useEthersProvider } from '../../hooks'
 import { ethers } from 'ethers'
+import { isNowBeforeGameEndTime } from '../../helpers/utils'
 
-function TicketFilter({ transformedGameId, address, gameTicketContract, gameLeaderboardContract, forwarderContract, gameContract }) {
+function TicketFilter({ transformedGameId, address, gameTicketContract, forwarderContract, gameContract }) {
   const [isBuying, setIsBuying] = useState(false)
   const [isRedeeming, setIsRedeeming] = useState(false)
   const [isSyncing, setIsSyncing] = useState(false)
@@ -53,7 +54,7 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, gameLead
     try {
       const nonce = await getNonceForForwarder(netId, provider, walletAddress)
       if (!nonce) return undefined
-      const signature = await handleSignTrustedForwarderMessage(netId, signer, nonce, encodeFunctionData)
+      const signature = await handleSignTrustedForwarderMessage(netId, signer, nonce, encodeFunctionData, transformedGameId)
       if (!signature) return undefined
       const signatureData = {
         forwarderData: signature.message,
@@ -185,8 +186,9 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, gameLead
     setIsSyncing(true)
 
     try {
-      const currentLeaderboard = await checkScore(gameLeaderboardContract, transformedGameId)
-      if (!currentLeaderboard) {
+      const currentLeaderboard = await checkScore(gameContract, transformedGameId)
+      if (!currentLeaderboard || !isNowBeforeGameEndTime()) {
+        dispatch(gameLeaderboardActions.resetGameScore(transformedGameId))
         setIsSyncing(false)
         return
       }
@@ -237,6 +239,7 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, gameLead
                   })
                 )
               }
+              dispatch(gameLeaderboardActions.resetGameScore(transformedGameId))
             }}
           >
             Restart

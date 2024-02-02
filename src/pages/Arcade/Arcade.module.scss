@@ -105,20 +105,20 @@
 
   @media screen and (max-width: $breakpoint-2xl) {
     flex-direction: column;
-    align-items: center
+    align-items: center;
   }
 }
 
 .arcadeSideBlock {
   text-align: center;
   max-height: 800px;
-  min-width: 300px;
+  min-width: 350px;
   border: 0.35rem solid $border-color;
 
   @media screen and (max-width: $breakpoint-2xl) {
     order: 2;
     max-height: 600px;
-    max-width: 600px;
+    max-width: 800px;
     overflow-y: auto;
     overflow-x: hidden;
   }
@@ -197,7 +197,7 @@
   margin-left: -20px;
   margin-top: -20px;
   position: relative;
-  order: 1
+  order: 1;
 }
 
 .arcadeMenuContainerForTicket {
@@ -317,7 +317,7 @@ $t: 0.001%;
   }
 }
 
-.mobileInfoContainer{
+.mobileInfoContainer {
   display: grid;
   grid-template-columns: 1fr 1fr;
   margin-top: 50px;

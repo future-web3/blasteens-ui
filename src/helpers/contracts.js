@@ -36,7 +36,6 @@ export const checkTicket = async (gameTicketContract, address) => {
     ]
   })
 
-  console.log(data)
   return mapTicket(data)
 }
 
@@ -64,16 +63,12 @@ export const mapTicket = data => {
 }
 
 export const checkScore = async (gameContract, gameName) => {
-  console.log(gameContract)
   const data = await readContract({
     ...gameContract,
     functionName: 'getLeaderBoardInfo',
     args: []
   })
 
-  console.log(data)
-
-  console.log(mapScore(data))
   return mapScore(data, gameName)
 }
 
@@ -89,4 +84,52 @@ export const mapScore = data => {
       }
     })
     .filter(item => item !== null)
+}
+
+export const getCurrentGameInfo = async gameContract => {
+  const data = await readContracts({
+    contracts: [
+      {
+        ...gameContract,
+        functionName: 'getCurrentGameRound',
+        args: []
+      },
+      {
+        ...gameContract,
+        functionName: 'isGameRunning',
+        args: []
+      },
+      {
+        ...gameContract,
+        functionName: 'isClaiming',
+        args: []
+      }
+    ]
+  })
+
+  const [roundInfoData, isGameRunningData, isClaimingData] = data
+
+  const gameInfo = { round: mapRoundInfo(roundInfoData), gameStatus: mapGameStatus(isGameRunningData, isClaimingData) }
+  return gameInfo
+}
+
+export const mapRoundInfo = data => {
+  return {
+    claimEndTime: Number(data.result.end) + Number(data.result.claimPeriod),
+    gameEndTime: Number(data.result.end),
+    gameRound: Number(data.result.gameRound)
+  }
+  return null
+}
+
+export const mapGameStatus = (isGameRunningData, isClaimingData) => {
+  const gameStatus = {
+    isGameRunning: false,
+    isClaiming: false
+  }
+  if (isGameRunningData.status === 'success' && isClaimingData.status === 'success') {
+    gameStatus.isGameRunning = isGameRunningData.result
+    gameStatus.isClaiming = isClaimingData.result
+  }
+  return gameStatus
 }
