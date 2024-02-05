@@ -6,6 +6,7 @@ export const useHighScore = () => {
   const [highestScoresByGame, setHighestScoresByGame] = useState({})
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [loaded, setLoaded] = useState(false)
   const { fastRefresh } = useRefresh()
 
   useEffect(() => {
@@ -36,11 +37,12 @@ export const useHighScore = () => {
         console.error('getScoreUpdated error:', error.message)
       } finally {
         setIsLoading(false)
+        setLoaded(true)
       }
     }
 
     fetchEventsData()
   }, [fastRefresh])
 
-  return { highestScoresByGame, error, isLoading }
+  return { highestScoresByGame, error, isLoading, loaded }
 }

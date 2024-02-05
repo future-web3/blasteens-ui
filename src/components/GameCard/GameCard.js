@@ -8,8 +8,10 @@ import { gameLeaderboardActions, gameTicketActions, useGameDispatch, useGameSele
 import { useBalance } from 'wagmi'
 import Countdown from 'react-countdown'
 import { formatTimeToMilliseconds } from '../../helpers/utils'
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
-function GameCard({ gameId, games, highestScoresByGame }) {
+function GameCard({ gameId, games, highestScoresByGame, isLoading, loaded }) {
   const logoUrl = `/assets/games/${gameConfigs[gameId]['key']}/logo.png`
   const dispatch = useGameDispatch()
   const round = useGameSelector(state => state.gameLeaderboard[gameId]?.round) || null
@@ -71,28 +73,41 @@ function GameCard({ gameId, games, highestScoresByGame }) {
           <img src={logoUrl} alt='LOGO' />
           <div className={styles.gameCardDescription}>{gameConfigs[gameId]['description']}</div>
         </div>
-        <div className={styles.gameCardDetail}>
-          <p>
-            <span className={styles.gameCardRow}>
-              <span style={{ fontWeight: 'bold' }}>Prize Pool</span>
-              <span>{poolPrize ? poolPrize.formatted : 0} ETH</span>
-            </span>
-            <span className={styles.gameCardRow}>
-              <span style={{ fontWeight: 'bold' }}>Highest Score</span>
-              <span>{score}pt</span>
-            </span>
-            <span className={styles.gameCardRow}>
-              {round && gameStatus && (
-                <>
-                  <span style={{ fontWeight: 'bold' }}>Remaining Time</span>
-                  <span className={styles.countdownSection}>
-                    <Countdown date={formatTimeToMilliseconds(gameStatus.isGameRunning ? round.gameEndTime : round.claimEndTime)} renderer={countdownRender} />
-                  </span>
-                </>
-              )}
-            </span>
-          </p>
-        </div>
+        {isLoading && !loaded && (!round || !gameStatus) ? (
+          <div className={styles.gameCardDetail}>
+            <div style={{ padding: '3px', width: '100%' }}>
+              <SkeletonTheme baseColor={'#191919'} highlightColor={'#7d7a92'}>
+                <Skeleton count={3} className={styles.skeletonLoading} />
+              </SkeletonTheme>
+            </div>
+          </div>
+        ) : (
+          <div className={styles.gameCardDetail}>
+            <p>
+              <span className={styles.gameCardRow}>
+                <span style={{ fontWeight: 'bold' }}>Prize Pool</span>
+                <span>{poolPrize ? poolPrize.formatted : 0} ETH</span>
+              </span>
+              <span className={styles.gameCardRow}>
+                <span style={{ fontWeight: 'bold' }}>Highest Score</span>
+                <span>{score}pt</span>
+              </span>
+              <span className={styles.gameCardRow}>
+                {round && gameStatus && (
+                  <>
+                    <span style={{ fontWeight: 'bold' }}>Remaining Time</span>
+                    <span>
+                      <Countdown
+                        date={formatTimeToMilliseconds(gameStatus.isGameRunning ? round.gameEndTime : round.claimEndTime)}
+                        renderer={countdownRender}
+                      />
+                    </span>
+                  </>
+                )}
+              </span>
+            </p>
+          </div>
+        )}
       </div>
     </div>
   )
