@@ -68,6 +68,7 @@
             gap: 5px;
 
             .filterWrapper{
+                width:80%;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
@@ -82,8 +83,57 @@
                     line-height: normal;
                 }
 
-                .select{
+                .dropdownContainer{
+                    background-color: $font-color;
+                    width: 80%;
+                    border-radius: 20px;
                     margin: 20px 0;
+                    position: relative;
+                    font-size: 16px;
+                    font-weight:700;
+                    .selectSection{
+                        width: 100%;
+                        color:$border-color;
+                        padding:10px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    .selectSectionOpen{
+                        color: font-color;
+                        width: 100%;
+                        border-top-right-radius: 20px;
+                        border-top-left-radius: 20px;
+                        padding:10px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        background-color: $border-color;
+                    }
+                    .items{
+                        position: absolute;
+                        width: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        margin-top:0%;
+                        left: 0;
+                        z-index: 1000; 
+                        color:$border-color;
+                        border-bottom-right-radius: 20px;
+                        border-bottom-left-radius: 20px;
+                        overflow: hidden;
+                        .selectItem{
+                            width: 100%;
+                            display: flex;
+                            justify-content: center;
+                            padding: 5px;
+                            background-color: $font-color;
+                        }
+                        .selectItem:hover{
+                            background-color: $border-color;
+                            color: $font-color;
+                        }
+                    }
                 }
 
                 .optionList{
@@ -95,9 +145,58 @@
 
 
                     .optionItem{
-                        display: flex;
-                        gap: 10px
+                        display: block;
+                        position: relative;
+                        padding-left: 35px;
+                        margin-bottom: 12px;
+                        cursor: pointer;
+                        font-size: 22px;
                     }
+
+                    input{
+                        position: absolute;
+                        opacity: 0;
+                        cursor: pointer;
+                        height: 0;
+                        width: 0;
+                    }
+
+                    .checkMark {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        height: 25px;
+                        width: 25px;
+                        background-color: $font-color;
+                      }
+
+                    .checkMark:hover{
+                        background-color: $border-color;
+                    }
+
+                    input:checked ~ .checkMark{
+                        background-color: $navbar-color;
+                    }
+                    
+                    .checkmark:after {
+                        content: "";
+                        position: absolute;
+                        display: none;
+                      }
+
+                      input:checked ~ .checkmark:after {
+                        display: block;
+                      }
+                
+                      .checkmark:after {
+                        left: 9px;
+                        top: 5px;
+                        width: 5px;
+                        height: 10px;
+                        border: solid white;
+                        border-width: 0 3px 3px 0;
+                        transform: rotate(45deg);
+                      }
 
                     .optionLabel{
                         width: 80%;

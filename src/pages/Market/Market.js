@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import React from 'react'
 import styles from './Market.module.scss'
+import { VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 
 const userOwnNft = [
   { image: '/images/nft6.jpeg', button: 'Sell' },
@@ -56,7 +57,21 @@ const SellButton = () => {
 }
 
 const Filter = () => {
-  const [selectedGame, setSelectedGame] = useState('Escape From Germs')
+  const [selectedGame, setSelectedGame] = useState('Escape From Germs');
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   function getOptionsByName(gameName) {
     const game = filterOptions.find(game => game.name === gameName)
@@ -66,21 +81,23 @@ const Filter = () => {
   return (
     <div className={styles.filterWrapper}>
       <h2 className={styles.h2}>{selectedGame}</h2>
-      <select value={selectedGame} onChange={e => setSelectedGame(e.target.value)} className={styles.select}>
-        {filterOptions.map((game, index) => (
-          <option key={index} value={game.name}>
-            {game.name}
-          </option>
-        ))}
-      </select>
+      <div className = {styles.dropdownContainer} ref = {dropdownRef}>
+        <div className = {isOpen ? styles.selectSectionOpen : styles.selectSection} onClick = {() => setIsOpen(!isOpen)}>{selectedGame}{isOpen?<VscTriangleUp/> : <VscTriangleDown/>}</div>
+        <div className={styles.items} >
+          {isOpen && filterOptions.map((game, index) => (
+            <div className={styles.selectItem} onClick={() => {setSelectedGame(game.name); setIsOpen(false)}} key = {index}>{game.name}</div>
+          ))}
+        </div>
+      </div>
       <div className={styles.optionList}>
         {getOptionsByName(selectedGame).map((opt, index) => (
-          <div key={index} className={styles.optionItem}>
-            <input type='checkbox' value={opt} id={opt} />
-            <label className={styles.optionLabel} for={opt}>
+          <label key={index} className={styles.optionItem}>
+            <input type='checkbox' value={opt} id={opt} for={opt} />
+            <span className={styles.checkMark}></span>
+            <div className={styles.optionLabel} >
               {opt}
-            </label>
-          </div>
+            </div>
+          </label>
         ))}
       </div>
     </div>
