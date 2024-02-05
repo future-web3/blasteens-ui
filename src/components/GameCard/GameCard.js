@@ -11,7 +11,7 @@ import { formatTimeToMilliseconds } from '../../helpers/utils'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
-function GameCard({ gameId, games, highestScoresByGame, isLoading, loaded }) {
+function GameCard({ gameId, games, highestScoresByGame, isLoading, loaded, isGamePlayable }) {
   const logoUrl = `/assets/games/${gameConfigs[gameId]['key']}/logo.png`
   const dispatch = useGameDispatch()
   const round = useGameSelector(state => state.gameLeaderboard[gameId]?.round) || null
@@ -73,7 +73,7 @@ function GameCard({ gameId, games, highestScoresByGame, isLoading, loaded }) {
           <img src={logoUrl} alt='LOGO' />
           <div className={styles.gameCardDescription}>{gameConfigs[gameId]['description']}</div>
         </div>
-        {isLoading && !loaded && (!round || !gameStatus) ? (
+        {(isLoading || !loaded || !round || !gameStatus) && isGamePlayable ? (
           <div className={styles.gameCardDetail}>
             <div style={{ padding: '3px', width: '100%' }}>
               <SkeletonTheme baseColor={'#191919'} highlightColor={'#7d7a92'}>
@@ -82,31 +82,35 @@ function GameCard({ gameId, games, highestScoresByGame, isLoading, loaded }) {
             </div>
           </div>
         ) : (
-          <div className={styles.gameCardDetail}>
-            <p>
-              <span className={styles.gameCardRow}>
-                <span style={{ fontWeight: 'bold' }}>Prize Pool</span>
-                <span>{poolPrize ? poolPrize.formatted : 0} ETH</span>
-              </span>
-              <span className={styles.gameCardRow}>
-                <span style={{ fontWeight: 'bold' }}>Highest Score</span>
-                <span>{score}pt</span>
-              </span>
-              <span className={styles.gameCardRow}>
-                {round && gameStatus && (
-                  <>
-                    <span style={{ fontWeight: 'bold' }}>Remaining Time</span>
-                    <span>
-                      <Countdown
-                        date={formatTimeToMilliseconds(gameStatus.isGameRunning ? round.gameEndTime : round.claimEndTime)}
-                        renderer={countdownRender}
-                      />
-                    </span>
-                  </>
-                )}
-              </span>
-            </p>
-          </div>
+          <>
+            {isGamePlayable && (
+              <div className={styles.gameCardDetail}>
+                <p>
+                  <span className={styles.gameCardRow}>
+                    <span style={{ fontWeight: 'bold' }}>Prize Pool</span>
+                    <span>{poolPrize ? poolPrize.formatted : 0} ETH</span>
+                  </span>
+                  <span className={styles.gameCardRow}>
+                    <span style={{ fontWeight: 'bold' }}>Highest Score</span>
+                    <span>{score}pt</span>
+                  </span>
+                  <span className={styles.gameCardRow}>
+                    {round && gameStatus && (
+                      <>
+                        <span style={{ fontWeight: 'bold' }}>Remaining Time</span>
+                        <span>
+                          <Countdown
+                            date={formatTimeToMilliseconds(gameStatus.isGameRunning ? round.gameEndTime : round.claimEndTime)}
+                            renderer={countdownRender}
+                          />
+                        </span>
+                      </>
+                    )}
+                  </span>
+                </p>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

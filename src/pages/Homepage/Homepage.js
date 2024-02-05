@@ -18,7 +18,15 @@ function Homepage() {
         <hr />
         <div className={styles.homepageCards}>
           {gameListConfigs['arcade'].map(id => (
-            <GameCard gameId={id} key={id} games={games} highestScoresByGame={highestScoresByGame} isLoading={isLoading} loaded={loaded} />
+            <GameCard
+              gameId={id}
+              key={id}
+              games={games}
+              highestScoresByGame={highestScoresByGame}
+              isLoading={isLoading}
+              loaded={loaded}
+              isGamePlayable={true}
+            />
           ))}
         </div>
       </div>
