@@ -46,6 +46,8 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, forwarde
     }
   })
 
+  const gameStatus = useGameSelector(state => state.gameLeaderboard[transformedGameId]?.gameStatus) || null
+
   const handleSignMessage = async () => {
     if (!netId || !provider || !walletAddress) return
 
@@ -281,7 +283,7 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, forwarde
             <button
               className={(gameViewStyles.arcadeWeb3Button, gameViewStyles.btn, gameViewStyles.drawBorder)}
               onClick={handleSubmit(handleRedeemTicket)}
-              disabled={isRedeeming}
+              disabled={isRedeeming || !gameStatus?.isGameRunning}
             >
               {isRedeeming ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Redeem Ticket'}
             </button>
