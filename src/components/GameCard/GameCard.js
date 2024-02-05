@@ -1,10 +1,58 @@
-import React from 'react'
+import React, { useEffect, useMemo } from 'react'
 import styles from './GameCard.module.scss'
 import { Link } from 'react-router-dom'
 import { gameConfigs } from '../../configs/gameConfig'
+import { getABI, getContractAddress } from '../../helpers/network'
+import { getCurrentGameInfo } from '../../helpers/contracts'
+import { gameLeaderboardActions, gameTicketActions, useGameDispatch, useGameSelector } from 'blast-game-sdk'
+import { useBalance } from 'wagmi'
+import Countdown from 'react-countdown'
+import { formatTimeToMilliseconds } from '../../helpers/utils'
 
-function GameCard({ gameId }) {
+function GameCard({ gameId, games, highestScoresByGame }) {
   const logoUrl = `/assets/games/${gameConfigs[gameId]['key']}/logo.png`
+  const dispatch = useGameDispatch()
+  const round = useGameSelector(state => state.gameLeaderboard[gameId]?.round) || null
+  const gameStatus = useGameSelector(state => state.gameLeaderboard[gameId]?.gameStatus) || null
+
+  const gameContract = useMemo(() => {
+    const address = getContractAddress('GAME', 168587773, gameId)
+    const abi = getABI('GAME')
+    if (!address || !abi) {
+      return null
+    }
+    return {
+      address,
+      abi
+    }
+  }, [gameId])
+
+  const score = highestScoresByGame?.[gameId] || 0
+
+  const { data: poolPrize } = useBalance({ address: gameContract?.address })
+
+  useEffect(() => {
+    if (!gameContract) return
+
+    const fetchGameInfo = async () => {
+      const { round, gameStatus } = await getCurrentGameInfo(gameContract)
+
+      if (!games[gameId] && gameConfigs[gameId]) {
+        dispatch(gameTicketActions.initGame(gameId))
+        dispatch(gameLeaderboardActions.initGame({ gameName: gameId, round, gameStatus }))
+      }
+    }
+
+    fetchGameInfo()
+  }, [gameContract])
+
+  const countdownRender = ({ days, hours, minutes, seconds }) => {
+    return (
+      <span className={styles.infoText}>
+        {days} D : {hours} H : {minutes} M : {seconds} S
+      </span>
+    )
+  }
 
   return (
     <div className={styles.gameCardBox}>
@@ -27,15 +75,21 @@ function GameCard({ gameId }) {
           <p>
             <span className={styles.gameCardRow}>
               <span style={{ fontWeight: 'bold' }}>Prize Pool</span>
-              <span>$2000</span>
+              <span>{poolPrize ? poolPrize.formatted : 0} ETH</span>
             </span>
             <span className={styles.gameCardRow}>
               <span style={{ fontWeight: 'bold' }}>Highest Score</span>
-              <span>923pt</span>
+              <span>{score}pt</span>
             </span>
             <span className={styles.gameCardRow}>
-              <span style={{ fontWeight: 'bold' }}>Remaining Time</span>
-              <span>01:23:12</span>
+              {round && gameStatus && (
+                <>
+                  <span style={{ fontWeight: 'bold' }}>Remaining Time</span>
+                  <span className={styles.countdownSection}>
+                    <Countdown date={formatTimeToMilliseconds(gameStatus.isGameRunning ? round.gameEndTime : round.claimEndTime)} renderer={countdownRender} />
+                  </span>
+                </>
+              )}
             </span>
           </p>
         </div>

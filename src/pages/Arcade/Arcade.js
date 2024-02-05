@@ -1,26 +1,28 @@
 import { useParams } from 'react-router-dom'
 import styles from './Arcade.module.scss'
 import React, { useEffect, useMemo } from 'react'
-import { useAccount, useConnect, useNetwork } from 'wagmi'
+import { useAccount, useConnect, useNetwork, useSwitchNetwork } from 'wagmi'
 
 import { gameConfigs } from '../../configs/gameConfig'
 import Phaser from 'phaser'
 import { getABI, getContractAddress } from '../../helpers/network'
-import { checkTicket } from '../../helpers/contracts'
+import { checkTicket, getCurrentGameInfo } from '../../helpers/contracts'
 import { useGameSelector, useGameDispatch, gameTicketActions, gameLeaderboardActions } from 'blast-game-sdk'
 import TicketFilter from '../../components/TicketFilter/TicketFilter'
 import Leaderboard from '../../components/Leaderboard/Leaderboard'
 import Inventory from '../../components/Inventory/Inventory'
 import { transformId } from '../../helpers/utils'
 import { useMediaQuery } from 'react-responsive'
+import moment from 'moment'
 
 let game = null
 
 function Arcade() {
+  const { switchNetwork } = useSwitchNetwork()
   const { connect, connectors } = useConnect()
   const { address, isConnected } = useAccount()
   const { chain } = useNetwork()
-  const netId = chain ? chain.id : 5
+  const netId = chain ? chain.id : 168587773
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1280px)' })
 
   const { gameId } = useParams()
@@ -30,11 +32,6 @@ function Arcade() {
   const dispatch = useGameDispatch()
 
   const games = useGameSelector(state => state.gameTicket.games)
-
-  if (!games[transformedGameId] && gameConfigs[transformedGameId]) {
-    dispatch(gameTicketActions.addGame(transformedGameId))
-    dispatch(gameLeaderboardActions.addGame(transformedGameId))
-  }
 
   const numberOfLives = useGameSelector(state => state.gameTicket.games[transformedGameId]?.numberOfLives || 0)
   const showTicketWindow = useGameSelector(state => state.gameTicket.showTicketWindow)
@@ -77,6 +74,18 @@ function Arcade() {
     }
   }, [netId])
 
+  const gameContract = useMemo(() => {
+    const address = getContractAddress('GAME', netId, transformedGameId)
+    const abi = getABI('GAME')
+    if (!address || !abi) {
+      return null
+    }
+    return {
+      address,
+      abi
+    }
+  }, [netId, transformedGameId])
+
   useEffect(() => {
     if (!isConnected || !targetGame || isTabletOrMobile) {
       if (game) {
@@ -100,17 +109,36 @@ function Arcade() {
     const checkTicketHandler = async () => {
       if (!address || !gameTicketContract) return
       const data = await checkTicket(gameTicketContract, address)
-      console.log('>>>>>>>>>ticketData', data)
       dispatch(gameTicketActions.setTickets(data))
       if (numberOfLives <= 0) {
         dispatch(gameTicketActions.setShowTicketWindow(true))
       }
     }
-    checkTicketHandler();
+    checkTicketHandler()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address, gameTicketContract, numberOfLives]);
+  }, [address, gameTicketContract, numberOfLives])
 
-  const handleConnectWallet = async () => {
+  useEffect(() => {
+    if (!gameContract) return
+
+    const fetchGameInfo = async () => {
+      const { round, gameStatus } = await getCurrentGameInfo(gameContract)
+
+      if (!games[transformedGameId] && gameConfigs[transformedGameId]) {
+        dispatch(gameTicketActions.initGame(transformedGameId))
+        dispatch(gameLeaderboardActions.initGame({ gameName: transformedGameId, round, gameStatus }))
+      }
+    }
+
+    fetchGameInfo()
+  }, [gameContract])
+
+  useEffect(() => {
+    if (!isConnected || chain?.id === 168587773) return
+    switchNetwork?.(168587773)
+  }, [isConnected, chain])
+
+  const handleConnectWallet = () => {
     try {
       if (!isConnected) {
         connect({ connector: connectors[0] })
@@ -131,14 +159,16 @@ function Arcade() {
         <p>Remaining chance {numberOfLives}</p>
         <hr />
       </header>
-      {!isTabletOrMobile ? <div className={styles.arcadeContent}>
-        <div className={styles.arcadeSideBlock}>
-          <Leaderboard gameLeaderboardContract={gameLeaderboardContract} transformedGameId={transformedGameId} />
-        </div>
-        <div className={styles.arcadeFrameContainer} style={{ backgroundImage: `url('/images/arcade-frame.png')` }}>
-          <div className={styles.arcadeGameContainer}>
-            {isConnected ?
-              <div id='gameDisplay' /> : (
+      {!isTabletOrMobile ? (
+        <div className={styles.arcadeContent}>
+          <div className={styles.arcadeSideBlock}>
+            <Leaderboard gameContract={gameContract} transformedGameId={transformedGameId} />
+          </div>
+          <div className={styles.arcadeFrameContainer} style={{ backgroundImage: `url('/images/arcade-frame.png')` }}>
+            <div className={styles.arcadeGameContainer}>
+              {isConnected ? (
+                <div id='gameDisplay' />
+              ) : (
                 <div
                   className={styles.arcadeFilter}
                   style={{
@@ -146,58 +176,57 @@ function Arcade() {
                   }}
                 >
                   <div className={styles.arcadeMenuContainer}>
-                    {!isTabletOrMobile ? <button className={(styles.arcadeWeb3Button, styles.btn, styles.drawBorder)} onClick={handleConnectWallet}>
+                    <button className={(styles.arcadeWeb3Button, styles.btn, styles.drawBorder)} onClick={handleConnectWallet}>
                       Connect Your Wallet
-                    </button> : <div className={(styles.btn, styles.drawBorder)}>
-                      Desktop Only
-                    </div>}
+                    </button>
                   </div>
                 </div>
               )}
-            {showTicketWindow && isConnected && (
-              <div className={`${styles.arcadeFilter} ${styles.ticketInfoContainer}`}>
-                <div className={`${styles.arcadeMenuContainer} ${styles.arcadeMenuContainerForTicket}`}>
-                  <TicketFilter
-                    transformedGameId={transformedGameId}
-                    address={address}
-                    gameTicketContract={gameTicketContract}
-                    gameLeaderboardContract={gameLeaderboardContract}
-                    forwarderContract={forwarderContract}
-                  />
+              {showTicketWindow && isConnected && (
+                <div className={`${styles.arcadeFilter} ${styles.ticketInfoContainer}`}>
+                  <div className={`${styles.arcadeMenuContainer} ${styles.arcadeMenuContainerForTicket}`}>
+                    <TicketFilter
+                      transformedGameId={transformedGameId}
+                      address={address}
+                      gameTicketContract={gameTicketContract}
+                      gameContract={gameContract}
+                      forwarderContract={forwarderContract}
+                    />
+                  </div>
                 </div>
-              </div>
-            )}
-          </div>
-        </div>
-        <div className={styles.arcadeSideBlock}>
-          <Inventory />
-        </div>
-      </div> : <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-        <div className={styles.arcadeFrameContainer} style={{ backgroundImage: `url('/images/arcade-frame.png')` }}>
-          <div className={styles.arcadeGameContainer}>
-            <div
-              className={styles.arcadeFilter}
-              style={{
-                backgroundImage: `url('/assets/games/${targetGame.key}/background.png')`
-              }}
-            >
-              <div className={styles.arcadeMenuContainer}>
-                <div className={(styles.btn, styles.drawBorder)}>
-                  Desktop Only
-                </div>
-              </div>
+              )}
             </div>
-          </div>
-        </div>
-        <div className={styles.mobileInfoContainer}>
-          <div className={styles.arcadeSideBlock}>
-            <Leaderboard gameLeaderboardContract={gameLeaderboardContract} transformedGameId={transformedGameId} />
           </div>
           <div className={styles.arcadeSideBlock}>
             <Inventory />
           </div>
         </div>
-      </div>}
+      ) : (
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+          <div className={styles.arcadeFrameContainer} style={{ backgroundImage: `url('/images/arcade-frame.png')` }}>
+            <div className={styles.arcadeGameContainer}>
+              <div
+                className={styles.arcadeFilter}
+                style={{
+                  backgroundImage: `url('/assets/games/${targetGame.key}/background.png')`
+                }}
+              >
+                <div className={styles.arcadeMenuContainer}>
+                  <div className={(styles.btn, styles.drawBorder)}>Desktop Only</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={styles.mobileInfoContainer}>
+            <div className={styles.arcadeSideBlock}>
+              <Leaderboard gameContract={gameContract} transformedGameId={transformedGameId} />
+            </div>
+            <div className={styles.arcadeSideBlock}>
+              <Inventory />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
