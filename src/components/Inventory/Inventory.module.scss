@@ -1,4 +1,4 @@
-@import "../../variables.module.scss";
+@import '../../variables.module.scss';
 
 .nftContainer {
   display: flex;
@@ -15,22 +15,16 @@
     align-items: center;
     padding: 5px;
 
-    a {
+    .nftDesc {
       text-decoration: none;
       font-size: smaller;
       padding: 0;
+      color: $font-color;
     }
 
-    img {
+    .nftImage {
       border: 5px solid $background-color;
-      border-image: conic-gradient(
-          from var(--angle),
-          $background-color,
-          $primary-color 0.1turn,
-          $primary-color 0.15turn,
-          $background-color 0.25turn
-        )
-        30;
+      border-image: conic-gradient(from var(--angle), $background-color, $primary-color 0.1turn, $primary-color 0.15turn, $background-color 0.25turn) 30;
       width: 116px;
       padding: 10px;
       animation: borderRotate var(--duration) linear infinite forwards;
@@ -95,19 +89,19 @@
 }
 
 @property --angle {
-  syntax: "<angle>";
+  syntax: '<angle>';
   initial-value: 90deg;
   inherits: true;
 }
 
 @property --gradX {
-  syntax: "<percentage>";
+  syntax: '<percentage>';
   initial-value: 50%;
   inherits: true;
 }
 
 @property --gradY {
-  syntax: "<percentage>";
+  syntax: '<percentage>';
   initial-value: 0%;
   inherits: true;
 }
