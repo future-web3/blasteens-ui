@@ -270,24 +270,28 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, forwarde
               {isBuying ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Buy Ticket'}
             </button>
           </div>
-          <div className={styles.formOuterContainer}>
-            <div className={styles.formContainer}>
-              <select className={styles.redeemSelection} {...register('redeemTicketType')}>
-                <option value={1}>Bronze</option>
-                <option value={2}>Sliver</option>
-                <option value={3}>Gold</option>
-              </select>
-            </div>
-          </div>
-          <div className={styles.buttonContainer}>
-            <button
-              className={(gameViewStyles.arcadeWeb3Button, gameViewStyles.btn, gameViewStyles.drawBorder)}
-              onClick={handleSubmit(handleRedeemTicket)}
-              disabled={isRedeeming || !gameStatus?.isGameRunning}
-            >
-              {isRedeeming ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Redeem Ticket'}
-            </button>
-          </div>
+          {gameStatus?.isGameRunning && (
+            <>
+              <div className={styles.formOuterContainer}>
+                <div className={styles.formContainer}>
+                  <select className={styles.redeemSelection} {...register('redeemTicketType')}>
+                    <option value={1}>Bronze</option>
+                    <option value={2}>Sliver</option>
+                    <option value={3}>Gold</option>
+                  </select>
+                </div>
+              </div>
+              <div className={styles.buttonContainer}>
+                <button
+                  className={(gameViewStyles.arcadeWeb3Button, gameViewStyles.btn, gameViewStyles.drawBorder)}
+                  onClick={handleSubmit(handleRedeemTicket)}
+                  disabled={isRedeeming}
+                >
+                  {isRedeeming ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Redeem Ticket'}
+                </button>
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>
