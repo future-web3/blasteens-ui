@@ -228,7 +228,7 @@ export default class MainGame extends Phaser.Scene {
 
     this.input.off('gameobjectdown', this.selectEmoji, this)
 
-    this.sdk.useLives()
+    this.sdk.updateLives()
 
     this.sdk.updateHighScore(this.score)
 
@@ -243,7 +243,7 @@ export default class MainGame extends Phaser.Scene {
         this.input.once(
           'pointerdown',
           () => {
-            this.sdk.endGame()
+            this.sdk.endGame(() => {})
             this.scene.start('MainMenu')
           },
           this

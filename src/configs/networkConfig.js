@@ -23,7 +23,7 @@ export const networkConfig = {
       escapeFromGerms: '0x92f07BA8650eee3564d95C1E083c8aa98FAC29Df',
       tommyJumping: '0x5D7E8082c02eEFdE0F36E59e5f72222F83ea10dd',
       snowmanDefender: '0xB967cC20De0417a4A9b386f70d18c783663E7047',
-      emojiMatch: '0x6983E47f520c7D98351335d0d436080aA037c9DA'
+      emojiMatch: '0x4731b0c12B3e5C7704C8964388a918936Bf3A953'
     },
     forwarderContract: '0xB6A87320DE35F2bEFE2258162360daa3de11C788',
     rpcUrl: `https://eth-goerli.g.alchemy.com/v2/${alchemyKey}`,

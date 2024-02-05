@@ -3,7 +3,7 @@ import { GET_SCORE_UPDATEDS } from './queries'
 
 const client = () => {
   return new ApolloClient({
-    uri: 'https://api.studio.thegraph.com/query/62573/blasteens-game/v0.0.7',
+    uri: 'https://api.studio.thegraph.com/query/62573/blasteens-game/v0.0.8',
     cache: new InMemoryCache(),
     defaultOptions: {
       query: {
