@@ -155,6 +155,16 @@
       align-items: center;
       text-align: start;
 
+      .skeletonLoading {
+        display: flex;
+        width: 100%;
+        height: 15px;
+        justify-content: center;
+        align-items: center;
+        margin-top: 3px;
+        margin-bottom: 3px;
+      }
+
       p {
         width: 100%;
         .gameCardRow {
