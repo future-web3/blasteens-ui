@@ -47,9 +47,5 @@ export const useLeaderboard = transformedGameId => {
     fetchEventsData()
   }, [transformedGameId, fastRefresh])
 
-  useEffect(() => {
-    console.log(highestScore)
-  }, [highestScore])
-
   return { highestScore, leaderboard, error, isLoading, loaded, setLoaded }
 }
