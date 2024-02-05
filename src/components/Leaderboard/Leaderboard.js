@@ -5,7 +5,7 @@ import { formatHash, formatTimeToMilliseconds } from '../../helpers/utils'
 import { useGameSelector } from 'blast-game-sdk'
 import Countdown from 'react-countdown'
 import { writeContract } from '@wagmi/core'
-import { useAccount, useWaitForTransaction } from 'wagmi'
+import { useAccount, useBalance, useWaitForTransaction } from 'wagmi'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
@@ -36,6 +36,7 @@ function Leaderboard({ gameContract, transformedGameId }) {
   const [isClaimingReward, setIsClaimingReward] = useState(false)
   const [isFetchingInfo, setIsFetchingInfo] = useState(true)
   const [pendingHash, setPendingHash] = useState('')
+  const { data: poolPrize } = useBalance({ address: gameContract.address, watch: true })
 
   useEffect(() => {
     if (!gameContract) return
@@ -97,10 +98,10 @@ function Leaderboard({ gameContract, transformedGameId }) {
   return (
     <div className={styles.leaderboardContainer}>
       <div className={styles.stickyHeader}>
-        <h2>Leaderboard #{round ? round.gameRound : 0}</h2>
+        <h2>Leaderboard {round && `#${round.gameRound}`}</h2>
         <div className={styles.prizeInfoContainer}>
           <div style={{ minWidth: '250px' }}>
-            <p className={styles.infoText}>Prize Pool: 10.2345 blast</p>
+            <p className={styles.infoText}>Prize Pool: {poolPrize?.formatted} ETH</p>
             {round && gameStatus && (
               <span className={styles.countdownSection}>
                 <p className={styles.infoText}>{gameStatus.isGameRunning ? 'Game' : 'Claim'} Remaining:</p>

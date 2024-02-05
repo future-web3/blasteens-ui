@@ -11,6 +11,7 @@ import NotFound from './pages/NotFound/NotFound'
 import Aboutus from './pages/About/Aboutus'
 import { defineChain } from 'viem'
 import 'react-loading-skeleton/dist/skeleton.css'
+import { RefreshContextProvider } from './context/Refresh/context'
 
 const blastSepolia = defineChain({
   id: 168_587_773,
@@ -58,18 +59,20 @@ function App() {
   return (
     <WagmiConfig config={wagmiConfig}>
       <GameProvider>
-        <Routes>
-          <Route path='/' element={<Layout />}>
-            <Route index element={<Homepage />} />
-            <Route path='arcade'>
-              <Route path=':gameId' element={<Arcade />} />
+        <RefreshContextProvider>
+          <Routes>
+            <Route path='/' element={<Layout />}>
+              <Route index element={<Homepage />} />
+              <Route path='arcade'>
+                <Route path=':gameId' element={<Arcade />} />
+              </Route>
+              <Route path='prize' element={<Prize />} />
+              <Route path='about' element={<Aboutus />} />
+              <Route path='market' element={<Market />} />
             </Route>
-            <Route path='prize' element={<Prize />} />
-            <Route path='about' element={<Aboutus />} />
-            <Route path='market' element={<Market />} />
-          </Route>
-          <Route path='*' element={<NotFound />} />
-        </Routes>
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+        </RefreshContextProvider>
       </GameProvider>
     </WagmiConfig>
   )
