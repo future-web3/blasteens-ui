@@ -119,7 +119,6 @@ export const mapRoundInfo = data => {
     gameEndTime: Number(data.result.end),
     gameRound: Number(data.result.gameRound)
   }
-  return null
 }
 
 export const mapGameStatus = (isGameRunningData, isClaimingData) => {
@@ -132,4 +131,24 @@ export const mapGameStatus = (isGameRunningData, isClaimingData) => {
     gameStatus.isClaiming = isClaimingData.result
   }
   return gameStatus
+}
+
+export const getSequenceNumberByUser = async (lottoContract, address) => {
+  const data = await readContract({
+    ...lottoContract,
+    functionName: 'getSequenceNumbersByUser',
+    args: [address]
+  })
+
+  return Number(data.toString())
+}
+
+export const getRandomNumber = async (lottoContract, address) => {
+  const data = await readContract({
+    ...lottoContract,
+    functionName: 'getFinalRandomNumberByUser',
+    args: [address]
+  })
+
+  return data.toString()
 }

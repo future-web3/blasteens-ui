@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { utils } from 'ethers'
 
 export const transformId = id => {
   const words = id.split('-')
@@ -33,4 +34,14 @@ export function getAdjacentElements(arr, index) {
 
 export const isNowBeforeGameEndTime = gameEndTime => {
   return moment().isBefore(moment.unix(gameEndTime))
+}
+
+export function generateRandomHex32() {
+  const randomBytes = utils.randomBytes(32)
+  const randomHex = utils.hexlify(randomBytes)
+  return randomHex
+}
+
+export function keccak256Hash(input) {
+  return utils.keccak256(input)
 }

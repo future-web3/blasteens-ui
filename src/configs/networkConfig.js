@@ -26,6 +26,7 @@ export const networkConfig = {
       emojiMatch: '0x4731b0c12B3e5C7704C8964388a918936Bf3A953'
     },
     forwarderContract: '0xB6A87320DE35F2bEFE2258162360daa3de11C788',
+    lottoContract: '0x3889e432217dD3e0979370fc9a699512247a1890',
     rpcUrl: `https://eth-goerli.g.alchemy.com/v2/${alchemyKey}`,
     chainName: 'Blast Sepolia',
     currencyName: 'ETH',
