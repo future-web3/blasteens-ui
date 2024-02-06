@@ -55,6 +55,11 @@
           @media screen and (max-width: $breakpoint-lg) {
             font-size: 24px;
           }
+
+          .timeSection {
+            display: flex;
+            align-items: center;
+          }
         }
         .rankTable {
           width: 100%;

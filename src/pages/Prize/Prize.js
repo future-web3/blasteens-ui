@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import styles from './Prize.module.scss'
-import Data from './testData.json'
 import { gameListConfigs } from '../../configs/gameListConfig'
 import { getABI, getContractAddress } from '../../helpers/network'
-import { checkScore } from '../../helpers/contracts'
+import { checkScore, getCurrentGameInfo } from '../../helpers/contracts'
 import { useBalance } from 'wagmi'
+import { gameConfigs } from '../../configs/gameConfig'
+import { gameLeaderboardActions, gameTicketActions, useGameDispatch, useGameSelector } from 'blast-game-sdk'
+import Countdown from 'react-countdown'
+import { formatTimeToMilliseconds } from '../../helpers/utils'
 
 export default function Price() {
   const gameList = gameListConfigs.arcade
@@ -14,6 +17,12 @@ export default function Price() {
   const [selected, setSelected] = useState(gameListConfigs.arcade[0])
   const [isGamer, setIsGamer] = useState(true)
   const [isOpen, setIsOpen] = useState(false)
+
+  const dispatch = useGameDispatch()
+
+  const games = useGameSelector(state => state.gameTicket.games)
+  const round = useGameSelector(state => state.gameLeaderboard[selected]?.round) || null
+  const gameStatus = useGameSelector(state => state.gameLeaderboard[selected]?.gameStatus) || null
 
   const gameContract = useMemo(() => {
     const address = getContractAddress('GAME', 168587773, selected)
@@ -46,6 +55,21 @@ export default function Price() {
   }, [gameContract, selected])
 
   useEffect(() => {
+    if (!gameContract) return
+
+    const fetchGameInfo = async () => {
+      const { round, gameStatus } = await getCurrentGameInfo(gameContract)
+
+      if (!games[selected] && gameConfigs[selected]) {
+        dispatch(gameTicketActions.initGame(selected))
+        dispatch(gameLeaderboardActions.initGame({ gameName: selected, round, gameStatus }))
+      }
+    }
+
+    fetchGameInfo()
+  }, [gameContract])
+
+  useEffect(() => {
     const handleOutsideClick = event => {
       if (isOpen && !event.target.closest(`.${styles.selectSection}`)) {
         setIsOpen(false)
@@ -58,6 +82,14 @@ export default function Price() {
     }
   }, [isOpen])
 
+  const countdownRender = ({ days, hours, minutes, seconds }) => {
+    return (
+      <p className={styles.infoText}>
+        {days} D : {hours} H : {minutes} M : {seconds} S
+      </p>
+    )
+  }
+
   return (
     <div>
       <div className={styles.page}>
@@ -67,7 +99,13 @@ export default function Price() {
               <div className={styles.title}>{selected}</div>
               <div className={styles.poolInfo}>
                 <div>Prize Pool:{poolPrize?.formatted} blast</div>
-                <div>Claim Closed at: {Data.timeRemain}</div>
+                {/*TODO:style issues*/}
+                {round && gameStatus && (
+                  <div className={styles.timeSection}>
+                    <p>{gameStatus.isGameRunning ? 'Game' : 'Claim'} Remaining:</p>
+                    <Countdown date={formatTimeToMilliseconds(gameStatus.isGameRunning ? round.gameEndTime : round.claimEndTime)} renderer={countdownRender} />
+                  </div>
+                )}
               </div>
               {/*TODO:style issues*/}
               <ul className={styles.rankTable}>
@@ -90,7 +128,7 @@ export default function Price() {
                   </div>
                   <div className={isGamer ? styles.notSelected : styles.selected} onClick={() => setIsGamer(false)}>
                     Developer
-                  </div>{' '}
+                  </div>
                 </div>
                 <div className={styles.selectSection}>
                   <div className={isOpen ? styles.selectedNameOpen : styles.selectedName} onClick={() => setIsOpen(!isOpen)}>
