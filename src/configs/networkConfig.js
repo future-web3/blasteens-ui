@@ -17,20 +17,19 @@ export const networkConfig = {
     image: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628'
   },
   netId168587773: {
-    gameTicketContract: '0x347723e76631759006F0bB7C0CEa608e73fEc48F',
-    gameLeaderBoardContract: '0x533798106BA364bBBeeEBE145B4f4b0dC829067A', //TODO:NO NEED THIS ANYMORE
+    gameTicketContract: '0x49c1B82ff813382BbCC3CAc05dc06a5F27DbeEe7',
     gameContract: {
-      escapeFromGerms: '0x92f07BA8650eee3564d95C1E083c8aa98FAC29Df',
-      tommyJumping: '0x5D7E8082c02eEFdE0F36E59e5f72222F83ea10dd',
-      snowmanDefender: '0xB967cC20De0417a4A9b386f70d18c783663E7047',
-      emojiMatch: '0x4731b0c12B3e5C7704C8964388a918936Bf3A953'
+      escapeFromGerms: '0x7cC1F4c0DFe5Ff02b2F9F9e347aABfcd092f41EB',
+      tommyJumping: '0x1Dd61C06Ed6E5Fb83F90EacF30122fC449B393f2',
+      snowmanDefender: '0x316622712FacA19c963d348446bF116de8A8A152',
+      emojiMatch: '0x65AE86f6954121389eD01fF12f20E1AC89dbD9AB'
     },
     forwarderContract: '0xB6A87320DE35F2bEFE2258162360daa3de11C788',
-    lottoContract: '0x3889e432217dD3e0979370fc9a699512247a1890',
+    lottoContract: '0x7E97D71D46F13Ae7A6cd7a241f69175E34EDdF54',
     rpcUrl: `https://eth-goerli.g.alchemy.com/v2/${alchemyKey}`,
     chainName: 'Blast Sepolia',
     currencyName: 'ETH',
-    fromBlock: 1202089,
+    fromBlock: 1294996,
     explorerUrl: {
       tx: 'https://goerli.etherscan.io/tx/',
       address: 'https://goerli.etherscan.io/address/',

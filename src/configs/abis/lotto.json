@@ -135,12 +135,17 @@
         "type": "address"
       }
     ],
-    "name": "getFinalRandomNumberByUser",
+    "name": "getFinalResultsByUser",
     "outputs": [
       {
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",

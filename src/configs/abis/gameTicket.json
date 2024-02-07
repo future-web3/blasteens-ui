@@ -254,6 +254,19 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "gameAddress",
+        "type": "address"
+      }
+    ],
+    "name": "addVerifiedGame",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "account",
         "type": "address"
       },
@@ -366,52 +379,21 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "recipient",
+        "name": "gameAddress",
         "type": "address"
       }
     ],
-    "name": "claimAllGas",
+    "name": "deleteVerifiedGame",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "recipient",
-        "type": "address"
-      }
-    ],
-    "name": "claimAllYield",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "recipient",
-        "type": "address"
-      },
       {
         "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "claimYield",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint8",
         "name": "_ticketType",
-        "type": "uint8"
+        "type": "uint256"
       }
     ],
     "name": "getNumberOfLives",
@@ -428,9 +410,9 @@
   {
     "inputs": [
       {
-        "internalType": "uint8",
+        "internalType": "uint256",
         "name": "_ticketType",
-        "type": "uint8"
+        "type": "uint256"
       }
     ],
     "name": "getTicketPrice",
@@ -482,11 +464,24 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "prizePool",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
-        "internalType": "uint8",
+        "internalType": "uint256",
         "name": "_ticketType",
-        "type": "uint8"
+        "type": "uint256"
       }
     ],
     "name": "redeemTicket",
@@ -576,6 +571,24 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "_ticketType",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address payable",
+        "name": "recipient",
+        "type": "address"
+      }
+    ],
+    "name": "sendPrize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "operator",
         "type": "address"
@@ -650,6 +663,25 @@
         "internalType": "string",
         "name": "",
         "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "verifiedGames",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",

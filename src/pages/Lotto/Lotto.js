@@ -11,6 +11,7 @@ function Lotto() {
   const [requestPendingHash, setRequestPendingHash] = useState('')
   const [getPendingHash, setGetPendingHash] = useState('')
   const [userRandomNumber, setUserRandomNumber] = useState('0')
+  const [isWinning, setIsWinning] = useState(false)
   const [finalRandomNumber, setFinalRandomNumber] = useState(null)
   const [shouldGetSequenceNumber, setShouldGetSequenceNumber] = useState(false)
   const [shouldGetRandomNumber, setShouldGetRandomNumber] = useState(false)
@@ -34,7 +35,10 @@ function Lotto() {
     const fetchRandomness = async () => {
       try {
         const data = await getRandomNumber(lottoContract, address)
-        setFinalRandomNumber(data)
+        const number = data.split(',')[0]
+        const winning = data.split(',')[1]
+        setFinalRandomNumber(number)
+        setIsWinning(winning === 'true')
         console.log(data)
       } catch (error) {
         console.error(error)
@@ -109,6 +113,7 @@ function Lotto() {
   })
 
   const handleOnclick = async () => {
+    setIsWinning(false)
     const generatedRandomNumber = generateRandomHex32()
     setUserRandomNumber(generatedRandomNumber)
     const commitment = keccak256Hash(generatedRandomNumber)

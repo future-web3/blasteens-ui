@@ -146,7 +146,7 @@ export const getSequenceNumberByUser = async (lottoContract, address) => {
 export const getRandomNumber = async (lottoContract, address) => {
   const data = await readContract({
     ...lottoContract,
-    functionName: 'getFinalRandomNumberByUser',
+    functionName: 'getFinalResultsByUser',
     args: [address]
   })
 

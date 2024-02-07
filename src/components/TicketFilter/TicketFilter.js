@@ -144,7 +144,7 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, forwarde
 
     try {
       const txReceiptForRedeeming = await writeContract({
-        ...gameTicketContract,
+        ...gameContract,
         account: walletClientData.account.address,
         args,
         functionName: 'redeemTicket'

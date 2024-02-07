@@ -25,6 +25,16 @@
         "internalType": "address",
         "name": "_minimalForwader",
         "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_gameTicket",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_gameDev",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
@@ -83,6 +93,11 @@
             "internalType": "bool",
             "name": "hasClaimedBySomeone",
             "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "rewardPool",
+            "type": "uint256"
           }
         ],
         "indexed": false,
@@ -142,10 +157,6 @@
     "type": "event"
   },
   {
-    "stateMutability": "payable",
-    "type": "fallback"
-  },
-  {
     "inputs": [],
     "name": "FIRST",
     "outputs": [
@@ -160,7 +171,33 @@
   },
   {
     "inputs": [],
+    "name": "GAME_DEV_SHARE",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "OTHERS",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "PLATFORM_SHARE",
     "outputs": [
       {
         "internalType": "uint256",
@@ -224,6 +261,19 @@
   },
   {
     "inputs": [],
+    "name": "gameDev",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "gameId",
     "outputs": [
       {
@@ -243,6 +293,19 @@
         "internalType": "string",
         "name": "",
         "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "gameTicket",
+    "outputs": [
+      {
+        "internalType": "contract GameTicket",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -296,6 +359,11 @@
             "internalType": "bool",
             "name": "hasClaimedBySomeone",
             "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "rewardPool",
+            "type": "uint256"
           }
         ],
         "internalType": "struct Game.Round",
@@ -389,6 +457,25 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint8",
+        "name": "_ticketType",
+        "type": "uint8"
+      }
+    ],
+    "name": "redeemTicket",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "renounceOwnership",
     "outputs": [],
@@ -428,6 +515,11 @@
         "internalType": "bool",
         "name": "hasClaimedBySomeone",
         "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "rewardPool",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -490,13 +582,6 @@
     "name": "updateGamePeriodAndEndTime",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "withdrawAll",
-    "outputs": [],
-    "stateMutability": "payable",
     "type": "function"
   },
   {
