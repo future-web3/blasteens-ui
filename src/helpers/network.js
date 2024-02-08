@@ -8,6 +8,7 @@ export const getABI = contractType => {
   if (contractType === 'BOARD') return config.gameLeaderBoardABI
   if (contractType === 'FORWARDER') return config.forwarderABI
   if (contractType === 'GAME') return config.gameABI
+  if (contractType === 'LOTTO') return config.lottoABI
   return null
 }
 
@@ -19,6 +20,7 @@ export const getContractAddress = (contractType, netId, transformedGameId) => {
   if (contractType === 'BOARD') return config.gameLeaderBoardContract
   if (contractType === 'FORWARDER') return config.forwarderContract
   if (contractType === 'GAME' && transformedGameId) return config.gameContract[transformedGameId]
+  if (contractType === 'LOTTO') return config.lottoContract
   return null
 }
 

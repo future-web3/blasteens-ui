@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom'
 import styles from './Arcade.module.scss'
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useAccount, useConnect, useNetwork, useSwitchNetwork } from 'wagmi'
 
 import { gameConfigs } from '../../configs/gameConfig'
@@ -13,7 +13,6 @@ import Leaderboard from '../../components/Leaderboard/Leaderboard'
 import Inventory from '../../components/Inventory/Inventory'
 import { transformId } from '../../helpers/utils'
 import { useMediaQuery } from 'react-responsive'
-import moment from 'moment'
 
 let game = null
 
@@ -25,6 +24,9 @@ function Arcade() {
   const netId = chain ? chain.id : 168587773
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1280px)' })
 
+  const [individuals, setIndividuals] = useState([])
+  const [redeemTimes, setRedeemTimes] = useState(0)
+
   const { gameId } = useParams()
 
   const transformedGameId = transformId(gameId)
@@ -32,6 +34,7 @@ function Arcade() {
   const dispatch = useGameDispatch()
 
   const games = useGameSelector(state => state.gameTicket.games)
+  const gameLeaderBoardInfo = useGameSelector(state => state.gameLeaderboard[transformedGameId] || null)
 
   const numberOfLives = useGameSelector(state => state.gameTicket.games[transformedGameId]?.numberOfLives || 0)
   const showTicketWindow = useGameSelector(state => state.gameTicket.showTicketWindow)
@@ -41,18 +44,6 @@ function Arcade() {
   const gameTicketContract = useMemo(() => {
     const address = getContractAddress('TICKET', netId)
     const abi = getABI('TICKET')
-    if (!address || !abi) {
-      return null
-    }
-    return {
-      address,
-      abi
-    }
-  }, [netId])
-
-  const gameLeaderboardContract = useMemo(() => {
-    const address = getContractAddress('BOARD', netId)
-    const abi = getABI('BOARD')
     if (!address || !abi) {
       return null
     }
@@ -128,10 +119,16 @@ function Arcade() {
         dispatch(gameTicketActions.initGame(transformedGameId))
         dispatch(gameLeaderboardActions.initGame({ gameName: transformedGameId, round, gameStatus }))
       }
+
+      if (gameLeaderBoardInfo && round && gameStatus) {
+        if (gameLeaderBoardInfo.round.gameRound !== round.gameRound) {
+          dispatch(gameLeaderboardActions.initGame({ gameName: transformedGameId, round, gameStatus }))
+        }
+      }
     }
 
     fetchGameInfo()
-  }, [gameContract])
+  }, [gameContract, gameLeaderBoardInfo, redeemTimes])
 
   useEffect(() => {
     if (!isConnected || chain?.id === 168587773) return
@@ -162,7 +159,7 @@ function Arcade() {
       {!isTabletOrMobile ? (
         <div className={styles.arcadeContent}>
           <div className={styles.arcadeSideBlock}>
-            <Leaderboard gameContract={gameContract} transformedGameId={transformedGameId} />
+            <Leaderboard gameContract={gameContract} transformedGameId={transformedGameId} individuals={individuals} setIndividuals={setIndividuals} />
           </div>
           <div className={styles.arcadeFrameContainer} style={{ backgroundImage: `url('/images/arcade-frame.png')` }}>
             <div className={styles.arcadeGameContainer}>
@@ -191,6 +188,8 @@ function Arcade() {
                       gameTicketContract={gameTicketContract}
                       gameContract={gameContract}
                       forwarderContract={forwarderContract}
+                      setIndividuals={setIndividuals}
+                      setRedeemTimes={setRedeemTimes}
                     />
                   </div>
                 </div>
@@ -219,7 +218,7 @@ function Arcade() {
           </div>
           <div className={styles.mobileInfoContainer}>
             <div className={styles.arcadeSideBlock}>
-              <Leaderboard gameContract={gameContract} transformedGameId={transformedGameId} />
+              <Leaderboard gameContract={gameContract} transformedGameId={transformedGameId} individuals={individuals} setIndividuals={setIndividuals} />
             </div>
             <div className={styles.arcadeSideBlock}>
               <Inventory />

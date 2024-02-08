@@ -14,7 +14,7 @@ import { useEthersSigner, useEthersProvider } from '../../hooks'
 import { ethers } from 'ethers'
 import { isNowBeforeGameEndTime } from '../../helpers/utils'
 
-function TicketFilter({ transformedGameId, address, gameTicketContract, forwarderContract, gameContract }) {
+function TicketFilter({ transformedGameId, address, gameTicketContract, forwarderContract, gameContract, setIndividuals, setRedeemTimes }) {
   const [isBuying, setIsBuying] = useState(false)
   const [isRedeeming, setIsRedeeming] = useState(false)
   const [isSyncing, setIsSyncing] = useState(false)
@@ -45,6 +45,8 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, forwarde
       redeemTicketType: 1
     }
   })
+
+  const gameStatus = useGameSelector(state => state.gameLeaderboard[transformedGameId]?.gameStatus) || null
 
   const handleSignMessage = async () => {
     if (!netId || !provider || !walletAddress) return
@@ -121,6 +123,10 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, forwarde
           })
         )
         dispatch(gameTicketActions.setShowTicketWindow(false))
+
+        const data = await checkScore(gameContract, transformedGameId)
+        setIndividuals(data)
+        setRedeemTimes(prev => (prev += 1))
         console.log('>>>>>>>>>Redeeming success')
       }
       setIsRedeeming(false)
@@ -142,7 +148,7 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, forwarde
 
     try {
       const txReceiptForRedeeming = await writeContract({
-        ...gameTicketContract,
+        ...gameContract,
         account: walletClientData.account.address,
         args,
         functionName: 'redeemTicket'
@@ -268,24 +274,28 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, forwarde
               {isBuying ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Buy Ticket'}
             </button>
           </div>
-          <div className={styles.formOuterContainer}>
-            <div className={styles.formContainer}>
-              <select className={styles.redeemSelection} {...register('redeemTicketType')}>
-                <option value={1}>Bronze</option>
-                <option value={2}>Sliver</option>
-                <option value={3}>Gold</option>
-              </select>
-            </div>
-          </div>
-          <div className={styles.buttonContainer}>
-            <button
-              className={(gameViewStyles.arcadeWeb3Button, gameViewStyles.btn, gameViewStyles.drawBorder)}
-              onClick={handleSubmit(handleRedeemTicket)}
-              disabled={isRedeeming}
-            >
-              {isRedeeming ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Redeem Ticket'}
-            </button>
-          </div>
+          {!gameStatus?.isClaiming && (
+            <>
+              <div className={styles.formOuterContainer}>
+                <div className={styles.formContainer}>
+                  <select className={styles.redeemSelection} {...register('redeemTicketType')}>
+                    <option value={1}>Bronze</option>
+                    <option value={2}>Sliver</option>
+                    <option value={3}>Gold</option>
+                  </select>
+                </div>
+              </div>
+              <div className={styles.buttonContainer}>
+                <button
+                  className={(gameViewStyles.arcadeWeb3Button, gameViewStyles.btn, gameViewStyles.drawBorder)}
+                  onClick={handleSubmit(handleRedeemTicket)}
+                  disabled={isRedeeming}
+                >
+                  {isRedeeming ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Redeem Ticket'}
+                </button>
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>

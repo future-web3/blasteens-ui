@@ -12,8 +12,7 @@
   min-width: 100vw;
   height: auto;
   min-height: 10vh;
-  flex-direction: row;
-  display: block;
+  display: flex;
   //   background-image: linear-gradient(270deg, $background-color, $navbar-color);
   background: linear-gradient(90deg, $background-color, $navbar-color);
 

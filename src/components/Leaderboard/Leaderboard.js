@@ -27,9 +27,8 @@ function Individual({ rank, points, addressLink, address }) {
   )
 }
 
-function Leaderboard({ gameContract, transformedGameId }) {
+function Leaderboard({ gameContract, transformedGameId, individuals, setIndividuals }) {
   const { address } = useAccount()
-  const [individuals, setIndividuals] = useState([])
   const allowSync = useGameSelector(state => state.gameLeaderboard[transformedGameId]?.allowSync) || false
   const round = useGameSelector(state => state.gameLeaderboard[transformedGameId]?.round) || null
   const gameStatus = useGameSelector(state => state.gameLeaderboard[transformedGameId]?.gameStatus) || null
