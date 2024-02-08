@@ -4,8 +4,10 @@ import { getABI, getContractAddress } from '../../helpers/network'
 import { writeContract } from '@wagmi/core'
 import { useAccount, useWaitForTransaction } from 'wagmi'
 import BN from 'bignumber.js'
+import { PYTH_BASE_URL } from '../../configs'
 import { getRandomNumber, getSequenceNumberByUser } from '../../helpers/contracts'
 import axios from 'axios'
+import styles from './Lotto.module.scss'
 
 function Lotto() {
   const [requestPendingHash, setRequestPendingHash] = useState('')
@@ -17,6 +19,29 @@ function Lotto() {
   const [shouldGetRandomNumber, setShouldGetRandomNumber] = useState(false)
   const [loading, setLoading] = useState(false)
   const { address } = useAccount()
+
+  const [isBoxOpen, setIsBoxOpen] = useState(false);
+  const [isWinner, setIsWinner] = useState(false);
+
+  const openBox = () => {
+    setIsBoxOpen(true);
+    const val = Math.ceil(Math.random() * 10);
+
+    setTimeout(() => {
+      setIsWinner(val === 4);
+    }, 1200);
+  };
+
+  console.log('>>>>>>>winner', isWinner)
+
+  useEffect(() => {
+    if (isBoxOpen) {
+      const boxTimer = setTimeout(() => {
+        setIsWinner(true); // Assuming winner for demonstration, replace with actual logic
+      }, 200);
+      return () => clearTimeout(boxTimer);
+    }
+  }, [isBoxOpen]);
 
   const lottoContract = useMemo(() => {
     const address = getContractAddress('LOTTO', 168587773)
@@ -49,7 +74,7 @@ function Lotto() {
     }
 
     fetchRandomness()
-  }, [shouldGetRandomNumber])
+  }, [shouldGetRandomNumber, address, lottoContract])
 
   useWaitForTransaction({
     hash: getPendingHash,
@@ -74,7 +99,7 @@ function Lotto() {
       try {
         const sequenceNumber = await getSequenceNumberByUser(lottoContract, address)
         //TODO:network name
-        const res = await axios.get(`https://fortuna-staging.pyth.network/v1/chains/blast-testnet/revelations/${sequenceNumber}`)
+        const res = await axios.get(`${PYTH_BASE_URL}/${sequenceNumber}`)
         const providerRandomNumber = `0x${res.data.value.data}`
 
         const getTxReceipt = await writeContract({
@@ -94,7 +119,7 @@ function Lotto() {
     }
 
     fetchSequenceNumber()
-  }, [address, lottoContract, shouldGetSequenceNumber])
+  }, [address, lottoContract, shouldGetSequenceNumber, userRandomNumber])
 
   useWaitForTransaction({
     hash: requestPendingHash,
@@ -149,31 +174,34 @@ function Lotto() {
       >
         Random
       </button>
-      <div class='draw-box'>
-        <div class='bg-light'></div>
-
-        <div class='close-box'>
-          <div class='box-msg hide'>
-            <div class='winning hide'>
-              <h3 class='box-msg-title'>中奖啦！</h3>
-              <div class='box-msg-congent'>恭喜您获得*****1个，请到我的预约里查看并支付尾款！</div>
-              <div class='box-msg-operat'>
-                <button type='button' class='btn-blue'>
-                  查看我的预约
-                </button>
+      <div className={styles.drawBox}>
+        <div className={styles.bgLight}></div>
+        <div className={`${isBoxOpen ? styles.boxOpen : styles.closeBox}`}>
+          <div className={`${styles.boxMsg} ${!isBoxOpen ? styles.hide : ''}`}>
+            {isBoxOpen && isWinner && (
+              <div className={styles.winning}>
+                <h3 className={styles.boxMsgTitle}>中奖啦！</h3>
+                <div className={styles.boxMsgCongent}>恭喜您获得*****1个,请到我的预约里查看并支付尾款!</div>
+                <div className={styles.boxMsgOperat}>
+                  <button type="button" className={styles.btnBlue}>
+                    查看我的预约
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
 
-            <div class='notWon hide'>
-              <div class='box-msg-congent'>很遗憾您未抽中预约名额，请明天再来</div>
-              <div class='box-msg-tip'>温馨提示：活动期间，每日都有一次抽奖机会</div>
-            </div>
+            {!isWinner && isBoxOpen && (
+              <div className={styles.notWon}>
+                <div className={styles.boxMsgContent}>很遗憾您未抽中预约名额，请明天再来</div>
+                <div className={styles.boxMsgTip}>温馨提示：活动期间，每日都有一次抽奖机会</div>
+              </div>
+            )}
           </div>
         </div>
 
-        <div class='prompt-operation'>Click to draw rewards</div>
+        <div className={styles.promptOperation} onClick={openBox}>Click to draw rewards</div>
       </div>
-    </div>
+    </div >
   )
 }
 
