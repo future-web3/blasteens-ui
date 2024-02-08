@@ -16,3 +16,15 @@ export const GET_SCORE_UPDATEDS = `
         blockNumber
         }
     }`
+
+export const GET_WINNERS = `
+    query getWinners($fromBlock: Int) {
+        winners(
+        orderBy: blockNumber,
+        orderDirection: desc
+    ) {
+        id
+        winner
+        amount
+        }
+    }`

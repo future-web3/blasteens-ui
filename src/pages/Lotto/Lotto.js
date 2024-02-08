@@ -117,18 +117,20 @@ function Lotto() {
     const generatedRandomNumber = generateRandomHex32()
     setUserRandomNumber(generatedRandomNumber)
     const commitment = keccak256Hash(generatedRandomNumber)
+    console.log('>>>>>>>generatedRandomNumber', generatedRandomNumber)
+    console.log('>>>>>>>commitment', commitment)
 
     try {
-      setLoading(true)
-      const requestTxReceipt = await writeContract({
-        ...lottoContract,
-        account: address,
-        functionName: 'requestRandomness',
-        args: [commitment],
-        value: new BN('0.0001').multipliedBy(new BN(10).pow(new BN(18)))
-      })
-
-      setRequestPendingHash(requestTxReceipt.hash)
+      // setLoading(true)
+      // const requestTxReceipt = await writeContract({
+      //   ...lottoContract,
+      //   account: address,
+      //   functionName: 'requestRandomness',
+      //   args: [commitment],
+      //   value: new BN('0.0001').multipliedBy(new BN(10).pow(new BN(18)))
+      // })
+      //
+      // setRequestPendingHash(requestTxReceipt.hash)
 
       console.log('>>>>>>>generatedRandomNumber', generatedRandomNumber)
       console.log('>>>>>>>commitment', commitment)
