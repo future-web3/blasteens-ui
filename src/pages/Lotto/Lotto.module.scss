@@ -1,14 +1,16 @@
 .drawBox {
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
 .bgLight {
   background: url('../../assets/light.png') center no-repeat;
-  width: 452px;
-  height: 510px;
+  width: 600px;
+  height: 600px;
   z-index: 1;
-  position: absolute;
-  left: calc((100% - 452px) / 2);
   animation: pic-rotate 10s infinite linear;
 }
 
@@ -19,8 +21,7 @@
   height: 138px;
   z-index: 2;
   position: absolute;
-  left: calc((100% - 320px) / 2);
-  top: 180px;
+  top: 200px;
 }
 
 .boxOpen {
@@ -30,8 +31,7 @@
   height: 138px;
   z-index: 2;
   position: absolute;
-  left: calc((100% - 320px) / 2);
-  top: 180px;
+  top: 200px;
 }
 
 .picShake {
@@ -45,7 +45,7 @@
   border: 5px solid #fce92f;
   background-color: rgba(255, 255, 255, 0.8);
   position: relative;
-  top: -100px;
+  top: -120px;
   box-shadow: 1px 1px 3px #888888;
   border-radius: 10px;
   padding: 10px;

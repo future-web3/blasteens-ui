@@ -24,24 +24,14 @@ function Lotto() {
   const [isWinner, setIsWinner] = useState(false);
 
   const openBox = () => {
-    setIsBoxOpen(true);
-    const val = Math.ceil(Math.random() * 10);
+    setIsBoxOpen(false)
+    const val = Math.ceil(Math.random() * 2);
 
     setTimeout(() => {
-      setIsWinner(val === 4);
+      setIsBoxOpen(true);
+      setIsWinner(val === 1);
     }, 1200);
   };
-
-  console.log('>>>>>>>winner', isWinner)
-
-  useEffect(() => {
-    if (isBoxOpen) {
-      const boxTimer = setTimeout(() => {
-        setIsWinner(true); // Assuming winner for demonstration, replace with actual logic
-      }, 200);
-      return () => clearTimeout(boxTimer);
-    }
-  }, [isBoxOpen]);
 
   const lottoContract = useMemo(() => {
     const address = getContractAddress('LOTTO', 168587773)
@@ -98,7 +88,6 @@ function Lotto() {
     const fetchSequenceNumber = async () => {
       try {
         const sequenceNumber = await getSequenceNumberByUser(lottoContract, address)
-        //TODO:network name
         const res = await axios.get(`${PYTH_BASE_URL}/${sequenceNumber}`)
         const providerRandomNumber = `0x${res.data.value.data}`
 
@@ -175,7 +164,7 @@ function Lotto() {
         Random
       </button>
       <div className={styles.drawBox}>
-        <div className={styles.bgLight}></div>
+        <div className={styles.bgLight} />
         <div className={`${isBoxOpen ? styles.boxOpen : styles.closeBox}`}>
           <div className={`${styles.boxMsg} ${!isBoxOpen ? styles.hide : ''}`}>
             {isBoxOpen && isWinner && (
