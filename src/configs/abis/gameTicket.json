@@ -213,6 +213,19 @@
   },
   {
     "inputs": [],
+    "name": "LOTTO_TICKET",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "SILVER",
     "outputs": [
       {
@@ -259,6 +272,24 @@
       }
     ],
     "name": "addVerifiedGame",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "players",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "numberOfTickets",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "airDropLottoTickets",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -373,6 +404,58 @@
     "name": "buyTicket",
     "outputs": [],
     "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      }
+    ],
+    "name": "claimAllGas",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "player",
+        "type": "address"
+      }
+    ],
+    "name": "claimLottoTicket",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      }
+    ],
+    "name": "claimMaxYield",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_governor",
+        "type": "address"
+      }
+    ],
+    "name": "configureGovernor",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
