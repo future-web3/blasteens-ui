@@ -121,16 +121,16 @@ function Lotto() {
     console.log('>>>>>>>commitment', commitment)
 
     try {
-      // setLoading(true)
-      // const requestTxReceipt = await writeContract({
-      //   ...lottoContract,
-      //   account: address,
-      //   functionName: 'requestRandomness',
-      //   args: [commitment],
-      //   value: new BN('0.0001').multipliedBy(new BN(10).pow(new BN(18)))
-      // })
-      //
-      // setRequestPendingHash(requestTxReceipt.hash)
+      setLoading(true)
+      const requestTxReceipt = await writeContract({
+        ...lottoContract,
+        account: address,
+        functionName: 'requestRandomness',
+        args: [commitment],
+        value: new BN('0.000001').multipliedBy(new BN(10).pow(new BN(18)))
+      })
+
+      setRequestPendingHash(requestTxReceipt.hash)
 
       console.log('>>>>>>>generatedRandomNumber', generatedRandomNumber)
       console.log('>>>>>>>commitment', commitment)
@@ -149,6 +149,30 @@ function Lotto() {
       >
         Random
       </button>
+      <div class='draw-box'>
+        <div class='bg-light'></div>
+
+        <div class='close-box'>
+          <div class='box-msg hide'>
+            <div class='winning hide'>
+              <h3 class='box-msg-title'>中奖啦！</h3>
+              <div class='box-msg-congent'>恭喜您获得*****1个，请到我的预约里查看并支付尾款！</div>
+              <div class='box-msg-operat'>
+                <button type='button' class='btn-blue'>
+                  查看我的预约
+                </button>
+              </div>
+            </div>
+
+            <div class='notWon hide'>
+              <div class='box-msg-congent'>很遗憾您未抽中预约名额，请明天再来</div>
+              <div class='box-msg-tip'>温馨提示：活动期间，每日都有一次抽奖机会</div>
+            </div>
+          </div>
+        </div>
+
+        <div class='prompt-operation'>Click to draw rewards</div>
+      </div>
     </div>
   )
 }

@@ -14,7 +14,7 @@ import { useEthersSigner, useEthersProvider } from '../../hooks'
 import { ethers } from 'ethers'
 import { isNowBeforeGameEndTime } from '../../helpers/utils'
 
-function TicketFilter({ transformedGameId, address, gameTicketContract, forwarderContract, gameContract }) {
+function TicketFilter({ transformedGameId, address, gameTicketContract, forwarderContract, gameContract, setIndividuals, setRedeemTimes }) {
   const [isBuying, setIsBuying] = useState(false)
   const [isRedeeming, setIsRedeeming] = useState(false)
   const [isSyncing, setIsSyncing] = useState(false)
@@ -123,6 +123,10 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, forwarde
           })
         )
         dispatch(gameTicketActions.setShowTicketWindow(false))
+
+        const data = await checkScore(gameContract, transformedGameId)
+        setIndividuals(data)
+        setRedeemTimes(prev => (prev += 1))
         console.log('>>>>>>>>>Redeeming success')
       }
       setIsRedeeming(false)
@@ -270,7 +274,7 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, forwarde
               {isBuying ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Buy Ticket'}
             </button>
           </div>
-          {gameStatus?.isGameRunning && (
+          {!gameStatus?.isClaiming && (
             <>
               <div className={styles.formOuterContainer}>
                 <div className={styles.formContainer}>
