@@ -1,14 +1,14 @@
 export const networkConfig = {
   netId168587773: {
-    gameTicketContract: '0xC88c10CC9A18c713e19BA5807E2659FBb98A893A',
+    gameTicketContract: '0x3c1F70e4af2E1693e89Bed7B24f497d8b0b0dB43',
     gameContract: {
-      escapeFromGerms: '0xC1BCaA3597a14c7c05334ba9f0C338c3c8a7eA2b',
-      tommyJumping: '0xaABc608c625DaE23Fb13b37cdDf67E186eC2A1c4',
-      snowmanDefender: '0xC4409E4CDDcB857ebdD70f81EE6EF1aB3Ce96d4e',
-      emojiMatch: '0xb386E9D436050C8fa71e8DfA9e0938c014fEDdBb'
+      escapeFromGerms: '0xdC29E420FbaF9c273d84B5a6548a7936a7ccdb9e',
+      tommyJumping: '0xCeB7dA77A08364AD614460E1Fa19782Cf1C6765a',
+      snowmanDefender: '0x1e68ED8a770D439300b6a6Ada4082Dd46174dB2C',
+      emojiMatch: '0x35Fa871534e1B452DD9Ef25aD597FD9FBaA6334d'
     },
     forwarderContract: '0xB6A87320DE35F2bEFE2258162360daa3de11C788',
-    lottoContract: '0xd46807E42528AAe601131235Cea22Cf4fe205A78',
+    lottoContract: '0xe1087eaE2147563d06f8870469bC022C94233f72',
     rpcUrl: `https://sepolia.blast.io`,
     chainName: 'Blast Sepolia',
     currencyName: 'ETH',

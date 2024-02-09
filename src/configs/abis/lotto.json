@@ -16,6 +16,25 @@
       {
         "indexed": true,
         "internalType": "address",
+        "name": "participant",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "number",
+        "type": "uint256"
+      }
+    ],
+    "name": "EnterLottoGame",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
         "name": "previousOwner",
         "type": "address"
       },
@@ -28,6 +47,19 @@
     ],
     "name": "OwnershipTransferred",
     "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "noOfTickets",
+        "type": "uint256"
+      }
+    ],
+    "name": "participate",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
     "anonymous": false,
@@ -68,6 +100,79 @@
     "type": "event"
   },
   {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "commitment",
+        "type": "bytes32"
+      }
+    ],
+    "name": "requestRandomness",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "sequenceNumber",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "_sequenceNumber",
+        "type": "uint64"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "_randomNumber",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "_providerRandomNumber",
+        "type": "bytes32"
+      }
+    ],
+    "name": "revealResult",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -85,6 +190,23 @@
     ],
     "name": "Winner",
     "type": "event"
+  },
+  {
+    "stateMutability": "payable",
+    "type": "receive"
+  },
+  {
+    "inputs": [],
+    "name": "entropy",
+    "outputs": [
+      {
+        "internalType": "contract IEntropy",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "inputs": [],
@@ -105,19 +227,6 @@
     "outputs": [
       {
         "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "entropy",
-    "outputs": [
-      {
-        "internalType": "contract IEntropy",
         "name": "",
         "type": "address"
       }
@@ -200,90 +309,19 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "noOfTickets",
-        "type": "uint256"
-      }
-    ],
-    "name": "participate",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "renounceOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "commitment",
-        "type": "bytes32"
-      }
-    ],
-    "name": "requestRandomness",
-    "outputs": [
-      {
-        "internalType": "uint64",
-        "name": "sequenceNumber",
-        "type": "uint64"
-      }
-    ],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint64",
-        "name": "_sequenceNumber",
-        "type": "uint64"
-      },
-      {
-        "internalType": "bytes32",
-        "name": "_randomNumber",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "bytes32",
-        "name": "_providerRandomNumber",
-        "type": "bytes32"
-      }
-    ],
-    "name": "revealResult",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
         "name": "",
         "type": "uint256"
       }
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
+    "name": "participants",
+    "outputs": [
       {
         "internalType": "address",
-        "name": "newOwner",
+        "name": "",
         "type": "address"
       }
     ],
-    "name": "transferOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
-  },
-  {
-    "stateMutability": "payable",
-    "type": "receive"
   }
 ]
