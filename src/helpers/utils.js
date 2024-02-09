@@ -1,5 +1,9 @@
 import moment from 'moment'
 import { utils } from 'ethers'
+import BN from 'bignumber.js'
+import numeral from 'numeral'
+
+const BIG_TEN = new BN(10)
 
 export const transformId = id => {
   const words = id.split('-')
@@ -45,3 +49,10 @@ export function generateRandomHex32() {
 export function keccak256Hash(input) {
   return utils.keccak256(input)
 }
+
+export const formatTokenAmount = (amount, decimals = 18) => {
+  return new BN(amount).dividedBy(BIG_TEN.pow(decimals)).toFixed()
+}
+
+export const numberFormat = (num, format = '0,0') => numeral(num).format(format)
+

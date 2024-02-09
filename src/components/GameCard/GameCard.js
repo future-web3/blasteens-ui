@@ -7,7 +7,7 @@ import { getCurrentGameInfo } from '../../helpers/contracts'
 import { gameLeaderboardActions, gameTicketActions, useGameDispatch, useGameSelector } from 'blast-game-sdk'
 import { useBalance } from 'wagmi'
 import Countdown from 'react-countdown'
-import { formatTimeToMilliseconds } from '../../helpers/utils'
+import { formatTimeToMilliseconds, numberFormat } from '../../helpers/utils'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
@@ -46,6 +46,7 @@ function GameCard({ gameId, games, highestScoresByGame, isLoading, loaded, isGam
     }
 
     fetchGameInfo()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameContract])
 
   const countdownRender = ({ days, hours, minutes, seconds }) => {
@@ -88,7 +89,7 @@ function GameCard({ gameId, games, highestScoresByGame, isLoading, loaded, isGam
                 <p>
                   <span className={styles.gameCardRow}>
                     <span style={{ fontWeight: 'bold' }}>Prize Pool</span>
-                    <span>{poolPrize ? poolPrize.formatted : 0} ETH</span>
+                    <span>{poolPrize ? numberFormat(poolPrize.formatted, '0,0.000') : 0} ETH</span>
                   </span>
                   <span className={styles.gameCardRow}>
                     <span style={{ fontWeight: 'bold' }}>Highest Score</span>

@@ -1,37 +1,28 @@
-import { generateRandomHex32, keccak256Hash } from '../../helpers/utils'
+import { generateRandomHex32, keccak256Hash, formatHash, formatTokenAmount, numberFormat } from '../../helpers/utils'
 import { useEffect, useMemo, useState } from 'react'
 import { getABI, getContractAddress } from '../../helpers/network'
 import { writeContract } from '@wagmi/core'
-import { useAccount, useWaitForTransaction } from 'wagmi'
+import { useAccount, useWaitForTransaction, useBalance, useContractEvent } from 'wagmi'
 import BN from 'bignumber.js'
 import { PYTH_BASE_URL } from '../../configs'
-import { getRandomNumber, getSequenceNumberByUser } from '../../helpers/contracts'
+import { getSequenceNumberByUser } from '../../helpers/contracts'
 import axios from 'axios'
 import styles from './Lotto.module.scss'
+import { getWinners } from '../../services/graph'
+import { useRefresh } from '../../context/Refresh/hooks'
+import { RotatingLines } from 'react-loader-spinner'
 
 function Lotto() {
-  const [requestPendingHash, setRequestPendingHash] = useState('')
-  const [getPendingHash, setGetPendingHash] = useState('')
+  const [randomnessPendingHash, setRandomnessPendingHash] = useState('')
+  const [revealPendingHash, setRevealPendingHash] = useState('')
   const [userRandomNumber, setUserRandomNumber] = useState('0')
-  const [isWinning, setIsWinning] = useState(false)
-  const [finalRandomNumber, setFinalRandomNumber] = useState(null)
+  const [lastWinner, setLastWinner] = useState(null)
+  const [lastestWinner, setLastestWinner] = useState(null)
   const [shouldGetSequenceNumber, setShouldGetSequenceNumber] = useState(false)
   const [shouldGetRandomNumber, setShouldGetRandomNumber] = useState(false)
   const [loading, setLoading] = useState(false)
   const { address } = useAccount()
-
-  const [isBoxOpen, setIsBoxOpen] = useState(false);
-  const [isWinner, setIsWinner] = useState(false);
-
-  const openBox = () => {
-    setIsBoxOpen(false)
-    const val = Math.ceil(Math.random() * 2);
-
-    setTimeout(() => {
-      setIsBoxOpen(true);
-      setIsWinner(val === 1);
-    }, 1200);
-  };
+  const { slowRefresh } = useRefresh()
 
   const lottoContract = useMemo(() => {
     const address = getContractAddress('LOTTO', 168587773)
@@ -45,39 +36,59 @@ function Lotto() {
     }
   }, [])
 
+  const { data: lottoPrize } = useBalance({ address: lottoContract?.address, watch: true })
+
   useEffect(() => {
-    if (!shouldGetRandomNumber) return
-    const fetchRandomness = async () => {
+    const fetchLastWinner = async () => {
       try {
-        const data = await getRandomNumber(lottoContract, address)
-        const number = data.split(',')[0]
-        const winning = data.split(',')[1]
-        setFinalRandomNumber(number)
-        setIsWinning(winning === 'true')
-        console.log(data)
+        const winners = await getWinners()
+        if (winners.length > 0) setLastWinner({
+          winner: winners[0].winner,
+          amount: winners[0].amount
+        })
       } catch (error) {
-        console.error(error)
-      } finally {
-        setShouldGetRandomNumber(false)
-        setLoading(false)
+        console.error("fetchLastWinner error", error.message)
       }
     }
+    fetchLastWinner()
+  }, [slowRefresh])
 
-    fetchRandomness()
-  }, [shouldGetRandomNumber, address, lottoContract])
+  useContractEvent({
+    address: lottoContract.address,
+    abi: lottoContract.abi,
+    enabled: !!lottoContract && shouldGetRandomNumber,
+    eventName: 'Winner',
+    listener(log) {
+      const event = log
+      const args = event[0].args
+      setLastestWinner(args)
+      setLoading(false)
+      setShouldGetRandomNumber(false)
+    },
+  })
+
+  useEffect(() => {
+    if (lastestWinner) {
+      const boxTimer = setTimeout(() => {
+        setLastestWinner(null);
+      }, 5000);
+
+      return () => clearTimeout(boxTimer);
+    }
+  }, [lastestWinner]);
 
   useWaitForTransaction({
-    hash: getPendingHash,
-    enabled: !!getPendingHash,
+    hash: revealPendingHash,
+    enabled: !!revealPendingHash,
     onSuccess: async data => {
       if (data.status === 'success') {
-        setGetPendingHash('')
+        setRevealPendingHash('')
         setShouldGetRandomNumber(true)
         console.log('>>>>>>>>>generating success')
       }
     },
     onError() {
-      setGetPendingHash('')
+      setRevealPendingHash('')
       setLoading(false)
     }
   })
@@ -98,7 +109,7 @@ function Lotto() {
           args: [sequenceNumber, userRandomNumber, providerRandomNumber]
         })
 
-        setGetPendingHash(getTxReceipt.hash)
+        setRevealPendingHash(getTxReceipt.hash)
       } catch (error) {
         console.error(error)
         setLoading(false)
@@ -111,23 +122,23 @@ function Lotto() {
   }, [address, lottoContract, shouldGetSequenceNumber, userRandomNumber])
 
   useWaitForTransaction({
-    hash: requestPendingHash,
-    enabled: !!requestPendingHash,
+    hash: randomnessPendingHash,
+    enabled: !!randomnessPendingHash,
     onSuccess: async data => {
       if (data.status === 'success') {
-        setRequestPendingHash('')
+        setRandomnessPendingHash('')
         setShouldGetSequenceNumber(true)
         console.log('>>>>>>>>>Requesting success')
       }
     },
     onError() {
-      setRequestPendingHash('')
+      setRandomnessPendingHash('')
       setLoading(false)
     }
   })
 
   const handleOnclick = async () => {
-    setIsWinning(false)
+    setLoading(true)
     const generatedRandomNumber = generateRandomHex32()
     setUserRandomNumber(generatedRandomNumber)
     const commitment = keccak256Hash(generatedRandomNumber)
@@ -135,17 +146,15 @@ function Lotto() {
     console.log('>>>>>>>commitment', commitment)
 
     try {
-      setLoading(true)
       const requestTxReceipt = await writeContract({
         ...lottoContract,
         account: address,
         functionName: 'requestRandomness',
         args: [commitment],
-        value: new BN('0.000001').multipliedBy(new BN(10).pow(new BN(18)))
+        value: new BN('0.001').multipliedBy(new BN(10).pow(new BN(18)))
       })
 
-      setRequestPendingHash(requestTxReceipt.hash)
-
+      setRandomnessPendingHash(requestTxReceipt.hash)
       console.log('>>>>>>>generatedRandomNumber', generatedRandomNumber)
       console.log('>>>>>>>commitment', commitment)
     } catch (error) {
@@ -155,42 +164,25 @@ function Lotto() {
   }
 
   return (
-    <div>
-      <button
-        onClick={() => {
-          handleOnclick()
-        }}
-      >
-        Random
-      </button>
-      <div className={styles.drawBox}>
-        <div className={styles.bgLight} />
-        <div className={`${isBoxOpen ? styles.boxOpen : styles.closeBox}`}>
-          <div className={`${styles.boxMsg} ${!isBoxOpen ? styles.hide : ''}`}>
-            {isBoxOpen && isWinner && (
-              <div className={styles.winning}>
-                <h3 className={styles.boxMsgTitle}>中奖啦！</h3>
-                <div className={styles.boxMsgCongent}>恭喜您获得*****1个,请到我的预约里查看并支付尾款!</div>
-                <div className={styles.boxMsgOperat}>
-                  <button type="button" className={styles.btnBlue}>
-                    查看我的预约
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {!isWinner && isBoxOpen && (
-              <div className={styles.notWon}>
-                <div className={styles.boxMsgContent}>很遗憾您未抽中预约名额，请明天再来</div>
-                <div className={styles.boxMsgTip}>温馨提示：活动期间，每日都有一次抽奖机会</div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div className={styles.promptOperation} onClick={openBox}>Click to draw rewards</div>
+    <div className={styles.drawBox}>
+      <div className={styles.prizeInfoSection}>
+        <h2>Participants: 100</h2>
+        <h2>Lotto Prize: {numberFormat(lottoPrize?.formatted, '0.000')} ETH</h2>
+        {lastWinner && <h2>Last Winner: {formatHash(lastWinner.winner, 3)} - {numberFormat(formatTokenAmount(lastWinner.amount), '0,0.000')} ETH</h2>}
       </div>
-    </div >
+      <div className={styles.bgLight} />
+      <div className={`${lastestWinner ? styles.boxOpen : styles.closeBox} ${loading ? styles.picShake : ''}`}>
+        <div className={`${styles.boxMsg} ${!lastestWinner ? styles.hide : ''}`}>
+          {lastestWinner && (
+            <div className={styles.winning}>
+              <h3 className={styles.boxMsgTitle}>Congratulations!</h3>
+              <div className={styles.boxMsgCongent}>{formatHash(lastWinner.winner, 3)} won {numberFormat(formatTokenAmount(lastestWinner.amount.toString()), '0,0.000')} ETH</div>
+            </div>
+          )}
+        </div>
+      </div>
+      <button className={styles.drawBtn} onClick={handleOnclick} disabled={loading || Number(lottoPrize?.formatted) < 0.1}>{loading ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Draw Rewards'}</button>
+    </div>
   )
 }
 

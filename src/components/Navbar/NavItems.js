@@ -24,25 +24,25 @@ const NavItems = ({ className }) => {
   return (
     <ul className={`${styles.linkDetailsWapper} ${className}`}>
       <li className={styles.linkInfoWrapper}>
-        <Link to='/'>Game</Link>
-      </li>
-      <li className={styles.linkInfoWrapper}>
-        <Link to='/market'>Market</Link>
+        <Link to='/about'>About Us</Link>
       </li>
       <li className={styles.linkInfoWrapper}>
         <Link to='/prize'>Prize</Link>
       </li>
       <li className={styles.linkInfoWrapper}>
-        <a href='https://www.google.com'>Doc</a>
+        <Link to='/market'>Market</Link>
       </li>
       <li className={styles.linkInfoWrapper}>
-        <Link to='/about'>About Us</Link>
+        <Link to='/lotto'>Lotto</Link>
+      </li>
+      <li className={styles.linkInfoWrapper}>
+        <a href='https://www.google.com' target="_blank" rel="noreferrer">Docs</a>
       </li>
       {!isTabletOrMobile && <li>
         {isConnected ? (
-          <div className={styles.avatarContainer}>
+          <Link className={styles.avatarContainer} to="/profile">
             <img className={styles.avatar} src='/images/nft6.jpeg' alt="avatar" />
-          </div>
+          </Link>
         ) : (
           <div
             onClick={() => {

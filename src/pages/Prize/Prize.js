@@ -7,7 +7,8 @@ import { useBalance } from 'wagmi'
 import { gameConfigs } from '../../configs/gameConfig'
 import { gameLeaderboardActions, gameTicketActions, useGameDispatch, useGameSelector } from 'blast-game-sdk'
 import Countdown from 'react-countdown'
-import { formatTimeToMilliseconds } from '../../helpers/utils'
+import { formatTimeToMilliseconds, formatHash, numberFormat } from '../../helpers/utils'
+import { RotatingLines } from 'react-loader-spinner'
 
 export default function Price() {
   const gameList = gameListConfigs.arcade
@@ -36,7 +37,7 @@ export default function Price() {
     }
   }, [selected])
 
-  const { data: poolPrize } = useBalance({ address: gameContract?.address })
+  const { data: poolPrize } = useBalance({ address: gameContract?.address, watch: true })
 
   useEffect(() => {
     if (!gameContract || !selected) return
@@ -67,6 +68,7 @@ export default function Price() {
     }
 
     fetchGameInfo()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameContract])
 
   useEffect(() => {
@@ -96,29 +98,31 @@ export default function Price() {
         <div className={styles.pricePage}>
           <div className={styles.contentWrapper}>
             <div className={styles.rankSection}>
-              <div className={styles.title}>{selected}</div>
-              <div className={styles.poolInfo}>
-                <div>Prize Pool:{poolPrize?.formatted} blast</div>
-                {/*TODO:style issues*/}
-                {round && gameStatus && (
-                  <div className={styles.timeSection}>
-                    <p>{gameStatus.isGameRunning ? 'Game' : 'Claim'} Remaining:</p>
-                    <Countdown date={formatTimeToMilliseconds(gameStatus.isGameRunning ? round.gameEndTime : round.claimEndTime)} renderer={countdownRender} />
+              <div className={styles.title}> {gameConfigs[selected].name}</div>
+              {isFetchingInfo
+                ? <div className={styles.poolInfoWrapper}>
+                  <RotatingLines strokeColor='#eff0f2' />
+                </div>
+                : <div className={styles.poolInfoWrapper}>
+                  <div className={styles.poolInfo}>
+                    <div>Prize Pool: {numberFormat(poolPrize?.formatted, '0,0.000')} ETH</div>
+                    {round && gameStatus && (
+                      <div className={styles.timeSection}>
+                        <p>{gameStatus.isGameRunning ? 'Game' : 'Claim'} Remaining:</p>
+                        <Countdown date={formatTimeToMilliseconds(gameStatus.isGameRunning ? round.gameEndTime : round.claimEndTime)} renderer={countdownRender} />
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-              {/*TODO:style issues*/}
-              <ul className={styles.rankTable}>
-                {individuals.map(item => (
-                  <li className={styles.dataRow} key={item.rank}>
-                    <div className={styles.data}>#{item.rank}</div>
-                    <div className={styles.data}>{item.points}pt</div>
-                    <div className={styles.data}>{item.address}</div>
-                    {/*<div className={styles.dataGreen}>$6</div>*/}
-                    {/*<div className={styles.dataGreen}>10%</div>*/}
-                  </li>
-                ))}
-              </ul>
+                  <ul className={styles.rankTable}>
+                    {individuals.map(item => (
+                      <li className={styles.dataRow} key={item.rank}>
+                        <div className={styles.data}>#{item.rank}</div>
+                        <div className={styles.data}>{item.points}pt</div>
+                        <div className={styles.data}>{formatHash(item.address, 5)}</div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>}
             </div>
             <div className={styles.controlSection}>
               <div className={styles.controlButtons}>
@@ -132,7 +136,7 @@ export default function Price() {
                 </div>
                 <div className={styles.selectSection}>
                   <div className={isOpen ? styles.selectedNameOpen : styles.selectedName} onClick={() => setIsOpen(!isOpen)}>
-                    {selected}
+                    {gameConfigs[selected].name}
                   </div>
                   {isOpen && (
                     <div className={styles.dropdown}>
@@ -144,7 +148,7 @@ export default function Price() {
                             setIsOpen(false)
                           }}
                         >
-                          {item}
+                          {gameConfigs[item].name}
                         </div>
                       ))}
                     </div>

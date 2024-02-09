@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import React from 'react'
 import styles from './Market.module.scss'
+import { useAccount, useBalance } from 'wagmi'
+import { numberFormat } from '../../helpers/utils'
 
 const userOwnNft = [
   { image: '/images/nft6.jpeg', button: 'Sell' },
@@ -100,13 +102,16 @@ const NftCard = ({ imgURL, buttonAction }) => {
 }
 
 const Market = () => {
+  const { address, isConnected } = useAccount()
+  const { data: ethBalance } = useBalance({ address, enabled: !!address })
+
   return (
     <div className={styles.outerLayer}>
       <div className={styles.grid}>
         <section className={styles.leftSection}>
-          <div className={styles.assetSection}>
+          {isConnected ? <div className={styles.assetSection}>
             <h3 className={styles.h3}>Your Wallet</h3>
-            <h2 className={styles.h2}>$ 126.345 blast</h2>
+            <h2 className={styles.h2}>{numberFormat(ethBalance?.formatted, '0,0.000')} ETH</h2>
             <div className={styles.indicator}>
               <svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30' fill='none'>
                 <path
@@ -116,7 +121,9 @@ const Market = () => {
               </svg>
               <p className={styles.p}>10.34%</p>
             </div>
-          </div>
+          </div> : <div className={styles.assetSection}>
+            <h3 className={styles.h3}>Connect Wallet</h3>
+          </div>}
           <div className={styles.filterSection}>
             <Filter />
           </div>

@@ -1,15 +1,20 @@
+@import "../../variables.module.scss";
+
 .drawBox {
   width: 100%;
+  min-height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   position: relative;
+  background-color: $background-color;
 }
 
 .bgLight {
   background: url('../../assets/light.png') center no-repeat;
-  width: 600px;
-  height: 600px;
+  width: 500px;
+  height: 500px;
   z-index: 1;
   animation: pic-rotate 10s infinite linear;
 }
@@ -21,7 +26,7 @@
   height: 138px;
   z-index: 2;
   position: absolute;
-  top: 200px;
+  top: 330px;
 }
 
 .boxOpen {
@@ -31,22 +36,22 @@
   height: 138px;
   z-index: 2;
   position: absolute;
-  top: 200px;
+  top: 330px;
 }
 
 .picShake {
-  animation: pic-shake 1.2s linear;
+  animation: pic-shake 1.2s infinite linear;
 }
 
 .boxMsg {
   width: 80%;
   height: auto;
   margin: 0px auto;
-  border: 5px solid #fce92f;
+  border: 5px solid $primary-color;
   background-color: rgba(255, 255, 255, 0.8);
   position: relative;
-  top: -120px;
-  box-shadow: 1px 1px 3px #888888;
+  top: -150px;
+  box-shadow: 1px 1px 3px $border-color;
   border-radius: 10px;
   padding: 10px;
   z-index: 5;
@@ -59,12 +64,17 @@
 .boxMsgTitle {
   text-align: center;
   margin: 0px 0px 10px 0px;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 .boxMsgCongent {
   line-height: 28px;
   margin: 0px 0px 10px 0px;
-  color: #610c03;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+  color: $navbar-color;
 }
 
 .boxMsgTip {
@@ -76,23 +86,45 @@
   text-align: center;
 }
 
-.btnBlue {
-  border: none;
-  background-color: #fce92f;
-  padding: 3px 15px;
+.drawBtn {
   border-radius: 5px;
-  box-shadow: 1px 1px 3px #888888;
+  background-color: $primary-color;
+  padding: 5px;
+  color: $navbar-color;
+  font-size: 25px;
+  font-weight: 700;
+  cursor: pointer;
+  position: absolute;
+  z-index: 10;
+  top: 500px;
+  min-width: 200px;
+  box-shadow: 1px 1px 3px $border-color;
 }
 
-.promptOperation {
-  width: 100%;
-  position: absolute;
-  cursor: pointer;
-  top: 350px;
-  text-align: center;
-  color: #cd1e03;
-  z-index: 10000;
-  text-shadow: 1px 1px 3px #ffd728;
+.drawBtn:disabled{
+  background-color: $border-color;
+  color: #fff;
+  pointer-events: none;
+}
+
+ .prizeInfoSection {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   flex-shrink: 0;
+   gap: 10px;
+   padding: 40px 0px;
+   text-align: center;
+   z-index: 9;
+   margin-top: 20px;
+   color: $font-color;
+
+   .h2 {
+     font-size: 40px;
+     font-style: normal;
+     font-weight: 400;
+     line-height: normal;
+   }
 }
 
 @keyframes pic-rotate {

@@ -128,11 +128,13 @@ function Arcade() {
     }
 
     fetchGameInfo()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameContract, gameLeaderBoardInfo, redeemTimes])
 
   useEffect(() => {
     if (!isConnected || chain?.id === 168587773) return
     switchNetwork?.(168587773)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConnected, chain])
 
   const handleConnectWallet = () => {

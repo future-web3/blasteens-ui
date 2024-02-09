@@ -13,6 +13,7 @@ import { defineChain } from 'viem'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { RefreshContextProvider } from './context/Refresh/context'
 import Lotto from './pages/Lotto/Lotto'
+import Profile from './pages/Profile/Profile'
 
 const blastSepolia = defineChain({
   id: 168_587_773,
@@ -71,6 +72,7 @@ function App() {
               <Route path='about' element={<Aboutus />} />
               <Route path='market' element={<Market />} />
               <Route path='lotto' element={<Lotto />} />
+              <Route path='profile' element={<Profile />} />
             </Route>
             <Route path='*' element={<NotFound />} />
           </Routes>
