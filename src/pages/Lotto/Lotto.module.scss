@@ -11,6 +11,14 @@
   background-color: $background-color;
 }
 
+.lottoBoxContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+
 .bgLight {
   background: url('../../assets/light.png') center no-repeat;
   width: 500px;
@@ -26,7 +34,7 @@
   height: 138px;
   z-index: 2;
   position: absolute;
-  top: 330px;
+  top: 100px;
 }
 
 .boxOpen {
@@ -36,7 +44,7 @@
   height: 138px;
   z-index: 2;
   position: absolute;
-  top: 330px;
+  top: 100px;
 }
 
 .picShake {
@@ -110,7 +118,7 @@
 .buttonWrapper{
   position: absolute;
   z-index: 10;
-  top: 500px;
+  top: 300px;
 }
 
 .drawBtn {
