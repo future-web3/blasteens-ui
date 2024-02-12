@@ -293,38 +293,40 @@ function Lotto() {
         <h2>Lotto Prize: {numberFormat(lottoPrize?.formatted, '0.000')} ETH</h2>
         {lastWinner && <h2>Last Winner: {formatHash(lastWinner.winner, 3)} - {numberFormat(formatTokenAmount(lastWinner.amount), '0,0.000')} ETH</h2>}
       </div>
-      <div className={styles.bgLight} />
-      <div className={`${lastestWinner ? styles.boxOpen : styles.closeBox} ${isDrawing ? styles.picShake : ''}`}>
-        <div className={`${styles.boxMsg} ${!lastestWinner ? styles.hide : ''}`}>
-          {lastestWinner && (
-            <div className={styles.winning}>
-              <h3 className={styles.boxMsgTitle}>Congratulations!</h3>
-              <div className={styles.boxMsgCongent}>{formatHash(lastestWinner.winner, 3)} won {numberFormat(formatTokenAmount(lastestWinner.amount.toString()), '0,0.000')} ETH</div>
-            </div>
-          )}
-        </div>
-      </div>
-      {Number(lottoTicketNumber) === 0
-        ? <div className={styles.errorText} style={{ position: "absolute", top: 500 }}>* You are not eligible to participate the lotto!</div>
-        : <div className={styles.buttonWrapper}>
-          {!isTicketApprovedForLotto ? <button
-            className={styles.drawBtn}
-            onClick={handleApproveTicket}
-            disabled={isApproving}
-          >
-            {isApproving ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Approve Ticket'}
-          </button> :
-            <div style={{ display: "flex", alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-              <div className={styles.participateInputContainer}>
-                <input className={styles.participateInput} placeholder='Enter the number ...' onChange={handleInputChange} type='text' value={noOfParticipation} />
-                <button className={styles.maxBtn} onClick={() => setNoOfParticipation(String(lottoTicketNumber))}>{Number(lottoTicketNumber)}</button>
-                <button className={styles.participateBtn} onClick={handleParticipateLotto} disabled={isParticipating || Number(noOfParticipation) < 1 || Number(noOfParticipation) > Number(lottoTicketNumber)}>{isParticipating ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Participate'}</button>
+      <div className={styles.lottoBoxContainer}>
+        <div className={styles.bgLight} />
+        <div className={`${lastestWinner ? styles.boxOpen : styles.closeBox} ${isDrawing ? styles.picShake : ''}`}>
+          <div className={`${styles.boxMsg} ${!lastestWinner ? styles.hide : ''}`}>
+            {lastestWinner && (
+              <div className={styles.winning}>
+                <h3 className={styles.boxMsgTitle}>Congratulations!</h3>
+                <div className={styles.boxMsgCongent}>{formatHash(lastestWinner.winner, 3)} won {numberFormat(formatTokenAmount(lastestWinner.amount.toString()), '0,0.000')} ETH</div>
               </div>
-              {Number(noOfParticipation) > Number(lottoTicketNumber) && <p className={styles.errorText}>* Number has exceeded your balance [{Number(lottoTicketNumber)}]</p>}
-              <button className={styles.drawBtn} onClick={handleDrawingReward} disabled={isDrawing || Number(lottoPrize?.formatted) < 0.1 || participantsCount < 100}>{isDrawing ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Draw Rewards'}</button>
-            </div>
-          }
-        </div >}
+            )}
+          </div>
+        </div>
+        {Number(lottoTicketNumber) === 0
+          ? <div className={styles.errorText} style={{ position: "absolute", top: 500 }}>* You are not eligible to participate the lotto!</div>
+          : <div className={styles.buttonWrapper}>
+            {!isTicketApprovedForLotto ? <button
+              className={styles.drawBtn}
+              onClick={handleApproveTicket}
+              disabled={isApproving}
+            >
+              {isApproving ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Approve Ticket'}
+            </button> :
+              <div style={{ display: "flex", alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+                <div className={styles.participateInputContainer}>
+                  <input className={styles.participateInput} placeholder='Enter the number ...' onChange={handleInputChange} type='text' value={noOfParticipation} />
+                  <button className={styles.maxBtn} onClick={() => setNoOfParticipation(String(lottoTicketNumber))}>{Number(lottoTicketNumber)}</button>
+                  <button className={styles.participateBtn} onClick={handleParticipateLotto} disabled={isParticipating || Number(noOfParticipation) < 1 || Number(noOfParticipation) > Number(lottoTicketNumber)}>{isParticipating ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Participate'}</button>
+                </div>
+                {Number(noOfParticipation) > Number(lottoTicketNumber) && <p className={styles.errorText}>* Number has exceeded your balance [{Number(lottoTicketNumber)}]</p>}
+                <button className={styles.drawBtn} onClick={handleDrawingReward} disabled={isDrawing || Number(lottoPrize?.formatted) < 0.1 || participantsCount < 100}>{isDrawing ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Draw Rewards'}</button>
+              </div>
+            }
+          </div >}
+      </div>
     </div>
   )
 }

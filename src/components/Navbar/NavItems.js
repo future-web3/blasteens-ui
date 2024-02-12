@@ -24,16 +24,16 @@ const NavItems = ({ className }) => {
   return (
     <ul className={`${styles.linkDetailsWapper} ${className}`}>
       <li className={styles.linkInfoWrapper}>
-        <Link to='/about'>About Us</Link>
-      </li>
-      <li className={styles.linkInfoWrapper}>
-        <Link to='/prize'>Prize</Link>
+        <Link to='/arcade/escape-from-germs'>Games</Link>
       </li>
       <li className={styles.linkInfoWrapper}>
         <Link to='/market'>Market</Link>
       </li>
       <li className={styles.linkInfoWrapper}>
         <Link to='/lotto'>Lotto</Link>
+      </li>
+      <li className={styles.linkInfoWrapper}>
+        <Link to='/about'>About Us</Link>
       </li>
       <li className={styles.linkInfoWrapper}>
         <a href='https://www.google.com' target="_blank" rel="noreferrer">Docs</a>
