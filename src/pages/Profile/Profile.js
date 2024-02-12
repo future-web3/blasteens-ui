@@ -50,7 +50,7 @@ const Profile = () => {
     watch: true,
   })
 
-  const [lottoBalanceData, lottoTicketsAmountData] = data
+  const [lottoBalanceData, lottoTicketsAmountData] = data ?? []
 
   useWaitForTransaction({
     hash: pendingHash,
@@ -114,7 +114,7 @@ const Profile = () => {
 
   return (
     <div className={styles.profileContainer}>
-      {address ?
+      {address && data ?
         <div className={styles.columnContainer}>
           <div className={styles.userInfoSection}>
             <img className={styles.avatar} src='/images/nft6.jpeg' alt="avatar" />
