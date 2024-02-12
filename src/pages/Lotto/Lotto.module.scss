@@ -50,11 +50,22 @@
   border: 5px solid $primary-color;
   background-color: rgba(255, 255, 255, 0.8);
   position: relative;
-  top: -150px;
+  top: -100px;
   box-shadow: 1px 1px 3px $border-color;
   border-radius: 10px;
   padding: 10px;
   z-index: 5;
+}
+
+.maxBtn{
+  background-color: $primary-color;
+  color: $navbar-color;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 50%;
+  outline: none;
+  padding: 5px;
 }
 
 .hide {

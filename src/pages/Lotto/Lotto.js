@@ -12,6 +12,7 @@ import { getLotto } from '../../services/graph'
 import { useRefresh } from '../../context/Refresh/hooks'
 import { RotatingLines } from 'react-loader-spinner'
 import { inputRegex, escapeRegExp } from '../../helpers/utils'
+import { getLottoParticipantsAmount } from '../../helpers/lotto'
 
 function Lotto() {
   const [randomnessPendingHash, setRandomnessPendingHash] = useState('')
@@ -113,10 +114,11 @@ function Lotto() {
         functionName: 'participate'
       })
       console.log(txReceiptForParticipating)
-      setApprovePendingHash(txReceiptForParticipating.hash)
+      setParticipatePendingHash(txReceiptForParticipating.hash)
     } catch (error) {
       console.error('handleParticipateLotto error', error.message)
       setIsParticipating(false)
+      setNoOfParticipation("")
     }
   }
 
@@ -130,7 +132,9 @@ function Lotto() {
           winner: data.winners[0].winner,
           amount: data.winners[0].amount
         })
-        if (data.enterLottoGames.length > 0) setParticipantsCount(data.enterLottoGames.length)
+        if (data.enterLottoGames.length > 0) {
+          setParticipantsCount(getLottoParticipantsAmount(data))
+        }
       } catch (error) {
         console.error("fetchLottoInfo error", error.message)
       }
@@ -202,10 +206,13 @@ function Lotto() {
         setParticipatePendingHash('')
       }
       setIsParticipating(false)
+      setNoOfParticipation("")
+      setTriggerRefresh(x => x + 1)
     },
     onError() {
       setParticipatePendingHash('')
       setIsParticipating(false)
+      setNoOfParticipation("")
     }
   })
 
@@ -292,7 +299,7 @@ function Lotto() {
           {lastestWinner && (
             <div className={styles.winning}>
               <h3 className={styles.boxMsgTitle}>Congratulations!</h3>
-              <div className={styles.boxMsgCongent}>{formatHash(lastWinner.winner, 3)} won {numberFormat(formatTokenAmount(lastestWinner.amount.toString()), '0,0.000')} ETH</div>
+              <div className={styles.boxMsgCongent}>{formatHash(lastestWinner.winner, 3)} won {numberFormat(formatTokenAmount(lastestWinner.amount.toString()), '0,0.000')} ETH</div>
             </div>
           )}
         </div>
@@ -310,10 +317,11 @@ function Lotto() {
             <div style={{ display: "flex", alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
               <div className={styles.participateInputContainer}>
                 <input className={styles.participateInput} placeholder='Enter the number ...' onChange={handleInputChange} type='text' value={noOfParticipation} />
+                <button className={styles.maxBtn} onClick={() => setNoOfParticipation(String(lottoTicketNumber))}>{Number(lottoTicketNumber)}</button>
                 <button className={styles.participateBtn} onClick={handleParticipateLotto} disabled={isParticipating || Number(noOfParticipation) < 1 || Number(noOfParticipation) > Number(lottoTicketNumber)}>{isParticipating ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Participate'}</button>
               </div>
               {Number(noOfParticipation) > Number(lottoTicketNumber) && <p className={styles.errorText}>* Number has exceeded your balance [{Number(lottoTicketNumber)}]</p>}
-              <button className={styles.drawBtn} onClick={handleDrawingReward} disabled={isDrawing || Number(lottoPrize?.formatted) < 0.1}>{isDrawing ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Draw Rewards'}</button>
+              <button className={styles.drawBtn} onClick={handleDrawingReward} disabled={isDrawing || Number(lottoPrize?.formatted) < 0.1 || participantsCount < 100}>{isDrawing ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Draw Rewards'}</button>
             </div>
           }
         </div >}
