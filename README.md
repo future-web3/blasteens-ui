@@ -1,22 +1,49 @@
-# Features
+# Blasteens
+<p align="left">
+  <img alt="Blasteens" src="public/images/blasteens.png" width="450" >
+</p>
 
-## Games
- - Escape From Germs. Navigate through a virtual world while avoiding and escaping from germs. Test your reflexes and strategic thinking in this exciting game.
- - Snowman defender. Defend your snowman against waves of attackers. Utilize various defenses and power-ups to keep your snowman safe. A thrilling defense game set in a winter wonderland.
- - Emoji Match. Exercise your memory and matching skills in the Emoji Match game. Flip cards to find matching emoji pairs within the given time. How quickly can you match them all?
- - Tommy Jumping. Join Tommy in an adventurous jumping game. Help him overcome obstacles and reach new heights. How far can you guide Tommy in this endless jumping journey?
+Blasteens, is an advanced gaming platform featuring three captivating games with built-in rewards showcased on leaderboards to attract competitive players. This aligns seamlessly with Blast's initiative to diversify its ecosystem and enhance user engagement. Blasteens provides a developer-friendly environment for creators to showcase their work. Notably, it stands out with a user-friendly game developer SDK and a dedicated marketplace for character trading, enriching the overall gaming experience.
+<br>
+> Let's ***blast*** some games? visit [_Blasteens_](https://blasteens-ui.vercel.app/) !!!
 
-## How to play games?
- - Buy your nft ticket. There are 3 types of NFT tickets to choose from
- - Redeem your nft ticket to start the game.
- - To win the prize from the highest ranking in the leaderboard
+## Table of Contents
+* [🔥 Point of Attraction](#-point-of-attraction)
+  * [👾 Gamer-orientation](#-gamer-orientation)
+  * [👨‍💻 Developer-orientation](#-developer-orientation)
+* [🌟 Features](#-features)
+  * [🎮 Game](#-game)
+    * [Arcade](#arcade)
+    * [Independent Games](#independent-games) 
+    * [AAA Games](#aaa-games)
+    * [How to Play Arcade?](#how-to-play-arcade)
+  * [🏛️ Market](#-market)
+  * [🥇 Prize](#-prize)
+  * [💰 Developer Bonus Reward](#-developer-bonus-reward)
+  * [🍀 Lotto](#-lotto)
+  * [🔨 SDK](#-sdk)
+* [💻 Tech Stack](#-tech-stack)
+* [👀 Preview](#-preview)
+* [🤝 How to contribute?](#-how-to-contribute)
+* [📜 Available Scripts](#-available-scripts)
+* [🧱 Developed By](#-developed-by)
 
-## Lotto
- - All the yield and gas fees will be sent to the Lottos.
- - All game participants can participate Lottos
- - Random draw to win the biggest lotto in the world.
+## 🔥 Point of Attraction
+  ### 👾 Gamer-orientation
+  ### 👨‍💻 Developer-orientation
+## 🌟 Features
+  ### 🎮 Game
+  #### Arcade
+  #### Independent Games
+  #### AAA Games
+  #### How to play Arcade?
+  ### 🏛️ Market
+  ### 🥇 Prize
+  ### 💰 Developer Bonus Reward
+  ### 🍀 Lotto
+  ### 🔨 SDK
 
-# UI Tech stack
+## 💻 Tech Stack
  - ReactJS
  - WAGMI wallet integration
  - Subgraph Query
@@ -24,17 +51,13 @@
  - PhaserJs to build out some demo games
  - Redux to manage the state of the app
 
-# UI preview
+## 👀 Preview
 
-# Demo link
-
-
-# How to contribute
+## 🤝 How to contribute?
 We warmly invite developers of all skill levels to contribute to our open-source project, whether through code, documentation, or community support, to help us build something truly amazing together.
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
-
+## 📜 Available Scripts
 In the project directory, you can run:
 
 ### `npm start`
@@ -57,3 +80,13 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
+
+## 🧱 Developed By
+- The SDK is developed by _Scorpion Studio_.
+  <p align="left">
+    <img alt="Scorpion Studio" src="public/images/scorpion-studio.png" width="500" >
+  </p>
+- Also, special thanks to _[Blast](https://blast.io/en)_ !
+  <p align="left">
+    <img alt="Blast" src="public/images/blast.svg" width="500" >
+  </p>
