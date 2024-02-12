@@ -5,6 +5,12 @@ import numeral from 'numeral'
 
 const BIG_TEN = new BN(10)
 
+export const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`)
+
+export const escapeRegExp = (string) => {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
+}
+
 export const transformId = id => {
   const words = id.split('-')
   const transformedWords = words.map((word, index) => {
