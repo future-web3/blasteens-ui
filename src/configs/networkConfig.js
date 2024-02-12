@@ -12,7 +12,7 @@ export const networkConfig = {
     rpcUrl: `https://sepolia.blast.io`,
     chainName: 'Blast Sepolia',
     currencyName: 'ETH',
-    fromBlock: 1294996,
+    fromBlock: 1377598,
     explorerUrl: {
       tx: 'https://testnet.blastscan.io/tx/',
       address: 'https://testnet.blastscan.io/address/',

@@ -68,6 +68,16 @@
   font-size: 20px;
 }
 
+.errorText {
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+  color: $fail-color;
+  text-align: center;
+  z-index: 10;
+  margin-bottom: 10px;
+}
+
 .boxMsgCongent {
   line-height: 28px;
   margin: 0px 0px 10px 0px;
@@ -86,6 +96,12 @@
   text-align: center;
 }
 
+.buttonWrapper{
+  position: absolute;
+  z-index: 10;
+  top: 500px;
+}
+
 .drawBtn {
   border-radius: 5px;
   background-color: $primary-color;
@@ -94,9 +110,6 @@
   font-size: 25px;
   font-weight: 700;
   cursor: pointer;
-  position: absolute;
-  z-index: 10;
-  top: 500px;
   min-width: 200px;
   box-shadow: 1px 1px 3px $border-color;
 }
@@ -158,4 +171,44 @@
   100% {
     -webkit-transform: scale(1) rotate(0);
   }
+}
+
+
+.participateInputContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px $border-color;
+  border: 1px solid $border-color;
+  margin-bottom: 10px;
+  gap: 20px;
+}
+
+.participateInput{
+  outline: none;
+  background-color: transparent;
+  color: white;
+  padding: 5px;
+  border: none;
+  font-family: $font-family;
+  font-size: 18px;
+}
+
+.participateBtn{
+  border-radius: 5px;
+  background-color: $primary-color;
+  padding: 5px;
+  color: $navbar-color;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  min-width: 115px;
+  box-shadow: 1px 1px 3px $border-color;
+}
+
+.participateBtn:disabled{
+  background-color: $border-color;
+  color: #fff;
+  pointer-events: none;
 }

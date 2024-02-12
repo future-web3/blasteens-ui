@@ -3,7 +3,7 @@ import gameViewStyles from '../../pages/Arcade/Arcade.module.scss'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { writeContract } from '@wagmi/core'
-import { useWaitForTransaction, useWalletClient, useAccount, useNetwork } from 'wagmi'
+import { useWaitForTransaction, useWalletClient, useAccount, useNetwork, useContractRead } from 'wagmi'
 import BN from 'bignumber.js'
 import { gameTicketActions, gameLeaderboardActions, useGameDispatch, useGameSelector } from 'blast-game-sdk'
 import { checkScore, checkTicket } from '../../helpers/contracts'
@@ -17,11 +17,13 @@ import { isNowBeforeGameEndTime } from '../../helpers/utils'
 function TicketFilter({ transformedGameId, address, gameTicketContract, forwarderContract, gameContract, setIndividuals, setRedeemTimes }) {
   const [isBuying, setIsBuying] = useState(false)
   const [isRedeeming, setIsRedeeming] = useState(false)
+  const [isApproving, setIsApproving] = useState(false)
   const [isSyncing, setIsSyncing] = useState(false)
   const [livesRedeemed, setLivesRedeemed] = useState(0)
   const [syncPendingHash, setSyncPendingHash] = useState('')
   const [buyingPendingHash, setBuyingPendingHash] = useState('')
   const [redeemingPendingHash, setRedeemingPendingHash] = useState('')
+  const [approvingPendingHash, setApprovingPendingHash] = useState('')
 
   const { data: walletClientData } = useWalletClient()
   const { address: walletAddress } = useAccount()
@@ -68,6 +70,14 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, forwarde
       return undefined
     }
   }
+
+  const { data: isTicketApprovedForGame } = useContractRead({
+    ...gameTicketContract,
+    enabled: !!walletAddress,
+    functionName: 'isApprovedForAll',
+    args: [walletAddress, gameContract.address],
+    watch: true
+  })
 
   useWaitForTransaction({
     hash: buyingPendingHash,
@@ -161,6 +171,42 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, forwarde
       setLivesRedeemed(0)
     }
   }
+
+  const handleApproveTicket = async () => {
+    setIsApproving(true)
+    const args = [gameContract.address, true]
+
+    try {
+      const txReceiptForApproving = await writeContract({
+        ...gameTicketContract,
+        account: walletClientData.account.address,
+        args,
+        functionName: 'setApprovalForAll'
+      })
+      console.log(txReceiptForApproving)
+      setRedeemingPendingHash(setApprovingPendingHash.hash)
+    } catch (error) {
+      console.log(error)
+      setIsApproving(false)
+    }
+  }
+
+  useWaitForTransaction({
+    hash: approvingPendingHash,
+    enabled: !!approvingPendingHash,
+    onSuccess: async data => {
+      if (data.status === 'success') {
+        setApprovingPendingHash('')
+        console.log('>>>>>>>>>Approve Success')
+      }
+      setIsApproving(false)
+    },
+    onError() {
+      setSyncPendingHash('')
+      setIsApproving(false)
+      console.log('>>>>>>>>>Approve finish')
+    }
+  })
 
   useWaitForTransaction({
     hash: syncPendingHash,
@@ -286,13 +332,21 @@ function TicketFilter({ transformedGameId, address, gameTicketContract, forwarde
                 </div>
               </div>
               <div className={styles.buttonContainer}>
-                <button
-                  className={(gameViewStyles.arcadeWeb3Button, gameViewStyles.btn, gameViewStyles.drawBorder)}
-                  onClick={handleSubmit(handleRedeemTicket)}
-                  disabled={isRedeeming}
-                >
-                  {isRedeeming ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Redeem Ticket'}
-                </button>
+                {
+                  isTicketApprovedForGame ? <button
+                    className={(gameViewStyles.arcadeWeb3Button, gameViewStyles.btn, gameViewStyles.drawBorder)}
+                    onClick={handleSubmit(handleRedeemTicket)}
+                    disabled={isRedeeming}
+                  >
+                    {isRedeeming ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Redeem Ticket'}
+                  </button> : <button
+                    onClick={handleSubmit(handleApproveTicket)}
+                    disabled={isApproving}
+                    className={(gameViewStyles.arcadeWeb3Button, gameViewStyles.btn, gameViewStyles.drawBorder)}
+                  >
+                    {isApproving ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Approve Ticket'}
+                  </button>
+                }
               </div>
             </>
           )}
