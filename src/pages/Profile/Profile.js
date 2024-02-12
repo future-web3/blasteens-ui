@@ -128,7 +128,7 @@ const Profile = () => {
               Lotto Tickets: x {lottoBalanceData.status === 'success' ? String(lottoBalanceData.result) : '0'}
             </div>
             <div className={styles.userAddressSection}>
-              Lotto Total WIN: {numberFormat(getTotalLottoWinnerAmount(userProfile, '0,0.000'))} ETH
+              Lotto Total WIN: {numberFormat(getTotalLottoWinnerAmount(userProfile), '0,0.000')} ETH
             </div>
             {lottoTicketsAmountData.status === 'success' && Number(lottoTicketsAmountData.result) > 0 && <button className={styles.lottoClaimButton} onClick={handleClaimLottoTicket} disabled={isClaiming}>
               {isClaiming ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : "Claim Lotto Ticket"}
