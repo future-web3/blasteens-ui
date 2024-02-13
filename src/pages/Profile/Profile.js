@@ -12,6 +12,7 @@ import { getTotalRedemptionAmountForGame, getRedemptionTotalCount, getHighestSco
 import { getContractAddress, getABI } from "../../helpers/network";
 import { RotatingLines } from "react-loader-spinner";
 import { useConnectModal } from '@rainbow-me/rainbowkit'
+import Layout from "../../components/Layout/Layout";
 
 const Profile = () => {
   const { address, isConnected } = useAccount()
@@ -104,68 +105,70 @@ const Profile = () => {
   }, [address])
 
   return (
-    <div className={styles.profileContainer}>
-      {address && isConnected && data ?
-        <div className={styles.columnContainer}>
-          <div className={styles.userInfoSection}>
-            <img className={styles.avatar} src='/images/nft6.jpeg' alt="avatar" />
-            <div className={styles.userAddressSection}>
-              Address: {formatHash(address, 4)}
-            </div>
-            <div className={styles.userAddressSection}>
-              Balance: {numberFormat(ethBalance?.formatted, '0,0.000')} ETH
-            </div>
-            <div className={styles.userAddressSection}>
-              Lotto Tickets: x {lottoBalanceData.status === 'success' ? String(lottoBalanceData.result) : '0'}
-            </div>
-            <div className={styles.userAddressSection}>
-              Lotto Total WIN: {numberFormat(getTotalLottoWinnerAmount(userProfile), '0,0.000')} ETH
-            </div>
-            {lottoTicketsAmountData.status === 'success' && Number(lottoTicketsAmountData.result) > 0 && <button className={styles.lottoClaimButton} onClick={handleClaimLottoTicket} disabled={isClaiming}>
-              {isClaiming ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : "Claim Lotto Ticket"}
-            </button>}
-          </div>
-          <div className={styles.gameInfoSection}>
-            <div className={styles.gameHeader}>Game Statistics</div>
-            {gameListConfigs.arcade.map(key => (
-              <div className={styles.gameInfoContainer} key={key}>
-                <div className={styles.gameInfoColumnContainer}>
-                  <h2 className={styles.gameInfoHeader}>{gameConfigs[key].name}</h2>
-                  <Link to={gameConfigs[key]?.url} className={styles.gamePlayButton}>
-                    PLAY
-                  </Link>
-                  <div className={styles.gameLogo}>
-                    <img src={`/assets/games/${gameConfigs[key]['key']}/logo.png`} alt='LOGO' />
-                  </div>
-                  {
-                    isLoading || !userProfile ? <div style={{ padding: '3px', width: '100%' }}>
-                      <SkeletonTheme baseColor={'#191919'} highlightColor={'#7d7a92'}>
-                        <Skeleton count={3} className={styles.skeletonLoading} />
-                      </SkeletonTheme>
-                    </div> : <div>
-                      <div className={styles.statisticsWrapper}>
-                        <p className={styles.gameInfoText}>Redemption:</p>
-                        <p className={styles.gameInfoText}>{getRedemptionTotalCount(key, userProfile)}</p>
-                      </div>
-                      <div className={styles.statisticsWrapper}>
-                        <p className={styles.gameInfoText}>Total Spent:</p>
-                        <p className={styles.gameInfoText}>{numberFormat(getTotalRedemptionAmountForGame(key, userProfile), '0,0.000')} ETH</p>
-                      </div>
-                      <div className={styles.statisticsWrapper}>
-                        <p className={styles.gameInfoText}>Highest Score:</p>
-                        <p className={styles.gameInfoText}>{getHighestScoreForGame(key, userProfile)} pt</p>
-                      </div>
-                    </div>
-                  }
-                </div>
+    <Layout>
+      <div className={styles.profileContainer}>
+        {address && isConnected && data ?
+          <div className={styles.columnContainer}>
+            <div className={styles.userInfoSection}>
+              <img className={styles.avatar} src='/images/nft6.jpeg' alt="avatar" />
+              <div className={styles.userAddressSection}>
+                Address: {formatHash(address, 4)}
               </div>
-            ))}
+              <div className={styles.userAddressSection}>
+                Balance: {numberFormat(ethBalance?.formatted, '0,0.000')} ETH
+              </div>
+              <div className={styles.userAddressSection}>
+                Lotto Tickets: x {lottoBalanceData.status === 'success' ? String(lottoBalanceData.result) : '0'}
+              </div>
+              <div className={styles.userAddressSection}>
+                Lotto Total WIN: {numberFormat(getTotalLottoWinnerAmount(userProfile), '0,0.000')} ETH
+              </div>
+              {lottoTicketsAmountData.status === 'success' && Number(lottoTicketsAmountData.result) > 0 && <button className={styles.lottoClaimButton} onClick={handleClaimLottoTicket} disabled={isClaiming}>
+                {isClaiming ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : "Claim Lotto Ticket"}
+              </button>}
+            </div>
+            <div className={styles.gameInfoSection}>
+              <div className={styles.gameHeader}>Game Statistics</div>
+              {gameListConfigs.arcade.map(key => (
+                <div className={styles.gameInfoContainer} key={key}>
+                  <div className={styles.gameInfoColumnContainer}>
+                    <h2 className={styles.gameInfoHeader}>{gameConfigs[key].name}</h2>
+                    <Link to={gameConfigs[key]?.url} className={styles.gamePlayButton}>
+                      PLAY
+                    </Link>
+                    <div className={styles.gameLogo}>
+                      <img src={`/assets/games/${gameConfigs[key]['key']}/logo.png`} alt='LOGO' />
+                    </div>
+                    {
+                      isLoading || !userProfile ? <div style={{ padding: '3px', width: '100%' }}>
+                        <SkeletonTheme baseColor={'#191919'} highlightColor={'#7d7a92'}>
+                          <Skeleton count={3} className={styles.skeletonLoading} />
+                        </SkeletonTheme>
+                      </div> : <div>
+                        <div className={styles.statisticsWrapper}>
+                          <p className={styles.gameInfoText}>Redemption:</p>
+                          <p className={styles.gameInfoText}>{getRedemptionTotalCount(key, userProfile)}</p>
+                        </div>
+                        <div className={styles.statisticsWrapper}>
+                          <p className={styles.gameInfoText}>Total Spent:</p>
+                          <p className={styles.gameInfoText}>{numberFormat(getTotalRedemptionAmountForGame(key, userProfile), '0,0.000')} ETH</p>
+                        </div>
+                        <div className={styles.statisticsWrapper}>
+                          <p className={styles.gameInfoText}>Highest Score:</p>
+                          <p className={styles.gameInfoText}>{getHighestScoreForGame(key, userProfile)} pt</p>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-        : <div>
-          {openConnectModal && <button className={styles.connectBtn} onClick={openConnectModal}>Connect Button</button>}
-        </div>}
-    </div>
+          : <div>
+            {openConnectModal && <button className={styles.connectBtn} onClick={openConnectModal}>Connect Button</button>}
+          </div>}
+      </div>
+    </Layout>
   )
 }
 
