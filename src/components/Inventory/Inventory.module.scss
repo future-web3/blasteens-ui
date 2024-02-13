@@ -24,10 +24,21 @@
 
     .nftImage {
       border: 5px solid $background-color;
-      border-image: conic-gradient(from var(--angle), $background-color, $primary-color 0.1turn, $primary-color 0.15turn, $background-color 0.25turn) 30;
       width: 116px;
       padding: 10px;
       animation: borderRotate var(--duration) linear infinite forwards;
+    }
+
+    .goldNft{
+      border-image: conic-gradient(from var(--angle), $background-color, $primary-color 0.1turn, $primary-color 0.15turn, $background-color 0.25turn) 30;
+    }
+
+    .silverNft{
+      border-image: conic-gradient(from var(--angle), $background-color, #C0C0C0 0.1turn, #C0C0C0 0.15turn, $background-color 0.25turn) 30;
+    }
+
+    .bronzeNft {
+      border-image: conic-gradient(from var(--angle), $background-color, #CD7F32 0.1turn, #CD7F32 0.15turn, $background-color 0.25turn) 30;
     }
   }
 

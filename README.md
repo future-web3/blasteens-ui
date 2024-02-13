@@ -4,9 +4,13 @@
 </p>
 
 Blasteens, is an advanced gaming platform featuring three captivating games with built-in rewards showcased on leaderboards to attract competitive players. This aligns seamlessly with Blast's initiative to diversify its ecosystem and enhance user engagement. Blasteens provides a developer-friendly environment for creators to showcase their work. Notably, it stands out with a user-friendly game developer SDK and a dedicated marketplace for character trading, enriching the overall gaming experience.
-<br>
-> Let's ***blast*** some games! Visit [Blasteens](https://blasteens-ui.vercel.app/) !\
-> Be more comfy watching a intro video? 👉 [Watch on Youtube](url) 👈
+<br><br>
+
+> Let's ***Blast*** some games! <br>
+> 👉 [Blasteens Website](https://blasteens-ui.vercel.app/) 👈
+
+> Be more comfy watching an intro video?<br>
+> 👉 [What is Blasteens?](url) 👈
 
 ## Table of Contents
 * [🔥 Point of Attraction](#-point-of-attraction)
@@ -21,14 +25,17 @@ Blasteens, is an advanced gaming platform featuring three captivating games with
   * [🥇 Prize](#-prize)
   * [💰 Developer Bonus Reward](#-developer-bonus-reward)
   * [🍀 Lotto](#-lotto)
+* [🟡 About Yield](#-about-yield)
 * [💻 Tech Stack](#-tech-stack)
 * [🔨 SDK](#-sdk)
 * [📝 Smart Contract](#-smart-contract)
 * [🌐 Subgraph](#-subgraph)
-* [👀 Preview and Presentation](#-preview-and-presentation)
+* [👀 Presentation](#-presentation)
 * [🤝 How to contribute?](#-how-to-contribute)
 * [📜 Available Scripts](#-available-scripts)
+* [🪪 License](#-license)
 * [🧱 Developed By](#-developed-by)
+
 
 ## 🔥 Point of Attraction
   ### 👾 Gamer-orientation
@@ -72,7 +79,7 @@ Blasteens, is an advanced gaming platform featuring three captivating games with
     2. Redeem your NFT ticket to start the game.\
     3. Aim for the top of the leaderboard to win the prize.
 
-  > **Specil Thanks!**\
+  > **Special Thanks!**\
     Since We consider Phaser to be an accessible framework for beginner game developers (like ourselves), our Arcade games are developed using modifications from games available on [Phaser Lab](https://phaser.io/). Notably, the Blasteens SDK seamlessly integrates with Phaser games. Appreciate your understanding.
   #### Independent Games
   Explore the creativity of independent game developers within the Blasteens ecosystem. Our platform provides a stage for these innovative minds to showcase their talents, bringing you a diverse array of games. From unique narratives to groundbreaking mechanics, independent games on Blasteens promise an unparalleled gaming journey.
@@ -90,6 +97,19 @@ Blasteens, is an advanced gaming platform featuring three captivating games with
   > Developer Bonus Reward coming soon. Stay tuned!
   ### 🍀 Lotto
   Blasteens rewards its community with a Lotto system. Every gamer receives a lotto ticket for playing an arcade game, with weekly draws to select lucky winners. The more you play, the better your chances. Let's go, gamers!
+  > Currently, Blasteens airdrops Lotto tickets, and the initial Lotto pool is also established by the platform.
+
+## 🟡 About Yield
+Yield received from Blast will be fairly distributed between gamers and developers. For instance, the distribution for an Arcade game is as follows:
+- 🥇 **30%**
+- 🥈 **20%**
+- 🥉 **10%**
+- 4️⃣ to 🔟 **4.29%** (30% would be evenly shared with 7 gamers)
+- 🧑‍💻 Developer **10%**
+ 
+> The allocation of Independent and AAA Games will be assessed in collaboration with the game developers.
+
+> Blast yield comes from ETH staking and RWA protocols. The yield from these decentralized protocols is passed back to Blast users automatically. The default interest rate on other L2s is 0%. On Blast, it’s 4% for ETH and 5% for stablecoins. For more information: [about Blast](https://docs.blast.io/about-blast)
 
 ## 💻 Tech Stack
  - ReactJS
@@ -111,9 +131,9 @@ Blasteens, is an advanced gaming platform featuring three captivating games with
   A subgraph, tailored for the Blasteens platform, is a custom API designed to interact with blockchain data. It employs the GraphQL query language for data requests and utilizes the Graph CLI for deployment to a Graph Node. After deployment, when published on The Graph's decentralized network, Indexers process these subgraphs, enabling them to be accessible for queries by Blasteens' subgraph consumers.
   > Explore more: [Blasteens Subgraph](https://github.com/future-web3/blasteens-subgraph)
 
-## 👀 Preview and Presentation
+## 👀 Presentation
 A Blasteens intro video is on air,\
-👉 [Watch on Youtube](url) 👈
+👉 [Blasteens' Youtube Video](url) 👈
 
 Also, feel free to explore the following repos:
 1. [Blasteens](https://blasteens-ui.vercel.app/)
@@ -150,8 +170,22 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
+## 🪪 License
+The MIT License (MIT)
+<br>
+<br>
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+Copyright (c) 2024 The Scorpion Studio
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 ## 🧱 Developed By
-- Blasteens is developed by _Scorpion Studio_. \
+- Blasteens is developed by _The Scorpion Studio_. \
 We're a dynamic developer team based in Melbourne, Australia, deeply fascinated by all aspects of dApps. With a firm belief in the future potential of blockchain technology, we are committed to exploring and contributing to this innovative field. Peace ✌️
   <p align="left">
     <img alt="Scorpion Studio" src="public/images/scorpion-studio.png" width="500" >

@@ -70,10 +70,15 @@ function GameCard({ gameId, games, highestScoresByGame, isLoading, loaded, isGam
             <span className={styles.gameCardButtonDisable}>Coming soon!</span>
           )}
         </div>
-        <div className={styles.gameCardLogo}>
+        {isGamePlayable ? <div className={styles.gameCardLogo}>
           <img src={logoUrl} alt='LOGO' />
           <div className={styles.gameCardDescription}>{gameConfigs[gameId]['description']}</div>
-        </div>
+        </div> : <div className={styles.notPlayableWrapper}>
+          <div className={styles.notPlayableGameCardLogo}>
+            <img src={logoUrl} alt='LOGO' />
+          </div>
+          <div className={styles.notPlayableDescription}>{gameConfigs[gameId]['description']}</div>
+        </div>}
         {(isLoading || !loaded || !round || !gameStatus) && isGamePlayable ? (
           <div className={styles.gameCardDetail}>
             <div style={{ padding: '3px', width: '100%' }}>
@@ -89,17 +94,17 @@ function GameCard({ gameId, games, highestScoresByGame, isLoading, loaded, isGam
                 <p>
                   <span className={styles.gameCardRow}>
                     <span style={{ fontWeight: 'bold' }}>Prize Pool</span>
-                    <span>{poolPrize ? numberFormat(poolPrize.formatted, '0,0.000') : 0} ETH</span>
+                    <span style={{ textAlign: 'right' }}>{poolPrize ? numberFormat(poolPrize.formatted, '0,0.000') : 0} ETH</span>
                   </span>
                   <span className={styles.gameCardRow}>
                     <span style={{ fontWeight: 'bold' }}>Highest Score</span>
-                    <span>{score}pt</span>
+                    <span style={{ textAlign: 'right' }}>{score}pt</span>
                   </span>
                   <span className={styles.gameCardRow}>
                     {round && gameStatus && (
                       <>
                         <span style={{ fontWeight: 'bold' }}>Remaining Time</span>
-                        <span>
+                        <span className={styles.countdownWrapper}>
                           <Countdown
                             date={formatTimeToMilliseconds(gameStatus.isGameRunning ? round.gameEndTime : round.claimEndTime)}
                             renderer={countdownRender}
@@ -114,7 +119,7 @@ function GameCard({ gameId, games, highestScoresByGame, isLoading, loaded, isGam
           </>
         )}
       </div>
-    </div>
+    </div >
   )
 }
 
