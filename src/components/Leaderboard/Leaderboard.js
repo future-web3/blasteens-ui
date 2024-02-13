@@ -7,6 +7,7 @@ import Countdown from 'react-countdown'
 import { writeContract } from '@wagmi/core'
 import { useAccount, useBalance, useWaitForTransaction } from 'wagmi'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import { RotatingLines } from 'react-loader-spinner'
 import 'react-loading-skeleton/dist/skeleton.css'
 
 function Individual({ rank, points, addressLink, address }) {
@@ -51,6 +52,7 @@ function Leaderboard({ gameContract, transformedGameId, individuals, setIndividu
       }
     }
     leaderboardHandler()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameContract, allowSync, transformedGameId])
 
   useWaitForTransaction({
@@ -109,8 +111,8 @@ function Leaderboard({ gameContract, transformedGameId, individuals, setIndividu
             )}
           </div>
           {gameStatus && gameStatus.isClaiming && address && (
-            <button className={styles.claimBtn} onClick={handleClaimReward}>
-              Claim
+            <button className={styles.claimBtn} onClick={handleClaimReward} disabled={isClaimingReward}>
+              {isClaimingReward ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : "Claim"}
             </button>
           )}
         </div>

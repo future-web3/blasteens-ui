@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom'
 import styles from './Arcade.module.scss'
 import React, { useEffect, useMemo, useState } from 'react'
-import { useAccount, useConnect, useNetwork, useSwitchNetwork } from 'wagmi'
+import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi'
 
 import { gameConfigs } from '../../configs/gameConfig'
 import Phaser from 'phaser'
@@ -13,15 +13,16 @@ import Leaderboard from '../../components/Leaderboard/Leaderboard'
 import Inventory from '../../components/Inventory/Inventory'
 import { transformId } from '../../helpers/utils'
 import { useMediaQuery } from 'react-responsive'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 let game = null
 
 function Arcade() {
   const { switchNetwork } = useSwitchNetwork()
-  const { connect, connectors } = useConnect()
   const { address, isConnected } = useAccount()
   const { chain } = useNetwork()
   const netId = chain ? chain.id : 168587773
+  const { openConnectModal } = useConnectModal()
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1280px)' })
 
   const [individuals, setIndividuals] = useState([])
@@ -137,16 +138,6 @@ function Arcade() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConnected, chain])
 
-  const handleConnectWallet = () => {
-    try {
-      if (!isConnected) {
-        connect({ connector: connectors[0] })
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
   if (!targetGame) {
     return <div>The game url in invalid</div>
   }
@@ -175,9 +166,9 @@ function Arcade() {
                   }}
                 >
                   <div className={styles.arcadeMenuContainer}>
-                    <button className={(styles.arcadeWeb3Button, styles.btn, styles.drawBorder)} onClick={handleConnectWallet}>
+                    {openConnectModal && <button className={(styles.arcadeWeb3Button, styles.btn, styles.drawBorder)} onClick={openConnectModal}>
                       Connect Your Wallet
-                    </button>
+                    </button>}
                   </div>
                 </div>
               )}
