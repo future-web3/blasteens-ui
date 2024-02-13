@@ -97,6 +97,10 @@
         min-width: 1ch;
         outline-offset: 5px;
       }
+
+      @media screen and (max-width: $breakpoint-xl) {
+        --font-size: clamp(40px, 0.25rem + 15vw, 60px);
+      }
     }
 
     hr {

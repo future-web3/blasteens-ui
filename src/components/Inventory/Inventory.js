@@ -4,6 +4,18 @@ import { useGameSelector } from 'blast-game-sdk'
 import { useAccount } from 'wagmi'
 
 function NFT({ name, addressLink, imageURL, amount }) {
+  const getNftClassName = () => {
+    if (name === 'BRONZE') {
+      return styles.bronzeNft
+    } else if (name === 'SILVER') {
+      return styles.silverNft
+    } else if (name === 'GOLD') {
+      return styles.goldNft
+    } else {
+      return styles.goldNft
+    }
+
+  }
   return (
     <div className={styles.nftContainer}>
       <div className={styles.nftInner} style={{ flex: 1 }}>
@@ -14,7 +26,7 @@ function NFT({ name, addressLink, imageURL, amount }) {
         </h3>
       </div>
       <div className={styles.nftInner} style={{ flex: 3 }}>
-        <img className={styles.nftImage} src={imageURL} alt={name} />
+        <img className={`${styles.nftImage} ${getNftClassName()}`} src={imageURL} alt={name} />
       </div>
       <hr />
     </div>

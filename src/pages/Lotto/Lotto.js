@@ -29,7 +29,7 @@ function Lotto() {
   const [isApproving, setIsApproving] = useState(false)
   const [isParticipating, setIsParticipating] = useState(false)
   const [triggerRefresh, setTriggerRefresh] = useState(0)
-  const { address: walletAddress } = useAccount()
+  const { address: walletAddress, isConnected } = useAccount()
   const { slowRefresh } = useRefresh()
   const [noOfParticipation, setNoOfParticipation] = useState("")
 
@@ -305,27 +305,24 @@ function Lotto() {
             )}
           </div>
         </div>
-        {Number(lottoTicketNumber) === 0
-          ? <div className={styles.errorText} style={{ position: "absolute", top: 500 }}>* You are not eligible to participate the lotto!</div>
-          : <div className={styles.buttonWrapper}>
-            {!isTicketApprovedForLotto ? <button
-              className={styles.drawBtn}
-              onClick={handleApproveTicket}
-              disabled={isApproving}
-            >
-              {isApproving ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Approve Ticket'}
-            </button> :
-              <div style={{ display: "flex", alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-                <div className={styles.participateInputContainer}>
-                  <input className={styles.participateInput} placeholder='Enter the number ...' onChange={handleInputChange} type='text' value={noOfParticipation} />
-                  <button className={styles.maxBtn} onClick={() => setNoOfParticipation(String(lottoTicketNumber))}>{Number(lottoTicketNumber)}</button>
-                  <button className={styles.participateBtn} onClick={handleParticipateLotto} disabled={isParticipating || Number(noOfParticipation) < 1 || Number(noOfParticipation) > Number(lottoTicketNumber)}>{isParticipating ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Participate'}</button>
-                </div>
-                {Number(noOfParticipation) > Number(lottoTicketNumber) && <p className={styles.errorText}>* Number has exceeded your balance [{Number(lottoTicketNumber)}]</p>}
-                <button className={styles.drawBtn} onClick={handleDrawingReward} disabled={isDrawing || Number(lottoPrize?.formatted) < 0.1 || participantsCount < 100}>{isDrawing ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Draw Rewards'}</button>
-              </div>
-            }
-          </div >}
+        <div className={styles.buttonWrapper}>
+          {!isTicketApprovedForLotto ? <button
+            className={styles.drawBtn}
+            onClick={handleApproveTicket}
+            disabled={isApproving}
+          >
+            {isApproving ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Approve Ticket'}
+          </button> :
+            <div style={{ display: "flex", alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+              {Number(lottoTicketNumber) !== 0 && <div className={styles.participateInputContainer}>
+                <input className={styles.participateInput} placeholder='Enter the number ...' onChange={handleInputChange} type='text' value={noOfParticipation} />
+                <button className={styles.maxBtn} onClick={() => setNoOfParticipation(String(lottoTicketNumber))}>{Number(lottoTicketNumber)}</button>
+                <button className={styles.participateBtn} onClick={handleParticipateLotto} disabled={isParticipating || Number(noOfParticipation) < 1 || Number(noOfParticipation) > Number(lottoTicketNumber)}>{isParticipating ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Participate'}</button>
+              </div>}
+              {Number(noOfParticipation) > Number(lottoTicketNumber) && <p className={styles.errorText}>* Number has exceeded your balance [{Number(lottoTicketNumber)}]</p>}
+              <button className={styles.drawBtn} onClick={handleDrawingReward} disabled={isDrawing || Number(lottoPrize?.formatted) < 0.1 || participantsCount < 100 || !isConnected}>{isDrawing ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : 'Draw Rewards'}</button>
+            </div>}
+        </div >
       </div>
     </div>
   )

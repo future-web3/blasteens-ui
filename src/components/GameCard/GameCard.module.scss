@@ -2,16 +2,15 @@
 
 .gameCardBox {
   background-color: lighten($background-color, 10%);
-  --b: 5px; /* thickness of the border */
-  --w: 30px; /* width of border */
-
   padding: 2px;
-
   position: relative;
   box-sizing: border-box;
   justify-content: center;
   align-items: center;
   text-align: center;
+  min-height: 320px;
+  max-width: 100%;
+  overflow: hidden;
 
   .gameCardContainer {
     width: 100%;
@@ -22,22 +21,18 @@
     color: $font-color;
 
     h2 {
-      padding: 10px;
+      padding: 0 10px;
       grid-column-start: 1;
       grid-column-end: 1;
       grid-row-start: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-
-      @media screen and (max-width: $breakpoint-xl) {
-        justify-content: flex-start;
-      }
     }
 
     .gameCardButtonBox {
       grid-column-start: 2;
-      grid-column-end: 3;
+      grid-column-end: 2;
       grid-row-start: 1;
       display: flex;
       justify-content: center;
@@ -49,7 +44,6 @@
         align-items: center;
         justify-content: center;
         width: 100%;
-        height: 50%;
         padding: 0.5rem 5rem;
         border-radius: 5rem;
         color: $fail-color;
@@ -71,7 +65,6 @@
         height: 50%;
         padding: 0.5rem 5rem;
         text-decoration: none;
-        border-radius: 0rem;
         color: $font-color;
         font-size: 1rem;
         font-weight: bold;
@@ -133,6 +126,48 @@
       }
     }
 
+    .notPlayableWrapper {
+      grid-column-start: 1;
+      grid-column-end: 3;
+      width: 100%;
+      align-items: center;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .notPlayableWrapper:hover{
+      color: black;
+    }
+
+    .notPlayableGameCardLogo {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      grid-column-start: 1;
+      grid-column-end: 1;
+
+      img {
+        padding: 10%;
+        width: 80%;
+
+        @media screen and (max-width: $breakpoint-sm) {
+          width: 100%;
+        }
+      }
+    }
+
+    .notPlayableDescription {
+      grid-column-start: 2;
+      grid-column-end: 3;
+      font-size: larger;
+
+      @media screen and (max-width: $breakpoint-md) {
+        font-size: 16px;;
+      }
+    }
+
     .gameCardLogo:active .gameCardDescription {
       display: flex;
       justify-content: space-around;
@@ -155,6 +190,11 @@
       font-size: larger;
       align-items: center;
       text-align: start;
+      width: 100%;
+
+      @media screen and (max-width: $breakpoint-md) {
+        font-size: 16px;
+      }
 
       .skeletonLoading {
         display: flex;
@@ -171,6 +211,18 @@
         .gameCardRow {
           display: flex;
           justify-content: space-between;
+
+          .countdownWrapper {
+            min-width: 190px;
+            max-width: 200px;
+            text-align: right;
+
+            @media screen and (max-width: $breakpoint-md) {
+              min-width: 100px;
+              width: 100px;
+              max-width: 100px;
+            }
+          }
         }
       }
     }
