@@ -133,6 +133,11 @@
       align-items: center;
       display: grid;
       grid-template-columns: 1fr 1fr;
+      padding: 0 30px;
+
+      @media screen and (max-width: $breakpoint-md) {
+        padding: 0 10px;
+      }
     }
 
     .notPlayableWrapper:hover{
@@ -181,19 +186,24 @@
       display: none;
       border-radius: 5px;
       z-index: 2;
+      font-size: larger;
       color: black;
+      font-weight: bold;
+      padding: 10px;
     }
 
     .gameCardDetail {
-      padding: 10px;
+      padding: 20px;
       display: flex;
       font-size: larger;
       align-items: center;
       text-align: start;
       width: 100%;
+      padding: 0 30px;
 
       @media screen and (max-width: $breakpoint-md) {
         font-size: 16px;
+        padding: 0 10px;
       }
 
       .skeletonLoading {
