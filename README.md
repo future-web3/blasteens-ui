@@ -10,7 +10,7 @@ Blasteens, is an advanced gaming platform featuring three captivating games with
 > 👉 [Blasteens Website](https://blasteens-ui.vercel.app/) 👈
 
 > Be more comfy watching an intro video?<br>
-> 👉 [Blasteens' Introduction](url) 👈
+> 👉 [What is Blasteens?](url) 👈
 
 ## Table of Contents
 * [🔥 Point of Attraction](#-point-of-attraction)
