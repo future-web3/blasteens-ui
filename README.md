@@ -29,6 +29,7 @@ Blasteens, is an advanced gaming platform featuring three captivating games with
 * [🤝 How to contribute?](#-how-to-contribute)
 * [📜 Available Scripts](#-available-scripts)
 * [🧱 Developed By](#-developed-by)
+* [🪪 License](#-license)
 
 ## 🔥 Point of Attraction
   ### 👾 Gamer-orientation
@@ -90,6 +91,7 @@ Blasteens, is an advanced gaming platform featuring three captivating games with
   > Developer Bonus Reward coming soon. Stay tuned!
   ### 🍀 Lotto
   Blasteens rewards its community with a Lotto system. Every gamer receives a lotto ticket for playing an arcade game, with weekly draws to select lucky winners. The more you play, the better your chances. Let's go, gamers!
+  > Currently, Blasteens airdrops Lotto tickets, and the initial Lotto pool is also established by the platform.
 
 ## 💻 Tech Stack
  - ReactJS
@@ -151,7 +153,7 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 ## 🧱 Developed By
-- Blasteens is developed by _Scorpion Studio_. \
+- Blasteens is developed by _The Scorpion Studio_. \
 We're a dynamic developer team based in Melbourne, Australia, deeply fascinated by all aspects of dApps. With a firm belief in the future potential of blockchain technology, we are committed to exploring and contributing to this innovative field. Peace ✌️
   <p align="left">
     <img alt="Scorpion Studio" src="public/images/scorpion-studio.png" width="500" >
@@ -160,3 +162,17 @@ We're a dynamic developer team based in Melbourne, Australia, deeply fascinated 
   <p align="left">
     <img alt="Blast" src="public/images/blast-powered-by.svg" width="500" >
   </p>
+
+## 🪪 License
+The MIT License (MIT)
+<br>
+<br>
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+Copyright (c) 2024 The Scorpion Studio
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
