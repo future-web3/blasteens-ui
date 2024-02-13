@@ -3,6 +3,7 @@ import React from 'react'
 import styles from './Market.module.scss'
 import { useAccount, useBalance } from 'wagmi'
 import { numberFormat } from '../../helpers/utils'
+import Layout from '../../components/Layout/Layout'
 
 const userOwnNft = [
   { image: '/images/nft6.jpeg', button: 'Sell' },
@@ -106,44 +107,46 @@ const Market = () => {
   const { data: ethBalance } = useBalance({ address, enabled: !!address })
 
   return (
-    <div className={styles.outerLayer}>
-      <div className={styles.grid}>
-        <section className={styles.leftSection}>
-          {isConnected ? <div className={styles.assetSection}>
-            <h3 className={styles.h3}>Your Wallet</h3>
-            <h2 className={styles.h2}>{numberFormat(ethBalance?.formatted, '0,0.000')} ETH</h2>
-            <div className={styles.indicator}>
-              <svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30' fill='none'>
-                <path
-                  d='M22.5389 20.625H7.46132C6.4173 20.625 5.89446 19.3627 6.63269 18.6245L14.1715 11.0857C14.6291 10.6281 15.3711 10.6281 15.8287 11.0857L23.3675 18.6245C24.1058 19.3627 23.5829 20.625 22.5389 20.625Z'
-                  fill='#7DDE92'
-                />
-              </svg>
-              <p className={styles.p}>10.34%</p>
+    <Layout>
+      <div className={styles.outerLayer}>
+        <div className={styles.grid}>
+          <section className={styles.leftSection}>
+            {isConnected ? <div className={styles.assetSection}>
+              <h3 className={styles.h3}>Your Wallet</h3>
+              <h2 className={styles.h2}>{numberFormat(ethBalance?.formatted, '0,0.000')} ETH</h2>
+              <div className={styles.indicator}>
+                <svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30' fill='none'>
+                  <path
+                    d='M22.5389 20.625H7.46132C6.4173 20.625 5.89446 19.3627 6.63269 18.6245L14.1715 11.0857C14.6291 10.6281 15.3711 10.6281 15.8287 11.0857L23.3675 18.6245C24.1058 19.3627 23.5829 20.625 22.5389 20.625Z'
+                    fill='#7DDE92'
+                  />
+                </svg>
+                <p className={styles.p}>10.34%</p>
+              </div>
+            </div> : <div className={styles.assetSection}>
+              <h3 className={styles.h3}>Connect Wallet</h3>
+            </div>}
+            <div className={styles.filterSection}>
+              <Filter />
             </div>
-          </div> : <div className={styles.assetSection}>
-            <h3 className={styles.h3}>Connect Wallet</h3>
-          </div>}
-          <div className={styles.filterSection}>
-            <Filter />
-          </div>
-        </section>
-        <section className={styles.rightSection}>
-          <div className={styles.NftsContainer}>
-            {userOwnNft.map((nft, index) => (
-              <NftCard imgURL={nft.image} key={index} buttonAction={nft.button} />
-            ))}
-          </div>
-          <div>
-            <div className={styles.NftsContainer} style={{ borderBottom: 'none', maxHeight: '55vh' }}>
-              {nftStore.map((nft, index) => (
+          </section>
+          <section className={styles.rightSection}>
+            <div className={styles.NftsContainer}>
+              {userOwnNft.map((nft, index) => (
                 <NftCard imgURL={nft.image} key={index} buttonAction={nft.button} />
               ))}
             </div>
-          </div>
-        </section>
+            <div>
+              <div className={styles.NftsContainer} style={{ borderBottom: 'none', maxHeight: '55vh' }}>
+                {nftStore.map((nft, index) => (
+                  <NftCard imgURL={nft.image} key={index} buttonAction={nft.button} />
+                ))}
+              </div>
+            </div>
+          </section>
+        </div>
       </div>
-    </div>
+    </Layout>
   )
 }
 

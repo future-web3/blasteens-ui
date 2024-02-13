@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styles from './Aboutus.module.scss'
 import { getAdjacentElements } from '../../helpers/utils'
+import Layout from '../../components/Layout/Layout'
 
 const questionList = [
   {
@@ -42,36 +43,38 @@ const Aboutus = () => {
   }, [selectedIndex, prevIndex, nextIndex])
 
   return (
-    <div className={styles.outerSection}>
-      <div className={styles.container}>
-        <div className={styles.jackpotSection} style={{ backgroundImage: `url('/images/jackpot-frame.png')` }}>
-          <div className={styles.carousel}>
-            <div
-              onClick={() => {
-                setSelectedIndex(prevIndex)
-              }}
-              className={styles.carouselSelect}
-            >
-              {questionList[prevIndex].question}
-            </div>
-            <div className={styles.selectedText}>{questionList[selectedIndex].question}</div>
-            <div
-              onClickCapture={() => {
-                setSelectedIndex(nextIndex)
-              }}
-              className={styles.carouselSelect}
-            >
-              {questionList[nextIndex].question}
+    <Layout>
+      <div className={styles.outerSection}>
+        <div className={styles.container}>
+          <div className={styles.jackpotSection} style={{ backgroundImage: `url('/images/jackpot-frame.png')` }}>
+            <div className={styles.carousel}>
+              <div
+                onClick={() => {
+                  setSelectedIndex(prevIndex)
+                }}
+                className={styles.carouselSelect}
+              >
+                {questionList[prevIndex].question}
+              </div>
+              <div className={styles.selectedText}>{questionList[selectedIndex].question}</div>
+              <div
+                onClickCapture={() => {
+                  setSelectedIndex(nextIndex)
+                }}
+                className={styles.carouselSelect}
+              >
+                {questionList[nextIndex].question}
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className={styles.textSection}>
-          <div className={styles.highlightedText}>{`Blasteens' says...`}</div>
-          {questionList[selectedIndex].content}
+          <div className={styles.textSection}>
+            <div className={styles.highlightedText}>{`Blasteens' says...`}</div>
+            {questionList[selectedIndex].content}
+          </div>
         </div>
       </div>
-    </div>
+    </Layout>
   )
 }
 

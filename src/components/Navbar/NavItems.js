@@ -27,7 +27,7 @@ const NavItems = ({ className }) => {
         <Link to='/about'>About Us</Link>
       </li>
       <li className={styles.linkInfoWrapper}>
-        <a href='https://www.google.com' target="_blank" rel="noreferrer">Docs</a>
+        <a href='https://github.com/future-web3/blasteens-ui' target="_blank" rel="noreferrer">Docs</a>
       </li>
       {!isTabletOrMobile && <li>
         {isConnected ? (

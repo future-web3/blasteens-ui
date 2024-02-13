@@ -14,6 +14,7 @@ import Inventory from '../../components/Inventory/Inventory'
 import { transformId } from '../../helpers/utils'
 import { useMediaQuery } from 'react-responsive'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
+import Layout from '../../components/Layout/Layout'
 
 let game = null
 
@@ -136,22 +137,61 @@ function Arcade() {
   }
 
   return (
-    <div className={styles.arcadeContainer}>
-      <header className={styles.arcadeHeader}>
-        <h1>{targetGame.name}</h1>
-        <p>Remaining chance {numberOfLives}</p>
-        <hr />
-      </header>
-      {!isTabletOrMobile ? (
-        <div className={styles.arcadeContent}>
-          <div className={styles.arcadeSideBlock}>
-            <Leaderboard gameContract={gameContract} transformedGameId={transformedGameId} individuals={individuals} setIndividuals={setIndividuals} />
+    <Layout>
+      <div className={styles.arcadeContainer}>
+        <header className={styles.arcadeHeader}>
+          <h1>{targetGame.name}</h1>
+          <p>Remaining chance {numberOfLives}</p>
+          <hr />
+        </header>
+        {!isTabletOrMobile ? (
+          <div className={styles.arcadeContent}>
+            <div className={styles.arcadeSideBlock}>
+              <Leaderboard gameContract={gameContract} transformedGameId={transformedGameId} individuals={individuals} setIndividuals={setIndividuals} />
+            </div>
+            <div className={styles.arcadeFrameContainer} style={{ backgroundImage: `url('/images/arcade-frame.png')` }}>
+              <div className={styles.arcadeGameContainer}>
+                {isConnected ? (
+                  <div id='gameDisplay' />
+                ) : (
+                  <div
+                    className={styles.arcadeFilter}
+                    style={{
+                      backgroundImage: `url('/assets/games/${targetGame.key}/background.png')`
+                    }}
+                  >
+                    <div className={styles.arcadeMenuContainer}>
+                      {openConnectModal && <button className={(styles.arcadeWeb3Button, styles.btn, styles.drawBorder)} onClick={openConnectModal}>
+                        Connect Your Wallet
+                      </button>}
+                    </div>
+                  </div>
+                )}
+                {showTicketWindow && isConnected && (
+                  <div className={`${styles.arcadeFilter} ${styles.ticketInfoContainer}`}>
+                    <div className={`${styles.arcadeMenuContainer} ${styles.arcadeMenuContainerForTicket}`}>
+                      <TicketFilter
+                        transformedGameId={transformedGameId}
+                        address={address}
+                        gameTicketContract={gameTicketContract}
+                        gameContract={gameContract}
+                        forwarderContract={forwarderContract}
+                        setIndividuals={setIndividuals}
+                        setRedeemTimes={setRedeemTimes}
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className={styles.arcadeSideBlock}>
+              <Inventory />
+            </div>
           </div>
-          <div className={styles.arcadeFrameContainer} style={{ backgroundImage: `url('/images/arcade-frame.png')` }}>
-            <div className={styles.arcadeGameContainer}>
-              {isConnected ? (
-                <div id='gameDisplay' />
-              ) : (
+        ) : (
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+            <div className={styles.arcadeFrameContainer} style={{ backgroundImage: `url('/images/arcade-frame.png')` }}>
+              <div className={styles.arcadeGameContainer}>
                 <div
                   className={styles.arcadeFilter}
                   style={{
@@ -159,60 +199,23 @@ function Arcade() {
                   }}
                 >
                   <div className={styles.arcadeMenuContainer}>
-                    {openConnectModal && <button className={(styles.arcadeWeb3Button, styles.btn, styles.drawBorder)} onClick={openConnectModal}>
-                      Connect Your Wallet
-                    </button>}
+                    <div className={(styles.btn, styles.drawBorder)}>Desktop Only</div>
                   </div>
-                </div>
-              )}
-              {showTicketWindow && isConnected && (
-                <div className={`${styles.arcadeFilter} ${styles.ticketInfoContainer}`}>
-                  <div className={`${styles.arcadeMenuContainer} ${styles.arcadeMenuContainerForTicket}`}>
-                    <TicketFilter
-                      transformedGameId={transformedGameId}
-                      address={address}
-                      gameTicketContract={gameTicketContract}
-                      gameContract={gameContract}
-                      forwarderContract={forwarderContract}
-                      setIndividuals={setIndividuals}
-                      setRedeemTimes={setRedeemTimes}
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-          <div className={styles.arcadeSideBlock}>
-            <Inventory />
-          </div>
-        </div>
-      ) : (
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-          <div className={styles.arcadeFrameContainer} style={{ backgroundImage: `url('/images/arcade-frame.png')` }}>
-            <div className={styles.arcadeGameContainer}>
-              <div
-                className={styles.arcadeFilter}
-                style={{
-                  backgroundImage: `url('/assets/games/${targetGame.key}/background.png')`
-                }}
-              >
-                <div className={styles.arcadeMenuContainer}>
-                  <div className={(styles.btn, styles.drawBorder)}>Desktop Only</div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className={styles.mobileInfoContainer}>
-            <div className={styles.arcadeSideBlock}>
-              <Leaderboard gameContract={gameContract} transformedGameId={transformedGameId} individuals={individuals} setIndividuals={setIndividuals} />
+            <div className={styles.mobileInfoContainer}>
+              <div className={styles.arcadeSideBlock}>
+                <Leaderboard gameContract={gameContract} transformedGameId={transformedGameId} individuals={individuals} setIndividuals={setIndividuals} />
+              </div>
+              <div className={styles.arcadeSideBlock}>
+                <Inventory />
+              </div>
             </div>
-            <div className={styles.arcadeSideBlock}>
-              <Inventory />
-            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </Layout>
   )
 }
 export default Arcade
