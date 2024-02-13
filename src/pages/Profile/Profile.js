@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import styles from './Profile.module.scss'
-import { useAccount, useConnect, useBalance, useWaitForTransaction, useContractReads } from "wagmi";
+import { useAccount, useBalance, useWaitForTransaction, useContractReads } from "wagmi";
 import { writeContract } from '@wagmi/core'
 import { formatHash, numberFormat } from "../../helpers/utils";
 import { gameConfigs } from "../../configs/gameConfig";
@@ -11,15 +11,16 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { getTotalRedemptionAmountForGame, getRedemptionTotalCount, getHighestScoreForGame, getTotalLottoWinnerAmount } from "../../helpers/profile";
 import { getContractAddress, getABI } from "../../helpers/network";
 import { RotatingLines } from "react-loader-spinner";
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 const Profile = () => {
   const { address, isConnected } = useAccount()
-  const { connect, connectors } = useConnect()
   const [userProfile, setUserProfile] = useState()
   const [isLoading, setIsLoading] = useState(false)
   const [isClaiming, setIsClaiming] = useState(false)
   const [pendingHash, setPendingHash] = useState('')
   const { data: ethBalance } = useBalance({ address, enabled: !!address })
+  const { openConnectModal } = useConnectModal()
 
   const gameTicketContract = useMemo(() => {
     const address = getContractAddress('TICKET', 168587773)
@@ -102,19 +103,9 @@ const Profile = () => {
     fetchInfo()
   }, [address])
 
-  const handleConnectWallet = async () => {
-    try {
-      if (!isConnected) {
-        connect({ connector: connectors[0] })
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
   return (
     <div className={styles.profileContainer}>
-      {address && data ?
+      {address && isConnected && data ?
         <div className={styles.columnContainer}>
           <div className={styles.userInfoSection}>
             <img className={styles.avatar} src='/images/nft6.jpeg' alt="avatar" />
@@ -171,7 +162,9 @@ const Profile = () => {
             ))}
           </div>
         </div>
-        : <button className={styles.connectBtn} onClick={handleConnectWallet}>Connect Button</button>}
+        : <div>
+          {openConnectModal && <button className={styles.connectBtn} onClick={openConnectModal}>Connect Button</button>}
+        </div>}
     </div>
   )
 }

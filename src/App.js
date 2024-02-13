@@ -14,6 +14,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { RefreshContextProvider } from './context/Refresh/context'
 import Lotto from './pages/Lotto/Lotto'
 import Profile from './pages/Profile/Profile'
+import { RainbowKitProvider, getDefaultWallets } from '@rainbow-me/rainbowkit'
 
 const blastSepolia = defineChain({
   id: 168_587_773,
@@ -40,7 +41,8 @@ const blastSepolia = defineChain({
   testnet: true
 })
 
-const { publicClient } = configureChains(
+
+const { chains, publicClient } = configureChains(
   [blastSepolia],
   [
     jsonRpcProvider({
@@ -52,32 +54,41 @@ const { publicClient } = configureChains(
   ]
 )
 
+const { connectors } = getDefaultWallets({
+  appName: 'blasteens',
+  projectId: process.env.REACT_APP_WALLET_CONNECT_ID ?? '',
+  chains,
+})
+
 const wagmiConfig = createConfig({
   autoConnect: true,
+  connectors,
   publicClient
 })
 
 function App() {
   return (
     <WagmiConfig config={wagmiConfig}>
-      <GameProvider>
-        <RefreshContextProvider>
-          <Routes>
-            <Route path='/' element={<Layout />}>
-              <Route index element={<Homepage />} />
-              <Route path='arcade'>
-                <Route path=':gameId' element={<Arcade />} />
+      <RainbowKitProvider chains={chains} modalSize="compact">
+        <GameProvider>
+          <RefreshContextProvider>
+            <Routes>
+              <Route path='/' element={<Layout />}>
+                <Route index element={<Homepage />} />
+                <Route path='arcade'>
+                  <Route path=':gameId' element={<Arcade />} />
+                </Route>
+                <Route path='prize' element={<Prize />} />
+                <Route path='about' element={<Aboutus />} />
+                <Route path='market' element={<Market />} />
+                <Route path='lotto' element={<Lotto />} />
+                <Route path='profile' element={<Profile />} />
               </Route>
-              <Route path='prize' element={<Prize />} />
-              <Route path='about' element={<Aboutus />} />
-              <Route path='market' element={<Market />} />
-              <Route path='lotto' element={<Lotto />} />
-              <Route path='profile' element={<Profile />} />
-            </Route>
-            <Route path='*' element={<NotFound />} />
-          </Routes>
-        </RefreshContextProvider>
-      </GameProvider>
+              <Route path='*' element={<NotFound />} />
+            </Routes>
+          </RefreshContextProvider>
+        </GameProvider>
+      </RainbowKitProvider>
     </WagmiConfig>
   )
 }

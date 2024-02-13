@@ -2,24 +2,15 @@ import React from "react";
 import { Link } from 'react-router-dom'
 import styles from './Navbar.module.scss'
 import { FaWallet } from 'react-icons/fa'
-import { useAccount, useConnect } from 'wagmi'
+import { useAccount } from 'wagmi'
 import { useMediaQuery } from 'react-responsive'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 
 const NavItems = ({ className }) => {
-  const { connect, connectors } = useConnect()
   const { isConnected } = useAccount()
+  const { openConnectModal } = useConnectModal()
 
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1280px)' })
-
-  const handleConnectWallet = async () => {
-    try {
-      if (!isConnected) {
-        connect({ connector: connectors[0] })
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
 
   return (
     <ul className={`${styles.linkDetailsWapper} ${className}`}>
@@ -44,12 +35,14 @@ const NavItems = ({ className }) => {
             <img className={styles.avatar} src='/images/nft6.jpeg' alt="avatar" />
           </Link>
         ) : (
-          <div
-            onClick={() => {
-              handleConnectWallet()
-            }}
-          >
-            <FaWallet className={styles.walletIconContainer} />
+          <div>
+            {openConnectModal && <div
+              onClick={() => {
+                openConnectModal()
+              }}
+            >
+              <FaWallet className={styles.walletIconContainer} />
+            </div>}
           </div>
         )}
       </li>}
