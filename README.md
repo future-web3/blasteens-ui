@@ -152,7 +152,7 @@ Your app is ready to be deployed!
 
 ## 🧱 Developed By
 - Blasteens is developed by _Scorpion Studio_. \
-We're a dynamic developer team based in Melbourne, Australia, deeply fascinated by all aspects of decentralized applications (dApps). With a firm belief in the future potential of blockchain technology, we are committed to exploring and contributing to this innovative field. Peace ✌️
+We're a dynamic developer team based in Melbourne, Australia, deeply fascinated by all aspects of dApps. With a firm belief in the future potential of blockchain technology, we are committed to exploring and contributing to this innovative field. Peace ✌️
   <p align="left">
     <img alt="Scorpion Studio" src="public/images/scorpion-studio.png" width="500" >
   </p>
