@@ -21,4 +21,4 @@ export const networkConfig = {
   }
 }
 
-export const PYTH_BASE_URL = 'https://fortuna-staging.pyth.network/v1/chains/blast-testnet/revelations'
+export const PYTH_BASE_URL = 'https://fortuna-staging.dourolabs.app/v1/chains/blast-testnet/revelations'

@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom'
 import styles from './Arcade.module.scss'
 import React, { useEffect, useMemo, useState } from 'react'
-import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi'
+import { useAccount, useNetwork } from 'wagmi'
 
 import { gameConfigs } from '../../configs/gameConfig'
 import Phaser from 'phaser'
@@ -18,7 +18,6 @@ import { useConnectModal } from '@rainbow-me/rainbowkit'
 let game = null
 
 function Arcade() {
-  const { switchNetwork } = useSwitchNetwork()
   const { address, isConnected } = useAccount()
   const { chain } = useNetwork()
   const netId = chain ? chain.id : 168587773
@@ -131,12 +130,6 @@ function Arcade() {
     fetchGameInfo()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameContract, gameLeaderBoardInfo, redeemTimes])
-
-  useEffect(() => {
-    if (!isConnected || chain?.id === 168587773) return
-    switchNetwork?.(168587773)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isConnected, chain])
 
   if (!targetGame) {
     return <div>The game url in invalid</div>
