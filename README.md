@@ -100,6 +100,16 @@ Blasteens, is an advanced gaming platform featuring three captivating games with
   > Currently, Blasteens airdrops Lotto tickets, and the initial Lotto pool is also established by the platform.
 
 ## 🟡 About Yield
+Yield received from Blast will be fairly distributed between gamers and developers. For instance, the distribution for an Arcade game is as follows:
+- 🥇 **30%**
+- 🥈 **20%**
+- 🥉 **10%**
+- 4️⃣ to 🔟 **4.29%** (30% would be evenly shared with 7 gamers)
+- 🧑‍💻 Developer **10%**
+ 
+> The allocation of Independent and AAA Games will be assessed in collaboration with the game developers.
+
+> Blast yield comes from ETH staking and RWA protocols. The yield from these decentralized protocols is passed back to Blast users automatically. The default interest rate on other L2s is 0%. On Blast, it’s 4% for ETH and 5% for stablecoins. For more information: [about Blast](https://docs.blast.io/about-blast)
 
 ## 💻 Tech Stack
  - ReactJS
