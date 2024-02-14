@@ -44,8 +44,13 @@ Blasteens, is an advanced gaming platform featuring three captivating games with
   Blasteens stands as a haven for developers, offering a platform to unleash creativity and earn through in-game item sales. With a built-in reward system and the potential for user investments in rare items, developers have the tools to craft captivating experiences. Transparent smart contracts ensure fair prize distribution, building a foundation of trust. Blasteens actively encourages community collaboration, providing developers with networking opportunities and exciting project prospects. Joining the web3 ecosystem becomes more accessible for skilled game developers through Blasteens, fostering a supportive environment. The renowned Blast and Blasteens brand is set to allure gamers, establishing a mutually beneficial relationship for both developers and players. Notably, the more players engage with your game, the greater the yield. Additionally, popular games receive extra bonus yield from Blasteens, enhancing the incentives for developers.
 
 ## 🟡 About Native Yield
-At Blasteens, we're committed to reinvesting all native yields and transaction fees directly back into the community through grand Lotto system, emphasizing our dedication to attract more players and more game developers onto the platform. All game entry ticket prize will be distributed among the game players and game devs according to their game rankings on the leaderboard.
-This is the split reward ration:
+At Blasteens, we're committed to reinvesting all native yields and transaction fees directly back into the community through grand Lotto system, emphasizing our dedication to attract more players and more game developers onto the platform. 
+
+## About game prize in each game
+Players need to buy game tickets to be able to play games. All game entry ticket prize will be distributed among the game players and game devs according to their game rankings on the leaderboard. <br>
+This is effectively create a good feedback loop. The better games, the more player. The more players, the more revenue to the game studios or indie developers also the more yields and more txn fees. <br>
+
+This is the split reward ratio for Arcade:
 - 🥇 **30%**
 - 🥈 **20%**
 - 🥉 **10%**
