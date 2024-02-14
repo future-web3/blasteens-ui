@@ -123,9 +123,12 @@ const Profile = () => {
               <div className={styles.userAddressSection}>
                 Lotto Total WIN: {numberFormat(getTotalLottoWinnerAmount(userProfile), '0,0.000')} ETH
               </div>
-              {lottoTicketsAmountData.status === 'success' && Number(lottoTicketsAmountData.result) > 0 && <button className={styles.lottoClaimButton} onClick={handleClaimLottoTicket} disabled={isClaiming}>
-                {isClaiming ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : "Claim Lotto Ticket"}
-              </button>}
+              {lottoTicketsAmountData.status === 'success' && Number(lottoTicketsAmountData.result) > 0 && <div>
+                <button className={styles.lottoClaimButton} onClick={handleClaimLottoTicket} disabled={isClaiming}>
+                  {isClaiming ? <RotatingLines strokeColor='#eff0f2' height='20' width='20' /> : "Claim Lotto Ticket"}
+                </button>
+                <p style={{ color: "#ffc906", textAlign: 'center', margin: '5px 0' }}>* You can claim {Number(lottoTicketsAmountData.result)} tickets</p>
+              </div>}
             </div>
             <div className={styles.gameInfoSection}>
               <div className={styles.gameHeader}>Game Statistics</div>
