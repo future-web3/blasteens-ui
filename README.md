@@ -44,12 +44,15 @@ Blasteens, is an advanced gaming platform featuring three captivating games with
   Blasteens stands as a haven for developers, offering a platform to unleash creativity and earn through in-game item sales. With a built-in reward system and the potential for user investments in rare items, developers have the tools to craft captivating experiences. Transparent smart contracts ensure fair prize distribution, building a foundation of trust. Blasteens actively encourages community collaboration, providing developers with networking opportunities and exciting project prospects. Joining the web3 ecosystem becomes more accessible for skilled game developers through Blasteens, fostering a supportive environment. The renowned Blast and Blasteens brand is set to allure gamers, establishing a mutually beneficial relationship for both developers and players. Notably, the more players engage with your game, the greater the yield. Additionally, popular games receive extra bonus yield from Blasteens, enhancing the incentives for developers.
 
 ## 🟡 About Native Yield
-At Blasteens, we're committed to reinvesting all native yields and transaction fees directly back into the community through leaderboard competitions and the Lotto system, emphasizing our dedication to enhancing the experience for both players and developers. Yield received from Blast will be fairly distributed between gamers and developers. For instance, the distribution for an Arcade game is as follows:
+At Blasteens, we're committed to reinvesting all native yields and transaction fees directly back into the community through grand Lotto system, emphasizing our dedication to attract more players and more game developers onto the platform. All game entry ticket prize will be distributed among the game players and game devs according to their game rankings on the leaderboard.
+This is the split reward ration:
 - 🥇 **30%**
 - 🥈 **20%**
 - 🥉 **10%**
 - 4️⃣ to 🔟 **4.29%** (30% would be evenly shared with 7 gamers)
-- 🧑‍💻 Developer **10%**
+- 🧑‍💻 Game Developer **10%**
+
+This can be changed by DAO in the future.
  
 > The allocation of Independent and AAA Games will be assessed in collaboration with the game developers.
 
@@ -114,7 +117,7 @@ At Blasteens, we're committed to reinvesting all native yields and transaction f
 
 ## 👀 Demo
 A Blasteens intro video is on air,\
-👉 [What's Blasteens](url) 👈
+👉 [What's Blasteens](https://www.loom.com/share/5eaaabb80aea44caa0df049fc7ccceac?sid=70772bc4-e234-4777-920f-86790a484fae) 👈
 
 Also, feel free to explore the following repos:
 1. [Blasteens](https://blasteens-ui.vercel.app/)
