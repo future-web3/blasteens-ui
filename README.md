@@ -119,6 +119,13 @@ This can be changed by DAO in the future.
   ### 🍀 Lotto
   Blasteens rewards its community with a Lotto system. Every gamer receives a lotto ticket for playing an arcade game, with weekly draws to select lucky winners. The more you play, the better your chances. Let's go, gamers!
   > Currently, Blasteens airdrops Lotto tickets, and the initial Lotto pool is also established by the platform.
+> 
+
+## Caveats
+- This is a pre-production build.
+- The contract is not audited.
+- The game doesn't have anti-bot mechanism. Also the sync function is not fully secured due to time constraints.
+- All these concerns will be addressed in the Production release in later June 2024.
 
 ## 👀 Demo
 A Blasteens intro video is on air,\
