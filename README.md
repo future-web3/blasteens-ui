@@ -38,28 +38,28 @@ Blasteens, is an advanced gaming platform featuring three captivating games with
 * [🧱 Developed By](#-developed-by)
 
 ## 🏦 GTM
-  - Product
+  - **Product**
     - A Web3 gaming platform leverages blockchain technology to provide a decentralized gaming experience, integrating elements like cryptocurrency, NFTs, and smart contracts to empower players with true ownership of in-game assets, secure transactions, and potentially a share in the platform's governance.
-  - Target Audience
+  - **Target Audience**
     - Gamers interested in blockchain and cryptocurrency.
     - Crypto enthusiasts looking for new utilities for digital assets.
     - Developers seeking to create and monetize decentralized games.
-  - Market Analysis
-    - Competitors: Imumutable, Web3Games adn Crossmint.
-    - Market Need: With the expansion of cryptocurrency and blockchain knowledge, there's an increasing willingness among the public, particularly gamers and gaming studios, to engage with Web3 games.
-  - Unique Selling Proposition (USP)
-    - Lotto Rewards: Earn lotto tickets by playing games, with weekly chances to win, powered by a community-focused reinvestment of all platform yields and fees.
-    - Revenue Sharing: Game ticket purchases fund rewards for top players and developers, promoting quality content and platform growth.
-    - Easy Development: A streamlined SDK enables quick and innovative game development, enhancing the web3 gaming ecosystem.
-  - Launch Timeline
-    - 
-    - Pre-launch: Beta testing with selected users for feedback (2 months before launch).
-    - Launch Phase: Official launch with promotional offers for early adopters.
-    - Post-launch: Customer feedback collection for continuous improvement.
-  - Success Metrics
-    - Active Users: Daily and monthly active users.
-    - Transaction Volume: Volume of trades and transactions within the platform.
-    - Community Growth: Increase in community size and engagement.
+  - **Market Analysis**
+    - `Competitors:` Imumutable, Web3Games adn Crossmint.
+    - `Market Need:` With the expansion of cryptocurrency and blockchain knowledge, there's an increasing willingness among the public, particularly gamers and gaming studios, to engage with Web3 games.
+  - **Unique Selling Proposition (USP)**
+    - `Lotto Rewards:` Earn lotto tickets by playing games, with weekly chances to win, powered by a community-focused reinvestment of all platform yields and fees.
+    - `Revenue Sharing:` Game ticket purchases fund rewards for top players and developers, promoting quality content and platform growth.
+    - `Easy Development:` A streamlined SDK enables quick and innovative game development, enhancing the web3 gaming ecosystem.
+  - **Launch Timeline**
+    - `Development Phase (now):` Finalizing the product concept, creating prototypes, and developing the actual product.
+    - `Pre-launch (May, 2024):` Beta testing with selected users for feedback.
+    - `Launch Phase (June, 2024):` Official launch with promotional offers for early adopters.
+    - `Post-launch:` Customer feedback collection for continuous improvement.
+  - **Success Metrics**
+    - `Active Users:` Daily and monthly active users.
+    - `Transaction Volume:` Volume of trades and transactions within the platform.
+    - `Community Growth:` Increase in community size and engagement.
 
 ## 🔥 Point of Attraction
   ### 👾 Gamer-orientation
