@@ -22,3 +22,5 @@ export const networkConfig = {
 }
 
 export const PYTH_BASE_URL = 'https://fortuna-staging.dourolabs.app/v1/chains/blast-testnet/revelations'
+export const GITHUB_URL = 'https://github.com/future-web3/blasteens-ui'
+export const TWITTER_URL = 'https://twitter.com/blasteens'
