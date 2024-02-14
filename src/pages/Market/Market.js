@@ -80,7 +80,7 @@ const Filter = () => {
         {getOptionsByName(selectedGame).map((opt, index) => (
           <div key={index} className={styles.optionItem}>
             <input type='checkbox' value={opt} id={opt} />
-            <label className={styles.optionLabel} for={opt}>
+            <label className={styles.optionLabel} htmlFor={opt}>
               {opt}
             </label>
           </div>

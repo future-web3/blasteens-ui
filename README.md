@@ -10,12 +10,17 @@ Blasteens, is an advanced gaming platform featuring three captivating games with
 > 👉 [Blasteens Website](https://blasteens-ui.vercel.app/) 👈
 
 > Be more comfy watching an intro video?<br>
-> 👉 [What is Blasteens?](url) 👈
+> 👉 [What's Blasteens?](url) 👈
 
 ## Table of Contents
 * [🔥 Point of Attraction](#-point-of-attraction)
   * [👾 Gamer-orientation](#-gamer-orientation)
   * [👨‍💻 Developer-orientation](#-developer-orientation)
+* [🟡 About Native Yield](#-about-native-yield)
+* [🔨 SDK](#-sdk)
+* [🌐 Subgraph](#-subgraph)
+* [📝 Smart Contract](#-smart-contract)
+* [💻 UI Tech Stack](#-ui-tech-stack)
 * [🌟 Features](#-features)
   * [🎮 Game](#-game)
     * [Arcade](#arcade)
@@ -25,12 +30,7 @@ Blasteens, is an advanced gaming platform featuring three captivating games with
   * [🥇 Prize](#-prize)
   * [💰 Developer Bonus Reward](#-developer-bonus-reward)
   * [🍀 Lotto](#-lotto)
-* [🟡 About Yield](#-about-yield)
-* [💻 Tech Stack](#-tech-stack)
-* [🔨 SDK](#-sdk)
-* [📝 Smart Contract](#-smart-contract)
-* [🌐 Subgraph](#-subgraph)
-* [👀 Presentation](#-presentation)
+* [👀 Demo](#-demo)
 * [🤝 How to contribute?](#-how-to-contribute)
 * [📜 Available Scripts](#-available-scripts)
 * [🪪 License](#-license)
@@ -42,38 +42,51 @@ Blasteens, is an advanced gaming platform featuring three captivating games with
   Attractions for gamers on Blasteens include the opportunity to ascend the leaderboard and vie for prizes from the pool. Additionally, players can engage in farming activities, selling items in the marketplace for profit, or investing in rare items for financial gains. Beyond financial incentives, users can relish the entertaining games crafted by developers. Blasteens distinguishes itself from traditional gaming platforms by detailing prize distribution in a smart contract, ensuring transparency and fairness for all participants.
   ### 👨‍💻 Developer-orientation
   Blasteens stands as a haven for developers, offering a platform to unleash creativity and earn through in-game item sales. With a built-in reward system and the potential for user investments in rare items, developers have the tools to craft captivating experiences. Transparent smart contracts ensure fair prize distribution, building a foundation of trust. Blasteens actively encourages community collaboration, providing developers with networking opportunities and exciting project prospects. Joining the web3 ecosystem becomes more accessible for skilled game developers through Blasteens, fostering a supportive environment. The renowned Blast and Blasteens brand is set to allure gamers, establishing a mutually beneficial relationship for both developers and players. Notably, the more players engage with your game, the greater the yield. Additionally, popular games receive extra bonus yield from Blasteens, enhancing the incentives for developers.
+
+## 🟡 About Native Yield
+At Blasteens, we're committed to reinvesting all native yields and transaction fees directly back into the community through leaderboard competitions and the Lotto system, emphasizing our dedication to enhancing the experience for both players and developers. Yield received from Blast will be fairly distributed between gamers and developers. For instance, the distribution for an Arcade game is as follows:
+- 🥇 **30%**
+- 🥈 **20%**
+- 🥉 **10%**
+- 4️⃣ to 🔟 **4.29%** (30% would be evenly shared with 7 gamers)
+- 🧑‍💻 Developer **10%**
+ 
+> The allocation of Independent and AAA Games will be assessed in collaboration with the game developers.
+
+> Blast yield comes from ETH staking and RWA protocols. The yield from these decentralized protocols is passed back to Blast users automatically. The default interest rate on other L2s is 0%. On Blast, it’s 4% for ETH and 5% for stablecoins. For more information: [about Blast](https://docs.blast.io/about-blast)
+
+## 📝 Smart Contract
+  The Blasteens smart contract ensures community fairness. Transparency guarantees benefits for both gamers and developers, showcasing the prize reward system, lotto system, and developer rewards. This is believed to be crucial for improving the ecosystem.
+  > Explore more: [Blasteens Smart Contract](https://github.com/future-web3/blasteens-contracts)
+## 🔨 SDK
+  Calling all game developers! With our robust Software Development Kit (SDK), creating and deploying games on Blasteens has never been smoother. Unleash your creativity, utilize powerful tools, and seamlessly integrate your games into our platform. The Blasteens SDK empowers developers to shape the future of gaming within the web3 ecosystem.
+  > Explore more: [Blasteens SDK](https://github.com/future-web3/blasteens-sdk)
+
+## 🌐 Subgraph
+  A subgraph, tailored for the Blasteens platform, is a custom API designed to interact with blockchain data. It employs the GraphQL query language for data requests and utilizes the Graph CLI for deployment to a Graph Node. After deployment, when published on The Graph's decentralized network, Indexers process these subgraphs, enabling them to be accessible for queries by Blasteens' subgraph consumers.
+  > Explore more: [Blasteens Subgraph](https://github.com/future-web3/blasteens-subgraph)
+
+## 💻 UI Tech Stack
+ - ReactJS
+ - EthersjJs
+ - WAGMI wallet integration
+ - Subgraph Query
+ - PhaserJs to build out some demo games
+ - Redux to manage the state of the app
+   
 ## 🌟 Features
   ### 🎮 Game
   #### Arcade
   Step into the Blasteens Arcade, a realm of boundless gaming excitement. Explore a variety of captivating games, each crafted to provide a unique and thrilling experience. The Arcade, the pulsating heart of Blasteens, invites players to embark on adventures, compete on leaderboards, and immerse themselves in a vibrant gaming community. With a collection of nostalgic old-style games, it operates like an online arcade where purchasing tickets allows you to climb leaderboards and reap rewards.
-  - **Escape From Germs** 
-      <p align="center">
-        <img alt="Scorpion Studio" src="public/images/arcade-germs.png" width="500" >
-      </p>
-      <p align="left">
-        Navigate through a virtual world while avoiding and escaping from germs. Test your reflexes and strategic thinking in this exciting game.
-      </p>
-  - **Snowman Defender** 
-      <p align="center">
-        <img alt="Scorpion Studio" src="public/images/arcade-snowman.png" width="500" >
-      </p>
-      <p align="left">
-        Defend your snowman against waves of attackers. Utilize various defenses and power-ups to keep your snowman safe. A thrilling defense game set in a winter wonderland.
-      </p>
+  - **Escape From Germs**
+  > Navigate through a virtual world while avoiding and escaping from germs. Test your reflexes and strategic thinking in this exciting game.
+  - **Snowman Defender**
+  > Defend your snowman against waves of attackers. Utilize various defenses and power-ups to keep your snowman safe. A thrilling defense game set in a winter wonderland.
   - **Emoji Match**
-    <p align="center">
-      <img alt="Scorpion Studio" src="public/images/arcade-emoji.png" width="500" >
-    </p>
-    <p align="left">
-      Exercise your memory and matching skills in the Emoji Match game. Flip cards to find matching emoji pairs within the given time. How quickly can you match them all?
-    </p>
-  - **Tommy Jumping** 
-    <p align="center">
-      <img alt="Scorpion Studio" src="public/images/arcade-tom.png" width="500" >
-    </p>
-    <p align="left">
-      Join Tommy in an adventurous jumping game. Help him overcome obstacles and reach new heights. How far can you guide Tommy in this endless jumping journey?
-    </p>
+  > Exercise your memory and matching skills in the Emoji Match game. Flip cards to find matching emoji pairs within the given time. How quickly can you match them all?
+  - **Tommy Jumping**
+  > Join Tommy in an adventurous jumping game. Help him overcome obstacles and reach new heights. How far can you guide Tommy in this endless jumping journey?
+  
   > **How to play Arcade?**\
     1. Purchase your NFT ticket. Choose from 3 different types: _Gold, Silver, Bronze._\
     2. Redeem your NFT ticket to start the game.\
@@ -99,41 +112,9 @@ Blasteens, is an advanced gaming platform featuring three captivating games with
   Blasteens rewards its community with a Lotto system. Every gamer receives a lotto ticket for playing an arcade game, with weekly draws to select lucky winners. The more you play, the better your chances. Let's go, gamers!
   > Currently, Blasteens airdrops Lotto tickets, and the initial Lotto pool is also established by the platform.
 
-## 🟡 About Yield
-Yield received from Blast will be fairly distributed between gamers and developers. For instance, the distribution for an Arcade game is as follows:
-- 🥇 **30%**
-- 🥈 **20%**
-- 🥉 **10%**
-- 4️⃣ to 🔟 **4.29%** (30% would be evenly shared with 7 gamers)
-- 🧑‍💻 Developer **10%**
- 
-> The allocation of Independent and AAA Games will be assessed in collaboration with the game developers.
-
-> Blast yield comes from ETH staking and RWA protocols. The yield from these decentralized protocols is passed back to Blast users automatically. The default interest rate on other L2s is 0%. On Blast, it’s 4% for ETH and 5% for stablecoins. For more information: [about Blast](https://docs.blast.io/about-blast)
-
-## 💻 Tech Stack
- - ReactJS
- - EthersjJs
- - WAGMI wallet integration
- - Subgraph Query
- - PhaserJs to build out some demo games
- - Redux to manage the state of the app
-
-## 🔨 SDK
-  Calling all game developers! With our robust Software Development Kit (SDK), creating and deploying games on Blasteens has never been smoother. Unleash your creativity, utilize powerful tools, and seamlessly integrate your games into our platform. The Blasteens SDK empowers developers to shape the future of gaming within the web3 ecosystem.
-  > Explore more: [Blasteens SDK](https://github.com/future-web3/blasteens-sdk)
-
-## 📝 Smart Contract
-  The Blasteens smart contract ensures community fairness. Transparency guarantees benefits for both gamers and developers, showcasing the prize reward system, lotto system, and developer rewards. This is believed to be crucial for improving the ecosystem.
-  > Explore more: [Blasteens Smart Contract](https://github.com/future-web3/blasteens-contracts)
-
-## 🌐 Subgraph
-  A subgraph, tailored for the Blasteens platform, is a custom API designed to interact with blockchain data. It employs the GraphQL query language for data requests and utilizes the Graph CLI for deployment to a Graph Node. After deployment, when published on The Graph's decentralized network, Indexers process these subgraphs, enabling them to be accessible for queries by Blasteens' subgraph consumers.
-  > Explore more: [Blasteens Subgraph](https://github.com/future-web3/blasteens-subgraph)
-
-## 👀 Presentation
+## 👀 Demo
 A Blasteens intro video is on air,\
-👉 [Blasteens' Youtube Video](url) 👈
+👉 [What's Blasteens](url) 👈
 
 Also, feel free to explore the following repos:
 1. [Blasteens](https://blasteens-ui.vercel.app/)

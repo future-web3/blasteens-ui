@@ -3,193 +3,190 @@
 .gameCardBox {
   background-color: lighten($background-color, 10%);
   padding: 2px;
-  position: relative;
-  box-sizing: border-box;
+  display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  min-height: 320px;
-  max-width: 100%;
-  overflow: hidden;
 
   .gameCardContainer {
     width: 100%;
     height: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 2fr;
     color: $font-color;
+    padding: 20px;
 
-    h2 {
-      padding: 0 10px;
-      grid-column-start: 1;
-      grid-column-end: 1;
-      grid-row-start: 1;
+    .gameHeadingSection {
       display: flex;
       align-items: center;
-      justify-content: center;
-    }
+      justify-content: space-around;
 
-    .gameCardButtonBox {
-      grid-column-start: 2;
-      grid-column-end: 2;
-      grid-row-start: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      .gameCardButtonDisable {
-        display: flex;
-        text-align: center;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        padding: 0.5rem 5rem;
-        border-radius: 5rem;
-        color: $fail-color;
-        font-size: 1rem;
-        font-weight: bold;
-        letter-spacing: 0.15rem;
-        transition: all 0.3s;
-        position: relative;
-        overflow: hidden;
-        z-index: 1;
+      @media screen and (max-width: $breakpoint-md) {
+        gap: 10px;
+        flex-direction: column;
       }
 
-      .gameCardButton {
-        display: flex;
+      h2 {
+        padding: 0 10px;
         text-align: center;
-        align-items: center;
+      }
+
+      .gameCardButtonBox {
+        display: flex;
         justify-content: center;
-        width: 15%;
-        height: 50%;
-        padding: 0.5rem 5rem;
-        text-decoration: none;
-        color: $font-color;
-        font-size: 1rem;
-        font-weight: bold;
-        letter-spacing: 0.15rem;
-        transition: all 0.3s;
-        position: relative;
-        overflow: hidden;
-        z-index: 1;
-        &:after {
-          content: '';
-          position: absolute;
-          bottom: 0;
-          left: 0;
+        align-items: center;
+        .gameCardButtonDisable {
+          display: flex;
+          text-align: center;
+          align-items: center;
+          justify-content: center;
           width: 100%;
-          height: 100%;
-          background-color: darken($navbar-color, 15%);
+          padding: 0.5rem 5rem;
           border-radius: 5rem;
-          z-index: -2;
-        }
-        &:before {
-          content: '';
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 0%;
-          height: 100%;
-          background-color: $navbar-color;
+          color: $fail-color;
+          font-size: 1rem;
+          font-weight: bold;
+          letter-spacing: 0.15rem;
           transition: all 0.3s;
-          border-radius: 10rem;
-          z-index: -1;
+          position: relative;
+          overflow: hidden;
+          z-index: 1;
         }
-        &:hover {
-          color: $primary-color;
-          &:before {
+
+        @media screen and (max-width: $breakpoint-md) {
+          padding: 0rem;
+        }
+
+        .gameCardButton {
+          display: flex;
+          text-align: center;
+          align-items: center;
+          justify-content: center;
+          width: 15%;
+          height: 50px;
+          padding: 0.5rem 5rem;
+          text-decoration: none;
+          color: $font-color;
+          font-size: 1rem;
+          font-weight: bold;
+          letter-spacing: 0.15rem;
+          transition: all 0.3s;
+          position: relative;
+          overflow: hidden;
+          z-index: 1;
+          &:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
             width: 100%;
+            height: 100%;
+            background-color: darken($navbar-color, 15%);
+            border-radius: 5rem;
+            z-index: -2;
+          }
+          &:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background-color: $navbar-color;
+            transition: all 0.3s;
+            border-radius: 10rem;
+            z-index: -1;
+          }
+          &:hover {
+            color: $primary-color;
+            &:before {
+              width: 100%;
+            }
           }
         }
       }
     }
 
-    .gameCardLogo {
-      grid-column-start: 1;
-      grid-column-end: 1;
-      grid-row-start: 2;
-      display: flex;
-      justify-content: center;
+    .gameDetailsSection {
+      display: grid;
       align-items: center;
-      text-align: center;
-      padding: 2px;
-      position: relative;
+      grid-template-columns: 1fr 1fr;
+      margin-top: 20px;
 
-      img {
+      @media screen and (max-width: $breakpoint-md) {
+        grid-template-columns: 1fr;
+        margin-top: 10px;
+      }
+
+      .gameCardLogoContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2px;
+
+        .gameCardLogo {
+          padding: 10%;
+          width: 80%;
+
+          @media screen and (max-width: $breakpoint-sm) {
+            width: 100%;
+          }
+        }
+      }
+
+      .notPlayableWrapper {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        width: 100%;
+        align-items: center;
+        display: grid;
+        padding: 0 30px;
+        grid-template-columns: 1fr 1fr;
+
+        @media screen and (max-width: $breakpoint-md) {
+          grid-template-columns: 1fr;
+          padding: 0 10px;
+        }
+      }
+
+      .notPlayableWrapper:hover {
+        color: black;
+      }
+
+      .notPlayableGameLogo {
         padding: 10%;
         width: 80%;
 
         @media screen and (max-width: $breakpoint-md) {
           width: 100%;
+          margin: 0 auto;
         }
       }
-    }
 
-    .notPlayableWrapper {
-      grid-column-start: 1;
-      grid-column-end: 3;
-      width: 100%;
-      align-items: center;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      padding: 0 30px;
+      .notPlayableDescription {
+        font-size: larger;
 
-      @media screen and (max-width: $breakpoint-md) {
-        padding: 0 10px;
-      }
-    }
-
-    .notPlayableWrapper:hover{
-      color: black;
-    }
-
-    .notPlayableGameCardLogo {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      grid-column-start: 1;
-      grid-column-end: 1;
-
-      img {
-        padding: 10%;
-        width: 80%;
-
-        @media screen and (max-width: $breakpoint-sm) {
-          width: 100%;
+        @media screen and (max-width: $breakpoint-md) {
+          font-size: 16px;
         }
       }
-    }
 
-    .notPlayableDescription {
-      grid-column-start: 2;
-      grid-column-end: 3;
-      font-size: larger;
-
-      @media screen and (max-width: $breakpoint-md) {
-        font-size: 16px;;
+      .gameCardLogoContainer:active .gameCardDescription {
+        display: flex;
+        justify-content: space-around;
       }
-    }
 
-    .gameCardLogo:active .gameCardDescription {
-      display: flex;
-      justify-content: space-around;
-    }
+      .gameCardLogoContainer:active .gameCardLogo {
+        display: none;
+      }
 
-    .gameCardLogo:active img {
-      display: none;
-    }
-
-    .gameCardDescription {
-      display: none;
-      border-radius: 5px;
-      z-index: 2;
-      font-size: larger;
-      color: black;
-      font-weight: bold;
-      padding: 10px;
+      .gameCardDescription {
+        display: none;
+        z-index: 2;
+        border-radius: 5px;
+        font-size: larger;
+        color: black;
+        font-weight: bold;
+        padding: 10px;
+      }
     }
 
     .gameCardDetail {
@@ -218,6 +215,7 @@
 
       p {
         width: 100%;
+
         .gameCardRow {
           display: flex;
           justify-content: space-between;
