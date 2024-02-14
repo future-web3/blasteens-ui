@@ -48,7 +48,7 @@ At Blasteens, we're committed to re-invest all native yields and transaction fee
 
 ## About game prize in each game
 Players need to buy game tickets to be able to play games. All game entry ticket prize will be distributed among the game players and game devs according to their game rankings on the leaderboard. <br>
-This is effectively create a good feedback loop. The better games, the more player. The more players, the more revenue to the game studios or indie developers also the more yields and more txn fees. <br>
+This is effectively create a good feedback loop. The better games, the more players. The more players, the more revenue to the game studios or indie developers also the more yields and more txn fees, hence more platform revenue.  <br>
 
 This is the split reward ratio for Arcade:
 - 🥇 **30%**
