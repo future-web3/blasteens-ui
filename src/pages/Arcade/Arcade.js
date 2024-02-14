@@ -199,7 +199,7 @@ function Arcade() {
                   }}
                 >
                   <div className={styles.arcadeMenuContainer}>
-                    <div className={(styles.btn, styles.drawBorder)}>Desktop Only</div>
+                    <div className={`${styles.btn} ${styles.drawBorder}`}>Desktop Only</div>
                   </div>
                 </div>
               </div>
