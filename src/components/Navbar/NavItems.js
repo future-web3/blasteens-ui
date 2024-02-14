@@ -5,6 +5,7 @@ import { FaWallet } from 'react-icons/fa'
 import { useAccount } from 'wagmi'
 import { useMediaQuery } from 'react-responsive'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
+import { GITHUB_URL } from "../../configs";
 
 const NavItems = ({ className }) => {
   const { isConnected } = useAccount()
@@ -18,16 +19,16 @@ const NavItems = ({ className }) => {
         <Link to='/arcade/escape-from-germs'>Games</Link>
       </li>
       <li className={styles.linkInfoWrapper}>
-        <Link to='/market'>Market</Link>
+        <Link to='/lotto'>Lotto</Link>
       </li>
       <li className={styles.linkInfoWrapper}>
-        <Link to='/lotto'>Lotto</Link>
+        <Link to='/market'>Market</Link>
       </li>
       <li className={styles.linkInfoWrapper}>
         <Link to='/about'>About Us</Link>
       </li>
       <li className={styles.linkInfoWrapper}>
-        <a href='https://github.com/future-web3/blasteens-ui' target="_blank" rel="noreferrer">Docs</a>
+        <a href={GITHUB_URL} target="_blank" rel="noreferrer">Docs</a>
       </li>
       {!isTabletOrMobile && <li>
         {isConnected ? (
